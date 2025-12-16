@@ -1,4 +1,4 @@
-import { Check, Layers, Eye, Building2, RotateCcw } from "lucide-react";
+import { Layers, Eye, Building2, Camera, CheckCircle, FileImage } from "lucide-react";
 
 /**
  * ApproveProPlusSection
@@ -9,27 +9,37 @@ import { Check, Layers, Eye, Building2, RotateCcw } from "lucide-react";
  * Standalone, modular component for WePrintWraps CommercialPro.
  */
 
-const FEATURES = [
+const WHATS_INCLUDED = [
   {
-    icon: Layers,
-    title: "2D to 3D Commercial Proof",
-    description: "Your flat design converted to a realistic 3D vehicle mockup",
+    icon: Camera,
+    text: "1 photorealistic 3D Commercial Proof per job",
+  },
+  {
+    icon: FileImage,
+    text: "Generated from a provided or approved 2D design",
   },
   {
     icon: Eye,
-    title: "All Sides Shown",
-    description: "Front, back, sides, and angles for complete approval confidence",
+    text: "Front, rear, driver, and passenger views",
+  },
+  {
+    icon: Layers,
+    text: "Accurate proportions and lighting",
   },
   {
     icon: Building2,
-    title: "Client Branding",
-    description: "Your shop or client logo locked in bottom-right for presentation",
+    text: "Client or shop branding locked in the bottom-right corner",
   },
   {
-    icon: RotateCcw,
-    title: "Fleet & Repeat Ready",
-    description: "Built for bulk approvals and ongoing production runs",
+    icon: CheckCircle,
+    text: "Approval-ready presentation for stakeholders",
   },
+];
+
+const IMPORTANT_NOTES = [
+  "A 2D wrap design is required to generate an ApprovePro Plus proof",
+  "ApprovePro Plus does not create or redesign artwork",
+  "The 3D proof is used for visual approval, not creative development",
 ];
 
 export const ApproveProPlusSection = () => {
@@ -42,16 +52,24 @@ export const ApproveProPlusSection = () => {
             CommercialPro Feature
           </span>
           <h2 className="text-3xl font-semibold text-foreground mb-4">
-            ApprovePro Plus
+            ApprovePro Plus™ (Included with CommercialPro)
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            CommercialPro includes ApprovePro Plus, which converts your 2D design
-            into a branded 3D approval proof showing all sides of the vehicle.
-          </p>
+          <div className="text-muted-foreground max-w-3xl mx-auto space-y-4">
+            <p>
+              Every CommercialPro wrap order includes ApprovePro Plus™ — a 2D-to-3D 
+              photorealistic commercial approval proof generated from your submitted 
+              or approved 2D wrap design.
+            </p>
+            <p>
+              ApprovePro Plus converts an existing 2D layout into a realistic 3D vehicle 
+              preview, showing all primary sides so decision-makers can clearly visualize 
+              the final result before production.
+            </p>
+          </div>
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Visual Placeholder */}
           <div className="relative">
             <div className="aspect-[4/3] bg-muted rounded-xl border border-border overflow-hidden flex items-center justify-center">
@@ -74,30 +92,48 @@ export const ApproveProPlusSection = () => {
             </div>
           </div>
 
-          {/* Features List */}
-          <div className="space-y-6">
-            {FEATURES.map((feature) => (
-              <div key={feature.title} className="flex gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-secondary flex items-center justify-center">
-                  <feature.icon className="w-5 h-5 text-secondary-foreground" />
-                </div>
-                <div>
-                  <h4 className="font-medium text-foreground mb-1">
-                    {feature.title}
-                  </h4>
-                  <p className="text-sm text-muted-foreground">
-                    {feature.description}
-                  </p>
-                </div>
+          {/* What's Included List */}
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-lg font-medium text-foreground mb-4">
+                What's Included
+              </h3>
+              <div className="space-y-4">
+                {WHATS_INCLUDED.map((item) => (
+                  <div key={item.text} className="flex gap-3 items-start">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-secondary flex items-center justify-center">
+                      <item.icon className="w-4 h-4 text-secondary-foreground" />
+                    </div>
+                    <p className="text-sm text-foreground pt-1">
+                      {item.text}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            {/* Important to Know */}
+            <div className="bg-muted/50 rounded-lg p-4 border border-border">
+              <h4 className="text-sm font-medium text-foreground mb-3">
+                Important to Know
+              </h4>
+              <ul className="space-y-2">
+                {IMPORTANT_NOTES.map((note) => (
+                  <li key={note} className="text-xs text-muted-foreground flex gap-2">
+                    <span className="text-primary">•</span>
+                    {note}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
         {/* Footer Note */}
         <div className="mt-12 text-center">
-          <p className="text-sm text-muted-foreground bg-muted/50 inline-block px-6 py-3 rounded-full">
-            Approval preview — final production follows approved proof.
+          <p className="text-xs text-muted-foreground">
+            One ApprovePro Plus 3D commercial proof is included per CommercialPro job. 
+            Additional views or versions are available if needed.
           </p>
         </div>
       </div>
