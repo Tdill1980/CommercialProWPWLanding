@@ -23,20 +23,20 @@
     --popover: 0 0% 100%;
     --popover-foreground: 220 25% 8%;
 
-    /* Professional Blue - Primary Brand Color (deeper, more professional) */
-    --primary: 220 75% 42%;
+    /* Professional Blue - Primary Brand Color */
+    --primary: 217 91% 50%;
     --primary-foreground: 0 0% 100%;
 
-    /* Light gray for secondary elements */
-    --secondary: 220 15% 96%;
-    --secondary-foreground: 220 40% 30%;
+    /* Secondary - subtle neutral */
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 40% 25%;
 
     /* Neutral muted tones */
     --muted: 220 10% 96%;
-    --muted-foreground: 220 10% 46%;
+    --muted-foreground: 220 10% 40%;
 
-    /* Accent - Deeper professional blue */
-    --accent: 220 70% 48%;
+    /* Accent - Bold blue for gradients */
+    --accent: 210 100% 45%;
     --accent-foreground: 0 0% 100%;
 
     /* Navy for deep contrast and headings */
