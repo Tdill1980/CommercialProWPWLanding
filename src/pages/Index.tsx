@@ -1,179 +1,173 @@
+import { Building2, Truck, Shield, Clock, ChevronRight, Phone, Mail } from "lucide-react";
 import {
   CommercialInfoStrip,
   BulkPricingSection,
   PricingUpdateExplainer,
   ApproveProPlusSection,
-  BulkOrderIndicator,
   CommercialFooter,
 } from "@/components/commercial";
-
-/**
- * CommercialPro Demo Page
- * 
- * Showcases all modular CommercialPro sections.
- * These components can be embedded individually into the existing WPW site.
- */
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      {/* Header with Two-Tone Branding */}
-      <header className="border-b border-border bg-background">
-        <div className="max-w-5xl mx-auto px-6 py-5">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">
-                <span className="text-navy">WPWCommercial</span>
-                <span className="text-primary">Pro</span>
-                <span className="text-primary text-sm align-super">™</span>
-              </h1>
-              <p className="text-sm text-muted-foreground mt-0.5">
-                Business Wraps. Built for Scale.
-              </p>
+      {/* Navigation Header */}
+      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-border">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <div className="flex items-center gap-8">
+              <a href="/" className="flex items-baseline gap-0.5">
+                <span className="text-xl font-bold text-navy tracking-tight">WPWCommercial</span>
+                <span className="text-xl font-bold text-primary tracking-tight">Pro</span>
+                <span className="text-primary text-xs font-bold ml-0.5">™</span>
+              </a>
+              
+              {/* Nav Links */}
+              <nav className="hidden md:flex items-center gap-6">
+                <a href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                  Pricing
+                </a>
+                <a href="#volume" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                  Volume Discounts
+                </a>
+                <a href="#proofing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                  3D Proofing
+                </a>
+              </nav>
             </div>
-            <span className="text-xs text-muted-foreground bg-muted px-3 py-1.5 rounded-full font-medium">
-              Preview Mode
-            </span>
+
+            {/* CTA */}
+            <div className="flex items-center gap-4">
+              <a href="tel:1-800-example" className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
+                <Phone className="h-4 w-4" />
+                <span>Contact Sales</span>
+              </a>
+              <Button size="sm" className="font-medium">
+                Get Quote
+                <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            </div>
           </div>
         </div>
       </header>
 
-      <main>
-        {/* Section 1: Commercial Info Strip */}
-        <div className="border-b border-border">
-          <div className="max-w-5xl mx-auto px-6 py-8">
-            <span className="text-xs font-medium tracking-widest uppercase text-muted-foreground">
-              Component 1
-            </span>
-            <h2 className="text-lg font-semibold text-foreground mt-1 mb-4">
-              Commercial Info Strip
-            </h2>
-            <p className="text-sm text-muted-foreground mb-6">
-              Place below value props (Wholesale Pricing • Fast Turnaround • Professional Grade • No Minimums)
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-secondary/50 to-background">
+        <div className="max-w-7xl mx-auto px-6 py-20 lg:py-28">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1.5 rounded-full text-sm font-medium mb-6">
+              <Building2 className="h-4 w-4" />
+              Fleet & Commercial Wraps
+            </div>
+            
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-navy tracking-tight leading-[1.1] mb-6">
+              Professional Wraps
+              <br />
+              <span className="text-primary">Built for Business</span>
+            </h1>
+            
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8 max-w-2xl">
+              Wholesale pricing, volume discounts, and dedicated account support for fleet managers, installers, and commercial buyers.
             </p>
-          </div>
-          <CommercialInfoStrip />
-        </div>
 
-        {/* Section 2: Pricing Update Explainer */}
-        <div className="border-b border-border">
-          <div className="max-w-5xl mx-auto px-6 py-8">
-            <span className="text-xs font-medium tracking-widest uppercase text-muted-foreground">
-              Component 2
-            </span>
-            <h2 className="text-lg font-semibold text-foreground mt-1 mb-4">
-              Pricing Update Explainer
-            </h2>
-            <p className="text-sm text-muted-foreground mb-6">
-              Explains $5.90 → $5.27 price reduction. Can be section or inline link trigger.
-            </p>
-          </div>
-          <PricingUpdateExplainer />
-        </div>
-
-        {/* Section 2b: Inline variant demo */}
-        <div className="border-b border-border bg-muted/30">
-          <div className="max-w-5xl mx-auto px-6 py-8">
-            <span className="text-xs font-medium tracking-widest uppercase text-muted-foreground">
-              Component 2b
-            </span>
-            <h2 className="text-lg font-semibold text-foreground mt-1 mb-4">
-              Inline Pricing Link
-            </h2>
-            <p className="text-sm text-muted-foreground mb-4">
-              For use next to "$5.27 per sq ft" references:
-            </p>
-            <div className="bg-background p-6 rounded-lg border border-border">
-              <p className="text-foreground">
-                Premium 3M IJ180 Wrap Film — <span className="font-semibold">$5.27 per sq ft</span>{" "}
-                <PricingUpdateExplainer variant="inline" />
-              </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button size="lg" className="text-base px-8">
+                Request Volume Quote
+                <ChevronRight className="h-5 w-5 ml-2" />
+              </Button>
+              <Button size="lg" variant="outline" className="text-base px-8">
+                <Mail className="h-5 w-5 mr-2" />
+                hello@weprintwraps.com
+              </Button>
             </div>
           </div>
         </div>
 
-        {/* Section 3: Bulk Pricing */}
-        <div className="border-b border-border">
-          <div className="max-w-5xl mx-auto px-6 py-8">
-            <span className="text-xs font-medium tracking-widest uppercase text-muted-foreground">
-              Component 3
-            </span>
-            <h2 className="text-lg font-semibold text-foreground mt-1 mb-4">
-              Bulk Pricing Selector
+        {/* Decorative elements */}
+        <div className="absolute top-20 right-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none" />
+      </section>
+
+      {/* Value Props */}
+      <section className="border-y border-border bg-background">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              { icon: Truck, label: "Wholesale Pricing", desc: "Commercial rates" },
+              { icon: Clock, label: "Fast Turnaround", desc: "Fleet-ready speed" },
+              { icon: Shield, label: "Professional Grade", desc: "Premium 3M materials" },
+              { icon: Building2, label: "No Minimums", desc: "Any order size" },
+            ].map(({ icon: Icon, label, desc }) => (
+              <div key={label} className="flex items-center gap-3">
+                <div className="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <Icon className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground text-sm">{label}</p>
+                  <p className="text-muted-foreground text-xs">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Commercial Info Strip */}
+      <CommercialInfoStrip />
+
+      {/* Pricing Section */}
+      <section id="pricing" className="scroll-mt-20">
+        <PricingUpdateExplainer />
+      </section>
+
+      {/* Volume Pricing Section */}
+      <section id="volume" className="scroll-mt-20 bg-secondary/30">
+        <div className="max-w-7xl mx-auto px-6 py-16 lg:py-20">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">
+              Volume Discounts
             </h2>
-            <p className="text-sm text-muted-foreground mb-6">
-              Interactive volume tier selector. Front-end only — does not affect checkout.
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              The more you order, the more you save. Automatic tier pricing for fleet and bulk orders.
             </p>
           </div>
           <BulkPricingSection />
         </div>
+      </section>
 
-        {/* Section 4: ApprovePro Plus */}
-        <div className="border-b border-border">
-          <div className="max-w-5xl mx-auto px-6 py-8">
-            <span className="text-xs font-medium tracking-widest uppercase text-muted-foreground">
-              Component 4
-            </span>
-            <h2 className="text-lg font-semibold text-foreground mt-1 mb-4">
-              ApprovePro Plus Explainer
-            </h2>
-            <p className="text-sm text-muted-foreground mb-6">
-              2D → 3D proof system overview. Placeholder image included — swap for commercial van mockup.
-            </p>
-          </div>
-          <ApproveProPlusSection />
-        </div>
+      {/* 3D Proofing Section */}
+      <section id="proofing" className="scroll-mt-20">
+        <ApproveProPlusSection />
+      </section>
 
-        {/* Section 5: Bulk Order Indicator */}
-        <div className="border-b border-border">
-          <div className="max-w-5xl mx-auto px-6 py-12">
-            <span className="text-xs font-medium tracking-widest uppercase text-muted-foreground">
-              Component 5
-            </span>
-            <h2 className="text-lg font-semibold text-foreground mt-1 mb-4">
-              Bulk Order Indicator
-            </h2>
-            <p className="text-sm text-muted-foreground mb-8">
-              Add to upload/quote forms. Tags orders as "Commercial / Bulk" without blocking checkout.
-            </p>
-            <BulkOrderIndicator 
-              onChange={(isBulk) => console.log("Bulk order:", isBulk)} 
-            />
+      {/* CTA Section */}
+      <section className="bg-navy">
+        <div className="max-w-7xl mx-auto px-6 py-16 lg:py-20">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-navy-foreground mb-2">
+                Ready to scale your fleet graphics?
+              </h2>
+              <p className="text-navy-foreground/70">
+                Contact our commercial team for volume pricing and account setup.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button size="lg" variant="secondary" className="text-base px-8">
+                <Phone className="h-5 w-5 mr-2" />
+                Call Sales
+              </Button>
+              <Button size="lg" className="text-base px-8 bg-white text-navy hover:bg-white/90">
+                <Mail className="h-5 w-5 mr-2" />
+                Email Quote Request
+              </Button>
+            </div>
           </div>
         </div>
+      </section>
 
-        {/* Section 6: Commercial Footer */}
-        <div>
-          <div className="max-w-5xl mx-auto px-6 py-8">
-            <span className="text-xs font-medium tracking-widest uppercase text-muted-foreground">
-              Component 6
-            </span>
-            <h2 className="text-lg font-semibold text-foreground mt-1 mb-4">
-              Commercial Footer Section
-            </h2>
-            <p className="text-sm text-muted-foreground mb-6">
-              Minimal footer block for wholesale/commercial contact info.
-            </p>
-          </div>
-          <div className="bg-muted/30">
-            <CommercialFooter />
-          </div>
-        </div>
-      </main>
-
-      {/* Integration Notes */}
-      <footer className="bg-navy text-navy-foreground py-12 mt-16">
-        <div className="max-w-5xl mx-auto px-6">
-          <h3 className="text-lg font-semibold mb-4">Integration Notes</h3>
-          <ul className="text-sm opacity-80 space-y-2">
-            <li>• All components are standalone — import individually as needed</li>
-            <li>• Components use semantic design tokens from index.css</li>
-            <li>• No checkout or pricing logic is modified</li>
-            <li>• Image placeholders marked with [Image swap: ...] notes</li>
-            <li>• Export from: <code className="bg-white/10 px-2 py-0.5 rounded">@/components/commercial</code></li>
-          </ul>
-        </div>
-      </footer>
+      {/* Footer */}
+      <CommercialFooter />
     </div>
   );
 };
