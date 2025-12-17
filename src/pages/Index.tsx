@@ -1,4 +1,5 @@
-import { Building2, Truck, Shield, Clock, ChevronRight, Phone, Mail } from "lucide-react";
+import { Building2, Truck, Shield, Clock, ChevronRight, Phone, Mail, Upload, DollarSign, Zap, LayoutDashboard } from "lucide-react";
+import { Link } from "react-router-dom";
 import {
   CommercialInfoStrip,
   BulkPricingSection,
@@ -9,6 +10,16 @@ import {
 } from "@/components/commercial";
 import { Button } from "@/components/ui/button";
 import heroFleet from "@/assets/hero-fleet.jpg";
+
+const VALUE_PROPS = [
+  { icon: Shield, label: "Premium Wrap Guarantee", desc: "Print flaws reprinted free" },
+  { icon: Zap, label: "1-2 Day Production", desc: "Lightning fast turnaround" },
+  { icon: Upload, label: "Upload & Buy Online", desc: "Easy file submission" },
+  { icon: DollarSign, label: "Wholesale Prices", desc: "Commercial rates" },
+  { icon: Truck, label: "3M at Lower Prices", desc: "Premium materials, everyday pricing" },
+  { icon: LayoutDashboard, label: "CommercialPro Dashboard", desc: "Dedicated account portal" },
+];
+
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
@@ -32,9 +43,9 @@ const Index = () => {
                 <a href="#volume" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                   Volume Discounts
                 </a>
-                <a href="#proofing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                  3D Proofing
-                </a>
+                <Link to="/approvepro" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                  ApprovePro
+                </Link>
                 <a href="#testimonials" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                   Success Stories
                 </a>
@@ -101,28 +112,29 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Value Props */}
-      <section className="border-y border-border bg-background">
+      {/* Value Props - 6 items with gradient accents */}
+      <section className="border-y border-border bg-background relative overflow-hidden">
+        {/* Subtle gradient accent line */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+        
         <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { icon: Truck, label: "Wholesale Pricing", desc: "Commercial rates" },
-              { icon: Clock, label: "Fast Turnaround", desc: "Fleet-ready speed" },
-              { icon: Shield, label: "Professional Grade", desc: "Premium 3M materials" },
-              { icon: Building2, label: "No Minimums", desc: "Any order size" },
-            ].map(({ icon: Icon, label, desc }) => (
-              <div key={label} className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <Icon className="h-5 w-5 text-primary" />
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            {VALUE_PROPS.map(({ icon: Icon, label, desc }) => (
+              <div key={label} className="flex flex-col items-center text-center gap-3 p-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl flex items-center justify-center border border-primary/10">
+                  <Icon className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground text-sm">{label}</p>
-                  <p className="text-muted-foreground text-xs">{desc}</p>
+                  <p className="font-semibold text-foreground text-sm leading-tight">{label}</p>
+                  <p className="text-muted-foreground text-xs mt-1">{desc}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
+        
+        {/* Subtle gradient accent line */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
       </section>
 
       {/* Commercial Info Strip */}

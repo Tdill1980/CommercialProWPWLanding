@@ -6,5 +6,7 @@ export { BulkPricingSection } from "./BulkPricingSection";
 export { PricingUpdateExplainer } from "./PricingUpdateExplainer";
 export { ApproveProPlusSection } from "./ApproveProPlusSection";
 export { BulkOrderIndicator } from "./BulkOrderIndicator";
+export { ApproveProUploader } from "./ApproveProUploader";
+export { ApproveProDashboard } from "./ApproveProDashboard";
 export { CommercialFooter } from "./CommercialFooter";
 export { TestimonialSection } from "./TestimonialSection";
