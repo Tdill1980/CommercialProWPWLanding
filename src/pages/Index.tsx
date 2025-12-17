@@ -77,7 +77,7 @@ const Index = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6">
               Professional Wraps
               <br />
-              <span className="text-primary">Built for Business</span>
+              <span className="text-white">Built for Business</span>
             </h1>
             
             <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-8 max-w-xl">
