@@ -54,49 +54,45 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-secondary/50 to-background">
-        <div className="max-w-7xl mx-auto px-6 py-16 lg:py-24">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Left - Content */}
-            <div>
-              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1.5 rounded-full text-sm font-medium mb-6">
-                <Building2 className="h-4 w-4" />
-                Fleet & Commercial Wraps
-              </div>
-              
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-navy tracking-tight leading-[1.1] mb-6">
-                Professional Wraps
-                <br />
-                <span className="text-primary">Built for Business</span>
-              </h1>
-              
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8 max-w-xl">
-                Wholesale pricing, volume discounts, and dedicated account support for fleet managers, installers, and commercial buyers.
-              </p>
+      <section className="relative min-h-[600px] lg:min-h-[700px] overflow-hidden">
+        {/* Full-width background image */}
+        <div className="absolute inset-0">
+          <img 
+            src={heroFleet} 
+            alt="Fleet of professionally wrapped commercial vehicles" 
+            className="w-full h-full object-cover"
+          />
+          {/* Gradient overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/70 to-transparent" />
+        </div>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="text-base px-8">
-                  Request Volume Quote
-                  <ChevronRight className="h-5 w-5 ml-2" />
-                </Button>
-                <Button size="lg" variant="outline" className="text-base px-8">
-                  <Mail className="h-5 w-5 mr-2" />
-                  hello@weprintwraps.com
-                </Button>
-              </div>
+        {/* Content overlay */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 lg:py-32">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-sm font-medium mb-6 border border-white/20">
+              <Building2 className="h-4 w-4" />
+              Fleet & Commercial Wraps
             </div>
+            
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6">
+              Professional Wraps
+              <br />
+              <span className="text-primary">Built for Business</span>
+            </h1>
+            
+            <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-8 max-w-xl">
+              Wholesale pricing, volume discounts, and dedicated account support for fleet managers, installers, and commercial buyers.
+            </p>
 
-            {/* Right - Hero Image */}
-            <div className="relative">
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-border/50">
-                <img 
-                  src={heroFleet} 
-                  alt="Fleet of professionally wrapped commercial vehicles" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              {/* Subtle accent */}
-              <div className="absolute -z-10 inset-4 bg-primary/10 rounded-2xl blur-xl" />
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button size="lg" className="text-base px-8">
+                Request Volume Quote
+                <ChevronRight className="h-5 w-5 ml-2" />
+              </Button>
+              <Button size="lg" variant="outline" className="text-base px-8 bg-white/10 border-white/30 text-white hover:bg-white/20">
+                <Mail className="h-5 w-5 mr-2" />
+                hello@weprintwraps.com
+              </Button>
             </div>
           </div>
         </div>
