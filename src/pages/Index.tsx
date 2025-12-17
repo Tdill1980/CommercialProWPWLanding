@@ -63,7 +63,7 @@ const Index = () => {
             className="w-full h-full object-cover"
           />
           {/* Gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/50 via-40% to-transparent to-70%" />
         </div>
 
         {/* Content overlay */}
