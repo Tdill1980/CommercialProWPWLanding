@@ -5,42 +5,42 @@
 @tailwind utilities;
 
 /* WePrintWraps CommercialPro Design System
-   Brand-aligned with WPW teal/navy palette
-   Clean, modern, enterprise-grade aesthetic inspired by perhaps.com
+   Blue/Black commercial aesthetic on white background
+   Clean, modern, enterprise-grade styling
    All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    /* Clean white background for perhaps.com aesthetic */
+    /* Clean white background */
     --background: 0 0% 100%;
-    --foreground: 220 25% 12%;
+    --foreground: 220 25% 8%;
 
-    /* Cards - very subtle warm gray */
+    /* Cards - very subtle gray */
     --card: 210 20% 99%;
-    --card-foreground: 220 25% 12%;
+    --card-foreground: 220 25% 8%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 12%;
+    --popover-foreground: 220 25% 8%;
 
-    /* WPW Teal/Cyan - Primary Brand Color */
-    --primary: 195 100% 42%;
+    /* Professional Blue - Primary Brand Color */
+    --primary: 220 84% 53%;
     --primary-foreground: 0 0% 100%;
 
-    /* Muted teal for secondary elements */
-    --secondary: 195 30% 95%;
-    --secondary-foreground: 195 80% 25%;
+    /* Light blue for secondary elements */
+    --secondary: 220 30% 96%;
+    --secondary-foreground: 220 60% 35%;
 
     /* Neutral muted tones */
-    --muted: 210 20% 96%;
+    --muted: 220 15% 96%;
     --muted-foreground: 220 10% 46%;
 
-    /* Accent - WPW Gold/Yellow */
-    --accent: 45 100% 50%;
-    --accent-foreground: 220 25% 12%;
+    /* Accent - Lighter blue */
+    --accent: 220 90% 60%;
+    --accent-foreground: 0 0% 100%;
 
-    /* Navy for deep contrast */
-    --navy: 220 60% 20%;
+    /* Navy for deep contrast and headings */
+    --navy: 220 60% 15%;
     --navy-foreground: 0 0% 100%;
 
     /* Success green */
@@ -51,24 +51,24 @@
     --destructive-foreground: 0 0% 100%;
 
     /* Clean borders */
-    --border: 210 20% 90%;
-    --input: 210 20% 90%;
-    --ring: 195 100% 42%;
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
+    --ring: 220 84% 53%;
 
     --radius: 0.5rem;
 
     /* Sidebar */
-    --sidebar-background: 210 20% 98%;
-    --sidebar-foreground: 220 25% 20%;
-    --sidebar-primary: 195 100% 42%;
+    --sidebar-background: 220 15% 98%;
+    --sidebar-foreground: 220 25% 15%;
+    --sidebar-primary: 220 84% 53%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 195 30% 95%;
-    --sidebar-accent-foreground: 195 80% 25%;
-    --sidebar-border: 210 20% 90%;
-    --sidebar-ring: 195 100% 42%;
+    --sidebar-accent: 220 30% 96%;
+    --sidebar-accent-foreground: 220 60% 35%;
+    --sidebar-border: 220 15% 90%;
+    --sidebar-ring: 220 84% 53%;
   }
 
-  .dark {
+.dark {
     --background: 220 25% 8%;
     --foreground: 210 20% 96%;
 
@@ -78,19 +78,19 @@
     --popover: 220 25% 10%;
     --popover-foreground: 210 20% 96%;
 
-    --primary: 195 100% 50%;
+    --primary: 220 84% 60%;
     --primary-foreground: 220 25% 8%;
 
     --secondary: 220 30% 18%;
-    --secondary-foreground: 195 80% 70%;
+    --secondary-foreground: 220 70% 70%;
 
     --muted: 220 25% 15%;
     --muted-foreground: 210 15% 60%;
 
-    --accent: 45 100% 55%;
+    --accent: 220 90% 65%;
     --accent-foreground: 220 25% 8%;
 
-    --navy: 220 60% 30%;
+    --navy: 220 60% 25%;
     --navy-foreground: 0 0% 100%;
 
     --success: 160 60% 50%;
@@ -101,16 +101,16 @@
 
     --border: 220 25% 18%;
     --input: 220 25% 18%;
-    --ring: 195 100% 50%;
+    --ring: 220 84% 60%;
 
     --sidebar-background: 220 25% 10%;
     --sidebar-foreground: 210 20% 90%;
-    --sidebar-primary: 195 100% 50%;
+    --sidebar-primary: 220 84% 60%;
     --sidebar-primary-foreground: 220 25% 8%;
     --sidebar-accent: 220 30% 18%;
-    --sidebar-accent-foreground: 195 80% 70%;
+    --sidebar-accent-foreground: 220 70% 70%;
     --sidebar-border: 220 25% 18%;
-    --sidebar-ring: 195 100% 50%;
+    --sidebar-ring: 220 84% 60%;
   }
 }
 

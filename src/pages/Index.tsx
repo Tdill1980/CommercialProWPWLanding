@@ -17,19 +17,21 @@ import {
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="max-w-5xl mx-auto px-6 py-4">
+      {/* Header with Two-Tone Branding */}
+      <header className="border-b border-border bg-background">
+        <div className="max-w-5xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-xl font-semibold text-foreground">
-                CommercialPro
+              <h1 className="text-2xl font-bold tracking-tight">
+                <span className="text-navy">WPWCommercial</span>
+                <span className="text-primary">Pro</span>
+                <span className="text-primary text-sm align-super">™</span>
               </h1>
-              <p className="text-sm text-muted-foreground">
-                Modular sections for WePrintWraps.com
+              <p className="text-sm text-muted-foreground mt-0.5">
+                Business Wraps. Built for Scale.
               </p>
             </div>
-            <span className="text-xs text-muted-foreground bg-muted px-3 py-1 rounded-full">
+            <span className="text-xs text-muted-foreground bg-muted px-3 py-1.5 rounded-full font-medium">
               Preview Mode
             </span>
           </div>
