@@ -54,20 +54,20 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative min-h-[600px] lg:min-h-[700px] overflow-hidden">
+      <section className="relative min-h-[500px] lg:min-h-[550px] overflow-hidden">
         {/* Full-width background image */}
         <div className="absolute inset-0">
           <img 
             src={heroFleet} 
             alt="Fleet of professionally wrapped commercial vehicles" 
-            className="w-full h-full object-cover object-[center_30%]"
+            className="w-full h-full object-cover object-center"
           />
           {/* Gradient overlay for text readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/40 via-35% to-transparent to-55%" />
         </div>
 
         {/* Content overlay */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 lg:py-32">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 lg:py-24">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-sm font-medium mb-6 border border-white/20">
               <Building2 className="h-4 w-4" />
