@@ -60,10 +60,10 @@ const Index = () => {
           <img 
             src={heroFleet} 
             alt="Fleet of professionally wrapped commercial vehicles" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
           />
           {/* Gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/50 via-40% to-transparent to-70%" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/40 via-35% to-transparent to-55%" />
         </div>
 
         {/* Content overlay */}
