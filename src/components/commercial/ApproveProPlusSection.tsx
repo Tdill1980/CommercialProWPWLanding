@@ -1,4 +1,6 @@
-import { Layers, Eye, Building2, Camera, CheckCircle, FileImage, ArrowRight } from "lucide-react";
+import { Layers, Eye, Building2, Camera, CheckCircle, FileImage, ArrowRight, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import proof2D from "@/assets/approvepro-2d-proof.png";
 import proof3D from "@/assets/approvepro-3d-proof.png";
 
@@ -153,12 +155,18 @@ export const ApproveProPlusSection = () => {
           </div>
         </div>
 
-        {/* Footer Note */}
-        <div className="mt-12 text-center">
+        {/* Footer Note + CTA */}
+        <div className="mt-12 text-center space-y-6">
           <p className="text-xs text-muted-foreground">
             One ApprovePro Plus 3D commercial proof is included per CommercialPro job. 
             Additional views or versions are available if needed.
           </p>
+          <Button asChild size="lg">
+            <Link to="/approvepro">
+              Request 3D Proof
+              <ChevronRight className="w-5 h-5 ml-2" />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>
