@@ -5,10 +5,10 @@ import {
   PricingUpdateExplainer,
   ApproveProPlusSection,
   CommercialFooter,
+  TestimonialSection,
 } from "@/components/commercial";
 import { Button } from "@/components/ui/button";
 import heroFleet from "@/assets/hero-fleet.jpg";
-
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
@@ -34,6 +34,9 @@ const Index = () => {
                 </a>
                 <a href="#proofing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                   3D Proofing
+                </a>
+                <a href="#testimonials" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                  Success Stories
                 </a>
               </nav>
             </div>
@@ -148,6 +151,11 @@ const Index = () => {
       {/* 3D Proofing Section */}
       <section id="proofing" className="scroll-mt-20">
         <ApproveProPlusSection />
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="scroll-mt-20">
+        <TestimonialSection />
       </section>
 
       {/* CTA Section */}
