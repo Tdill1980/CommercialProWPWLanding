@@ -7,6 +7,7 @@ import {
   CommercialFooter,
 } from "@/components/commercial";
 import { Button } from "@/components/ui/button";
+import heroFleet from "@/assets/hero-fleet.jpg";
 
 const Index = () => {
   return (
@@ -54,38 +55,51 @@ const Index = () => {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-b from-secondary/50 to-background">
-        <div className="max-w-7xl mx-auto px-6 py-20 lg:py-28">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1.5 rounded-full text-sm font-medium mb-6">
-              <Building2 className="h-4 w-4" />
-              Fleet & Commercial Wraps
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-navy tracking-tight leading-[1.1] mb-6">
-              Professional Wraps
-              <br />
-              <span className="text-primary">Built for Business</span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8 max-w-2xl">
-              Wholesale pricing, volume discounts, and dedicated account support for fleet managers, installers, and commercial buyers.
-            </p>
+        <div className="max-w-7xl mx-auto px-6 py-16 lg:py-24">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left - Content */}
+            <div>
+              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1.5 rounded-full text-sm font-medium mb-6">
+                <Building2 className="h-4 w-4" />
+                Fleet & Commercial Wraps
+              </div>
+              
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-navy tracking-tight leading-[1.1] mb-6">
+                Professional Wraps
+                <br />
+                <span className="text-primary">Built for Business</span>
+              </h1>
+              
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8 max-w-xl">
+                Wholesale pricing, volume discounts, and dedicated account support for fleet managers, installers, and commercial buyers.
+              </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="text-base px-8">
-                Request Volume Quote
-                <ChevronRight className="h-5 w-5 ml-2" />
-              </Button>
-              <Button size="lg" variant="outline" className="text-base px-8">
-                <Mail className="h-5 w-5 mr-2" />
-                hello@weprintwraps.com
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" className="text-base px-8">
+                  Request Volume Quote
+                  <ChevronRight className="h-5 w-5 ml-2" />
+                </Button>
+                <Button size="lg" variant="outline" className="text-base px-8">
+                  <Mail className="h-5 w-5 mr-2" />
+                  hello@weprintwraps.com
+                </Button>
+              </div>
+            </div>
+
+            {/* Right - Hero Image */}
+            <div className="relative">
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-border/50">
+                <img 
+                  src={heroFleet} 
+                  alt="Fleet of professionally wrapped commercial vehicles" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {/* Subtle accent */}
+              <div className="absolute -z-10 inset-4 bg-primary/10 rounded-2xl blur-xl" />
             </div>
           </div>
         </div>
-
-        {/* Decorative elements */}
-        <div className="absolute top-20 right-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none" />
       </section>
 
       {/* Value Props */}
