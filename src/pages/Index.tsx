@@ -76,8 +76,8 @@ const Index = () => {
             alt="Fleet of professionally wrapped commercial vehicles" 
             className="w-full h-full object-cover object-center"
           />
-          {/* Gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/40 via-35% to-transparent to-55%" />
+          {/* Strong gradient overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 via-40% to-slate-950/20" />
         </div>
 
         {/* Content overlay */}
