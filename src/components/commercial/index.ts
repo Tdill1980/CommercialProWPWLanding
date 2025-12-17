@@ -7,3 +7,4 @@ export { PricingUpdateExplainer } from "./PricingUpdateExplainer";
 export { ApproveProPlusSection } from "./ApproveProPlusSection";
 export { BulkOrderIndicator } from "./BulkOrderIndicator";
 export { CommercialFooter } from "./CommercialFooter";
+export { TestimonialSection } from "./TestimonialSection";
