@@ -112,29 +112,29 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Value Props - 6 items with gradient accents */}
-      <section className="border-y border-border bg-background relative overflow-hidden">
-        {/* Subtle gradient accent line */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+      {/* Value Props - 6 items with bold gradient */}
+      <section className="border-y border-border bg-gradient-to-b from-slate-900 via-blue-950 to-slate-900 relative overflow-hidden">
+        {/* Top gradient accent */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent" />
         
         <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {VALUE_PROPS.map(({ icon: Icon, label, desc }) => (
               <div key={label} className="flex flex-col items-center text-center gap-3 p-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl flex items-center justify-center border border-primary/10">
-                  <Icon className="h-6 w-6 text-primary" />
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/25">
+                  <Icon className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground text-sm leading-tight">{label}</p>
-                  <p className="text-muted-foreground text-xs mt-1">{desc}</p>
+                  <p className="font-semibold text-white text-sm leading-tight">{label}</p>
+                  <p className="text-blue-200/70 text-xs mt-1">{desc}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
         
-        {/* Subtle gradient accent line */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+        {/* Bottom gradient accent */}
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent" />
       </section>
 
       {/* Commercial Info Strip */}
