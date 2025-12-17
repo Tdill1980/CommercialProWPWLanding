@@ -1,4 +1,6 @@
-import { Layers, Eye, Building2, Camera, CheckCircle, FileImage } from "lucide-react";
+import { Layers, Eye, Building2, Camera, CheckCircle, FileImage, ArrowRight } from "lucide-react";
+import proof2D from "@/assets/approvepro-2d-proof.png";
+import proof3D from "@/assets/approvepro-3d-proof.png";
 
 /**
  * ApproveProPlusSection
@@ -71,24 +73,46 @@ export const ApproveProPlusSection = () => {
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Visual Placeholder */}
-          <div className="relative">
-            <div className="aspect-[4/3] bg-muted rounded-xl border border-border overflow-hidden flex items-center justify-center">
-              {/* Placeholder for 3D proof visualization */}
-              <div className="text-center p-8">
-                <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-secondary flex items-center justify-center">
-                  <Layers className="w-10 h-10 text-primary" />
-                </div>
-                <p className="text-muted-foreground text-sm">
-                  3D Proof Preview
-                </p>
-                <p className="text-xs text-muted-foreground/70 mt-1">
-                  [Image swap: commercial van 3D mockup]
-                </p>
+          <div className="space-y-6">
+            {/* 2D Proof - Before */}
+            <div className="relative">
+              <div className="absolute -top-3 left-4 z-10">
+                <span className="bg-muted text-muted-foreground text-xs font-medium px-3 py-1 rounded-full border border-border">
+                  BEFORE — 2D Proof
+                </span>
+              </div>
+              <div className="aspect-[16/10] rounded-xl border border-border overflow-hidden bg-muted">
+                <img 
+                  src={proof2D} 
+                  alt="2D wrap proof layout with measurements" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
-            {/* Brand badge indicator */}
-            <div className="absolute bottom-4 right-4 bg-background/90 backdrop-blur-sm border border-border rounded px-3 py-1.5 text-xs text-muted-foreground">
-              Your Logo Here
+
+            {/* Arrow */}
+            <div className="flex justify-center">
+              <div className="flex items-center gap-2 text-primary">
+                <ArrowRight className="w-5 h-5 rotate-90" />
+                <span className="text-sm font-medium">Transforms to</span>
+                <ArrowRight className="w-5 h-5 rotate-90" />
+              </div>
+            </div>
+
+            {/* 3D Proof - After */}
+            <div className="relative">
+              <div className="absolute -top-3 left-4 z-10">
+                <span className="bg-primary text-primary-foreground text-xs font-medium px-3 py-1 rounded-full">
+                  AFTER — 3D ApprovePro Plus™
+                </span>
+              </div>
+              <div className="aspect-[16/10] rounded-xl border border-border overflow-hidden shadow-lg">
+                <img 
+                  src={proof3D} 
+                  alt="Photorealistic 3D vehicle wrap proof" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
           </div>
 
