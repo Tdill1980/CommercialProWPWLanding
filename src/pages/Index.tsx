@@ -74,7 +74,7 @@ const Index = () => {
               Fleet & Commercial Wraps
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] mb-6">
               Professional Wraps
               <br />
               <span className="text-white">Built for Business</span>
