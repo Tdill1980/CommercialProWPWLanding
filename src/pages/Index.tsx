@@ -83,10 +83,6 @@ const Index = () => {
         {/* Content overlay */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 lg:py-24">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-sm font-medium mb-6 border border-white/20">
-              <Building2 className="h-4 w-4" />
-              Fleet & Commercial Wraps
-            </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] mb-6">
               Professional Wraps
