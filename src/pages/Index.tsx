@@ -46,6 +46,9 @@ const Index = () => {
                 <Link to="/approvepro" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                   ApprovePro
                 </Link>
+                <Link to="/wall-wraps" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                  Wall Wraps
+                </Link>
                 <a href="#testimonials" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                   Success Stories
                 </a>
