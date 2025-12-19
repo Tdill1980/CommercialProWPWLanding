@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Layers } from 'lucide-react';
 import { SceneVisualizer, DesignLibrary, DesignUploader, WallPricingCalculator, WallDesign } from '@/components/wallgraphics';
 
-const WallGraphics = () => {
+const WallWraps = () => {
   const [selectedDesign, setSelectedDesign] = useState<WallDesign | null>(null);
   const [customDesignName, setCustomDesignName] = useState<string | undefined>();
   const [wallWidth, setWallWidth] = useState(48);
@@ -45,7 +45,7 @@ const WallGraphics = () => {
           </Link>
           <div className="flex items-center gap-2">
             <Layers className="h-5 w-5 text-primary" />
-            <span className="font-bold">Wall Graphics</span>
+            <span className="font-bold">Wall Wraps</span>
           </div>
           <div className="w-16" />
         </div>
@@ -105,11 +105,11 @@ const WallGraphics = () => {
       {/* Footer */}
       <footer className="bg-muted/30 border-t border-border py-8 mt-12">
         <div className="max-w-7xl mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>© 2024 We Print Wraps. Premium wall graphics printed on Avery 2610.</p>
+          <p>© 2024 We Print Wraps. Premium wall wraps printed on Avery 2610.</p>
         </div>
       </footer>
     </div>
   );
 };
 
-export default WallGraphics;
+export default WallWraps;
