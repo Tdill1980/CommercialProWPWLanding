@@ -149,18 +149,8 @@ const Index = () => {
       </section>
 
       {/* Volume Pricing Section */}
-      <section id="volume" className="scroll-mt-20 bg-secondary/30">
-        <div className="max-w-7xl mx-auto px-6 py-16 lg:py-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">
-              Volume Discounts
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              The more you order, the more you save. Automatic tier pricing for fleet and bulk orders.
-            </p>
-          </div>
-          <BulkPricingSection />
-        </div>
+      <section id="volume" className="scroll-mt-20">
+        <BulkPricingSection />
       </section>
 
       {/* 3D Proofing Section */}
