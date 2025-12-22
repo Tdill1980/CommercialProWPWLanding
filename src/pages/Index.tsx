@@ -81,6 +81,10 @@ const Index = () => {
           />
           {/* Strong gradient overlay for text readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 via-40% to-slate-950/20" />
+          {/* Image credit caption */}
+          <p className="absolute bottom-2 right-4 text-xs text-white/50 italic z-10">
+            Image is a fleet done by VikingFleet Prescott, Arizona using WePrintWraps.com for printing.
+          </p>
         </div>
 
         {/* Content overlay */}
