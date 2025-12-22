@@ -1,5 +1,5 @@
 import { Play, Quote, TrendingUp, Truck, Ruler } from "lucide-react";
-import testimonialShaun from "@/assets/testimonial-shaun.png";
+import testimonialGhostIndustries from "@/assets/testimonial-ghost-industries.png";
 import wpwGuarantee from "@/assets/wpw-quality-guarantee.png";
 
 export const TestimonialSection = () => {
@@ -87,7 +87,7 @@ export const TestimonialSection = () => {
           <div className="relative rounded-2xl overflow-hidden min-h-[500px] lg:min-h-0">
             {/* Background Image */}
             <img 
-              src={testimonialShaun} 
+              src={testimonialGhostIndustries} 
               alt="Shaun from Ghost Industries wrapping a vehicle" 
               className="absolute inset-0 w-full h-full object-cover"
             />
