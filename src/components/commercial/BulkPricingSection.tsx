@@ -63,95 +63,92 @@ export const BulkPricingSection = () => {
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Left: Interactive Calculator */}
-          <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-6 text-white relative overflow-hidden">
-            {/* Decorative elements */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
-            
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                  <Calculator className="w-5 h-5" />
-                </div>
-                <h3 className="text-lg font-semibold">Savings Calculator</h3>
+          <div className="bg-background border border-border rounded-xl p-6">
+            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border">
+              <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10">
+                <Calculator className="w-5 h-5 text-primary" />
               </div>
-
-              {/* Input */}
-              <div className="mb-6">
-                <label className="text-sm text-blue-100 mb-2 block">
-                  Enter your project size
-                </label>
-                <div className="relative">
-                  <Ruler className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300" />
-                  <Input
-                    type="number"
-                    value={sqftInput}
-                    onChange={(e) => setSqftInput(e.target.value)}
-                    className="pl-10 pr-16 h-12 bg-white/10 border-white/20 text-white placeholder:text-blue-200 text-lg font-medium focus:bg-white/15 focus:border-white/40"
-                    placeholder="500"
-                    min="0"
-                  />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-200 text-sm">
-                    sq ft
-                  </span>
-                </div>
+              <div>
+                <h3 className="font-semibold text-foreground">Savings Calculator</h3>
+                <p className="text-xs text-muted-foreground">Enter your project size</p>
               </div>
+            </div>
 
-              {/* Results */}
-              <div className="space-y-4">
-                {/* Your Tier */}
-                <div className="bg-white/10 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm text-blue-100">Your Volume Tier</span>
-                    {calculations.activeTier.discount > 0 && (
-                      <span className="text-xs font-semibold bg-white/20 px-2 py-0.5 rounded">
-                        {calculations.activeTier.discount}% OFF
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xl font-bold">{calculations.activeTier.label}</p>
-                </div>
+            {/* Input */}
+            <div className="mb-6">
+              <label className="text-sm text-muted-foreground mb-2 block">
+                Project Size (sq ft)
+              </label>
+              <div className="relative">
+                <Ruler className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Input
+                  type="number"
+                  value={sqftInput}
+                  onChange={(e) => setSqftInput(e.target.value)}
+                  className="pl-10 pr-16 h-12 text-lg font-medium"
+                  placeholder="500"
+                  min="0"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
+                  sq ft
+                </span>
+              </div>
+            </div>
 
-                {/* Your Price */}
-                <div className="bg-white/10 rounded-lg p-4">
-                  <div className="flex items-center gap-2 mb-1">
-                    <DollarSign className="w-4 h-4 text-blue-200" />
-                    <span className="text-sm text-blue-100">Your Price Per Sq Ft</span>
-                  </div>
-                  <div className="flex items-baseline gap-2">
-                    <p className="text-3xl font-bold">${calculations.discountedPrice.toFixed(2)}</p>
-                    {calculations.activeTier.discount > 0 && (
-                      <span className="text-blue-200 line-through text-lg">
-                        ${BASE_PRICE.toFixed(2)}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Total Savings */}
-                {calculations.totalSavings > 0 && (
-                  <div className="bg-gradient-to-r from-emerald-500/30 to-emerald-600/30 rounded-lg p-4 border border-emerald-400/30">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Sparkles className="w-4 h-4 text-emerald-300" />
-                      <span className="text-sm text-emerald-100">Your Total Savings</span>
-                    </div>
-                    <p className="text-2xl font-bold text-emerald-300">
-                      ${calculations.totalSavings.toFixed(2)}
-                    </p>
-                    <p className="text-xs text-emerald-200/70 mt-1">
-                      on {calculations.sqft.toLocaleString()} sq ft order
-                    </p>
-                  </div>
-                )}
-
-                {/* Estimated Total */}
-                <div className="pt-4 border-t border-white/20">
-                  <div className="flex items-center justify-between">
-                    <span className="text-blue-100">Estimated Total</span>
-                    <span className="text-2xl font-bold">
-                      ${calculations.discountedTotal.toFixed(2)}
+            {/* Results */}
+            <div className="space-y-4">
+              {/* Your Tier */}
+              <div className="bg-secondary/50 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm text-muted-foreground">Your Volume Tier</span>
+                  {calculations.activeTier.discount > 0 && (
+                    <span className="text-xs font-semibold bg-primary/10 text-primary px-2 py-0.5 rounded">
+                      {calculations.activeTier.discount}% OFF
                     </span>
+                  )}
+                </div>
+                <p className="text-lg font-semibold text-foreground">{calculations.activeTier.label}</p>
+              </div>
+
+              {/* Your Price */}
+              <div className="bg-secondary/50 rounded-lg p-4">
+                <div className="flex items-center gap-2 mb-1">
+                  <DollarSign className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">Your Price Per Sq Ft</span>
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <p className="text-2xl font-bold text-foreground">${calculations.discountedPrice.toFixed(2)}</p>
+                  {calculations.activeTier.discount > 0 && (
+                    <span className="text-muted-foreground line-through text-base">
+                      ${BASE_PRICE.toFixed(2)}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Total Savings */}
+              {calculations.totalSavings > 0 && (
+                <div className="bg-success/10 rounded-lg p-4 border border-success/20">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Sparkles className="w-4 h-4 text-success" />
+                    <span className="text-sm text-success">Your Total Savings</span>
                   </div>
+                  <p className="text-2xl font-bold text-success">
+                    ${calculations.totalSavings.toFixed(2)}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    on {calculations.sqft.toLocaleString()} sq ft order
+                  </p>
+                </div>
+              )}
+
+              {/* Estimated Total */}
+              <div className="pt-4 border-t border-border">
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Estimated Total</span>
+                  <span className="text-xl font-bold text-foreground">
+                    ${calculations.discountedTotal.toFixed(2)}
+                  </span>
                 </div>
               </div>
             </div>
