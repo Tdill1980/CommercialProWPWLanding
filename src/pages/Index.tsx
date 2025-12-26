@@ -1,4 +1,4 @@
-import { Building2, Truck, Shield, Clock, ChevronRight, Phone, Mail, Upload, DollarSign, Zap, LayoutDashboard } from "lucide-react";
+import { Truck, Shield, ChevronRight, Phone, Mail, Upload, DollarSign, Zap, LayoutDashboard } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   CommercialInfoStrip,
@@ -7,6 +7,11 @@ import {
   ApproveProPlusSection,
   CommercialFooter,
   TestimonialSection,
+  JacksonQuoteEmbed,
+  ApproveProTeaser,
+  StickyQuoteBar,
+  QuoteWelcomeBanner,
+  ProUpgradeStrip,
 } from "@/components/commercial";
 import { Button } from "@/components/ui/button";
 import heroFleet from "@/assets/hero-fleet.jpg";
@@ -23,6 +28,9 @@ const VALUE_PROPS = [
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      {/* Quote Welcome Banner - shows when coming from WPW with quote_id */}
+      <QuoteWelcomeBanner />
+
       {/* Navigation Header */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-border">
         <div className="max-w-7xl mx-auto px-6">
@@ -71,7 +79,7 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative min-h-[500px] lg:min-h-[550px] overflow-hidden">
+      <section className="relative min-h-[600px] lg:min-h-[700px] overflow-hidden">
         {/* Full-width background image */}
         <div className="absolute inset-0">
           <img 
@@ -80,7 +88,7 @@ const Index = () => {
             className="w-full h-full object-cover object-center"
           />
           {/* Strong gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 via-40% to-slate-950/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 via-40% to-slate-950/40" />
           {/* Image credit caption */}
           <p className="absolute bottom-2 right-4 text-xs text-white/50 italic z-10">
             Image is a fleet done by VikingFleet Prescott, Arizona using WePrintWraps.com for printing.
@@ -88,29 +96,50 @@ const Index = () => {
         </div>
 
         {/* Content overlay */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 lg:py-24">
-          <div className="max-w-2xl">
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] mb-6">
-              Professional Wraps
-              <br />
-              <span className="text-white">Built for Business</span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-8 max-w-xl">
-              Wholesale pricing, volume discounts, and dedicated account support for fleet managers, installers, and commercial buyers.
-            </p>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 lg:py-16">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            {/* Left side - Hero text + value props */}
+            <div className="pt-4">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] mb-4">
+                Professional Wraps
+                <br />
+                <span className="text-white">Built for Business</span>
+              </h1>
+              
+              <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-6 max-w-xl">
+                Built for wrap shops that don't own printers. Wholesale pricing, volume discounts, and 3D proofs that sell jobs.
+              </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="text-base px-8">
-                Request Volume Quote
-                <ChevronRight className="h-5 w-5 ml-2" />
-              </Button>
-              <Button size="lg" variant="outline" className="text-base px-8 bg-white/10 border-white/30 text-white hover:bg-white/20">
-                <Mail className="h-5 w-5 mr-2" />
-                hello@weprintwraps.com
-              </Button>
+              {/* Quick value props */}
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                <div className="flex items-center gap-2 text-white/90">
+                  <Shield className="h-4 w-4 text-primary flex-shrink-0" />
+                  <span className="text-sm">Premium Wrap Guarantee</span>
+                </div>
+                <div className="flex items-center gap-2 text-white/90">
+                  <Zap className="h-4 w-4 text-primary flex-shrink-0" />
+                  <span className="text-sm">1-2 Day Production</span>
+                </div>
+                <div className="flex items-center gap-2 text-white/90">
+                  <DollarSign className="h-4 w-4 text-primary flex-shrink-0" />
+                  <span className="text-sm">From $5.27/sq ft</span>
+                </div>
+                <div className="flex items-center gap-2 text-white/90">
+                  <Truck className="h-4 w-4 text-primary flex-shrink-0" />
+                  <span className="text-sm">3M Premium Materials</span>
+                </div>
+              </div>
             </div>
+
+            {/* Right side - Quote Tool Embed */}
+            <div className="lg:pt-2">
+              <JacksonQuoteEmbed className="shadow-2xl shadow-black/30" />
+            </div>
+          </div>
+
+          {/* ApprovePro Teaser - below quote, still above fold */}
+          <div className="mt-8">
+            <ApproveProTeaser />
           </div>
         </div>
       </section>
@@ -163,6 +192,21 @@ const Index = () => {
         <TestimonialSection />
       </section>
 
+      {/* Pro Upgrade Strip - CommercialPro + RestylePro */}
+      <section className="bg-muted/30 border-y border-border">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          <div className="text-center mb-8">
+            <h2 className="text-xl font-semibold text-foreground mb-2">
+              Upgrade Your Wrap Game
+            </h2>
+            <p className="text-muted-foreground text-sm">
+              Professional tools for wrap shops ready to level up
+            </p>
+          </div>
+          <ProUpgradeStrip />
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="bg-navy">
         <div className="max-w-7xl mx-auto px-6 py-16 lg:py-20">
@@ -191,6 +235,9 @@ const Index = () => {
 
       {/* Footer */}
       <CommercialFooter />
+
+      {/* Sticky Quote Bar - event-driven states */}
+      <StickyQuoteBar />
     </div>
   );
 };
