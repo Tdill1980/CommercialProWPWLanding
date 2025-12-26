@@ -10,3 +10,10 @@ export { ApproveProUploader } from "./ApproveProUploader";
 export { ApproveProDashboard } from "./ApproveProDashboard";
 export { CommercialFooter } from "./CommercialFooter";
 export { TestimonialSection } from "./TestimonialSection";
+
+// New: Quote integration components
+export { JacksonQuoteEmbed } from "./JacksonQuoteEmbed";
+export { ApproveProTeaser } from "./ApproveProTeaser";
+export { StickyQuoteBar } from "./StickyQuoteBar";
+export { QuoteWelcomeBanner } from "./QuoteWelcomeBanner";
+export { ProUpgradeStrip } from "./ProUpgradeStrip";
