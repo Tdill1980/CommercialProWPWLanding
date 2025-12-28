@@ -13,6 +13,7 @@ import {
   QuoteWelcomeBanner,
   ProUpgradeStrip,
   SalesAgentDrawer,
+  VoiceAgentButton,
 } from "@/components/commercial";
 import { Button } from "@/components/ui/button";
 import heroFleet from "@/assets/hero-fleet.jpg";
@@ -66,11 +67,12 @@ const Index = () => {
 
             {/* CTA */}
             <div className="flex items-center gap-4">
+              <VoiceAgentButton className="hidden sm:flex" />
               <SalesAgentDrawer
                 trigger={
                   <button className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
                     <MessageCircle className="h-4 w-4" />
-                    <span>Chat with Sales</span>
+                    <span>Chat</span>
                   </button>
                 }
               />
@@ -241,6 +243,7 @@ const Index = () => {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
+              <VoiceAgentButton variant="hero" />
               <SalesAgentDrawer
                 trigger={
                   <Button size="lg" variant="secondary" className="text-base px-8">
@@ -252,7 +255,7 @@ const Index = () => {
               <Button size="lg" className="text-base px-8 bg-white text-navy hover:bg-white/90" asChild>
                 <a href="mailto:commercial@weprintwraps.com">
                   <Mail className="h-5 w-5 mr-2" />
-                  Email Quote Request
+                  Email Us
                 </a>
               </Button>
             </div>

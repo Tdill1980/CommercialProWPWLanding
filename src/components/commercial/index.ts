@@ -20,3 +20,4 @@ export { ProUpgradeStrip } from "./ProUpgradeStrip";
 
 // New: AI Sales Agent
 export { SalesAgentDrawer } from "./SalesAgentDrawer";
+export { VoiceAgentButton } from "./VoiceAgentButton";
