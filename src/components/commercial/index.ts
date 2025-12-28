@@ -17,3 +17,6 @@ export { ApproveProTeaser } from "./ApproveProTeaser";
 export { StickyQuoteBar } from "./StickyQuoteBar";
 export { QuoteWelcomeBanner } from "./QuoteWelcomeBanner";
 export { ProUpgradeStrip } from "./ProUpgradeStrip";
+
+// New: AI Sales Agent
+export { SalesAgentDrawer } from "./SalesAgentDrawer";
