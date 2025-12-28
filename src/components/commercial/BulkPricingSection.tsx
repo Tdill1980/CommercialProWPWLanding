@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Check, TrendingDown, Calculator, Ruler, DollarSign, Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import premiumGuaranteeBadge from "@/assets/premium-wrap-guarantee-gold.png";
 
 /**
  * BulkPricingSection
@@ -216,11 +217,19 @@ export const BulkPricingSection = () => {
 
             {/* Guarantee */}
             <div className="flex items-start gap-3 bg-secondary/50 rounded-lg p-4 mt-6">
-              <Check className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-foreground">
-                <span className="font-medium">Premium Wrap Guarantee:</span>{" "}
-                <span className="text-muted-foreground">Print flaws reprinted at no cost.</span>
-              </p>
+              <img 
+                src={premiumGuaranteeBadge} 
+                alt="Premium Wrap Guarantee" 
+                className="h-12 w-auto flex-shrink-0"
+              />
+              <div>
+                <p className="text-sm font-medium text-foreground">
+                  Premium Wrap Guarantee
+                </p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Print flaws reprinted at no cost.
+                </p>
+              </div>
             </div>
           </div>
         </div>

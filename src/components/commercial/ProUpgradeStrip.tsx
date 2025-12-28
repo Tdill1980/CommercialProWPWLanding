@@ -1,4 +1,5 @@
-import { Rocket, Sparkles, ChevronRight } from "lucide-react";
+import { Rocket, ChevronRight } from "lucide-react";
+import logoRestylepro from "@/assets/logo-restylepro.png";
 
 // Environment variables for Pro URLs
 const COMMERCIALPRO_URL = import.meta.env.VITE_COMMERCIALPRO_URL || "#";
@@ -64,8 +65,12 @@ export const ProUpgradeStrip = ({
           className={`${cardBgClass} border rounded-lg p-5 transition-colors group`}
         >
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-accent/20 transition-colors">
-              <Sparkles className="h-6 w-6 text-accent" />
+            <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-accent/20 transition-colors overflow-hidden">
+              <img 
+                src={logoRestylepro} 
+                alt="RestylePro" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
