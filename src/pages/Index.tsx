@@ -14,9 +14,12 @@ import {
   ProUpgradeStrip,
   SalesAgentDrawer,
   VoiceAgentButton,
+  TrustLogosStrip,
 } from "@/components/commercial";
 import { Button } from "@/components/ui/button";
 import heroFleet from "@/assets/hero-fleet.jpg";
+import logoWpw from "@/assets/logo-wpw.png";
+import premiumGuaranteeBadge from "@/assets/premium-wrap-guarantee-gold.png";
 
 const VALUE_PROPS = [
   { icon: Shield, label: "Premium Wrap Guarantee", desc: "Print flaws reprinted free" },
@@ -39,10 +42,13 @@ const Index = () => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center gap-8">
-              <a href="/" className="flex items-baseline gap-0.5">
-                <span className="text-xl font-bold text-navy tracking-tight">WPWCommercial</span>
-                <span className="text-xl font-bold text-primary tracking-tight">Pro</span>
-                <span className="text-primary text-xs font-bold ml-0.5">™</span>
+              <a href="/" className="flex items-center gap-2">
+                <img src={logoWpw} alt="WePrintWraps" className="h-8 w-auto" />
+                <div className="flex items-baseline gap-0.5">
+                  <span className="text-lg font-bold text-navy tracking-tight">Commercial</span>
+                  <span className="text-lg font-bold text-primary tracking-tight">Pro</span>
+                  <span className="text-primary text-xs font-bold ml-0.5">™</span>
+                </div>
               </a>
               
               {/* Nav Links */}
@@ -136,6 +142,18 @@ const Index = () => {
                   <span className="text-sm">3M Premium Materials</span>
                 </div>
               </div>
+
+              {/* Premium Wrap Guarantee Badge */}
+              <div className="flex items-center gap-3">
+                <img 
+                  src={premiumGuaranteeBadge} 
+                  alt="Premium Wrap Guarantee" 
+                  className="h-14 w-auto drop-shadow-lg"
+                />
+                <p className="text-xs text-white/70 max-w-[180px]">
+                  Print flaws reprinted at no cost. Quality guaranteed.
+                </p>
+              </div>
             </div>
 
             {/* Right side - Quote Tool Embed */}
@@ -191,6 +209,9 @@ const Index = () => {
         {/* Bottom gradient accent */}
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent" />
       </section>
+
+      {/* Trust Logos Strip - Manufacturer Badges */}
+      <TrustLogosStrip />
 
       {/* Commercial Info Strip */}
       <CommercialInfoStrip />

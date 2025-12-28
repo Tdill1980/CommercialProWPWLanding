@@ -1,6 +1,6 @@
 import { Play, Quote, TrendingUp, Truck, Ruler } from "lucide-react";
 import testimonialGhostIndustries from "@/assets/testimonial-ghost-industries.png";
-import wpwGuarantee from "@/assets/wpw-quality-guarantee.png";
+import premiumGuaranteeBadge from "@/assets/premium-wrap-guarantee-gold.png";
 
 export const TestimonialSection = () => {
   return (
@@ -120,9 +120,9 @@ export const TestimonialSection = () => {
                 
                 {/* WPW Guarantee Badge */}
                 <img 
-                  src={wpwGuarantee} 
-                  alt="WPW Wrap Quality Guarantee" 
-                  className="h-16 w-auto object-contain"
+                  src={premiumGuaranteeBadge} 
+                  alt="Premium Wrap Guarantee" 
+                  className="h-16 w-auto object-contain drop-shadow-lg"
                 />
               </div>
             </div>
