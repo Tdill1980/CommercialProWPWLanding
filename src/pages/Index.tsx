@@ -1,4 +1,4 @@
-import { Truck, Shield, ChevronRight, Phone, Mail, Upload, DollarSign, Zap, LayoutDashboard } from "lucide-react";
+import { Truck, Shield, ChevronRight, Phone, Mail, Upload, DollarSign, Zap, LayoutDashboard, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   CommercialInfoStrip,
@@ -12,6 +12,7 @@ import {
   StickyQuoteBar,
   QuoteWelcomeBanner,
   ProUpgradeStrip,
+  SalesAgentDrawer,
 } from "@/components/commercial";
 import { Button } from "@/components/ui/button";
 import heroFleet from "@/assets/hero-fleet.jpg";
@@ -65,10 +66,14 @@ const Index = () => {
 
             {/* CTA */}
             <div className="flex items-center gap-4">
-              <a href="tel:1-800-example" className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
-                <Phone className="h-4 w-4" />
-                <span>Contact Sales</span>
-              </a>
+              <SalesAgentDrawer
+                trigger={
+                  <button className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    <MessageCircle className="h-4 w-4" />
+                    <span>Chat with Sales</span>
+                  </button>
+                }
+              />
               <Button size="sm" className="font-medium">
                 Get Quote
                 <ChevronRight className="h-4 w-4 ml-1" />
@@ -220,13 +225,19 @@ const Index = () => {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" variant="secondary" className="text-base px-8">
-                <Phone className="h-5 w-5 mr-2" />
-                Call Sales
-              </Button>
-              <Button size="lg" className="text-base px-8 bg-white text-navy hover:bg-white/90">
-                <Mail className="h-5 w-5 mr-2" />
-                Email Quote Request
+              <SalesAgentDrawer
+                trigger={
+                  <Button size="lg" variant="secondary" className="text-base px-8">
+                    <MessageCircle className="h-5 w-5 mr-2" />
+                    Chat with Sales
+                  </Button>
+                }
+              />
+              <Button size="lg" className="text-base px-8 bg-white text-navy hover:bg-white/90" asChild>
+                <a href="mailto:commercial@weprintwraps.com">
+                  <Mail className="h-5 w-5 mr-2" />
+                  Email Quote Request
+                </a>
               </Button>
             </div>
           </div>
