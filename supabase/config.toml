@@ -2,3 +2,6 @@ project_id = "upfeyxviuutacdijxtcj"
 
 [functions.sales-chat]
 verify_jwt = false
+
+[functions.ingest-voice-intent]
+verify_jwt = false

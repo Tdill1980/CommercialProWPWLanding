@@ -1,4 +1,4 @@
-import { Truck, Shield, ChevronRight, Phone, Mail, Upload, DollarSign, Zap, LayoutDashboard, MessageCircle } from "lucide-react";
+import { Truck, Shield, ChevronRight, Phone, Mail, Upload, DollarSign, Zap, LayoutDashboard, MessageCircle, Grid } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   CommercialInfoStrip,
@@ -23,7 +23,7 @@ const VALUE_PROPS = [
   { icon: Upload, label: "Upload & Buy Online", desc: "Easy file submission" },
   { icon: DollarSign, label: "Wholesale Prices", desc: "Commercial rates" },
   { icon: Truck, label: "3M at Lower Prices", desc: "Premium materials, everyday pricing" },
-  { icon: LayoutDashboard, label: "CommercialPro Dashboard", desc: "Dedicated account portal" },
+  { icon: Grid, label: "Command Center", desc: "Quotes • Files • Proofs", link: "/commercial/command-center", badge: "WrapCommand™" },
 ];
 
 const Index = () => {
@@ -155,18 +155,34 @@ const Index = () => {
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent" />
         
         <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {VALUE_PROPS.map(({ icon: Icon, label, desc }) => (
-              <div key={label} className="flex flex-col items-center text-center gap-3 p-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/25">
-                  <Icon className="h-6 w-6 text-white" />
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            {VALUE_PROPS.map(({ icon: Icon, label, desc, link, badge }) => {
+              const content = (
+                <div className={`flex flex-col items-center text-center gap-3 p-4 ${link ? 'cursor-pointer hover:scale-105 transition-transform' : ''}`}>
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/25 relative">
+                    <Icon className="h-6 w-6 text-white" />
+                    {badge && (
+                      <span className="absolute -top-1 -right-1 bg-primary text-[8px] text-primary-foreground px-1.5 py-0.5 rounded-full font-medium">
+                        ★
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-white text-sm leading-tight">{label}</p>
+                    <p className="text-blue-200/70 text-xs mt-1">{desc}</p>
+                    {badge && (
+                      <p className="text-primary text-[10px] mt-1 font-medium">{badge}</p>
+                    )}
+                  </div>
                 </div>
-                <div>
-                  <p className="font-semibold text-white text-sm leading-tight">{label}</p>
-                  <p className="text-blue-200/70 text-xs mt-1">{desc}</p>
-                </div>
-              </div>
-            ))}
+              );
+              
+              return link ? (
+                <Link key={label} to={link}>{content}</Link>
+              ) : (
+                <div key={label}>{content}</div>
+              );
+            })}
           </div>
         </div>
         
