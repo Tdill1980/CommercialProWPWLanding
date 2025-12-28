@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 
 type Message = {
   role: "user" | "assistant";
@@ -6,11 +6,39 @@ type Message = {
 };
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/sales-chat`;
+const EXTRACT_LEAD_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/extract-chat-lead`;
 
 export function useSalesChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const sessionId = useRef(crypto.randomUUID());
+
+  // Extract lead data and send to Luigi when conversation ends
+  const extractAndSendLead = useCallback(async (conversationMessages: Message[]) => {
+    if (conversationMessages.length < 2) return; // Need at least one exchange
+    
+    try {
+      console.log("[useSalesChat] Extracting lead from", conversationMessages.length, "messages");
+      
+      await fetch(EXTRACT_LEAD_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({ 
+          messages: conversationMessages,
+          session_id: sessionId.current
+        }),
+      });
+      
+      console.log("[useSalesChat] Lead extraction request sent");
+    } catch (err) {
+      console.log("[useSalesChat] Lead extraction failed:", err);
+      // Silent fail - don't disrupt user experience
+    }
+  }, []);
 
   const sendMessage = useCallback(async (input: string) => {
     const userMsg: Message = { role: "user", content: input };
@@ -120,9 +148,16 @@ export function useSalesChat() {
   }, [messages]);
 
   const clearChat = useCallback(() => {
+    // Extract lead before clearing (in background)
+    if (messages.length >= 2) {
+      extractAndSendLead(messages);
+    }
+    
+    // Reset for new conversation
     setMessages([]);
     setError(null);
-  }, []);
+    sessionId.current = crypto.randomUUID();
+  }, [messages, extractAndSendLead]);
 
   return { messages, isLoading, error, sendMessage, clearChat };
 }
