@@ -173,19 +173,21 @@ For confidence, rate 0.0-1.0 based on how clear their intent was.`;
 
     console.log("[extract-chat-lead] Extracted lead:", luigiPayload);
 
-    // Persist to leads_inbox (optional)
+    // Persist to leads_inbox
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
+    let leadId: string | null = null;
+
     if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
       try {
-        await fetch(`${SUPABASE_URL}/rest/v1/leads_inbox`, {
+        const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/leads_inbox`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             apikey: SUPABASE_SERVICE_ROLE_KEY,
             Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-            Prefer: "return=minimal",
+            Prefer: "return=representation",
           },
           body: JSON.stringify({
             source: "chat",
@@ -201,9 +203,38 @@ For confidence, rate 0.0-1.0 based on how clear their intent was.`;
             next_action: action,
           }),
         });
-        console.log("[extract-chat-lead] Saved to leads_inbox");
+        
+        if (insertRes.ok) {
+          const inserted = await insertRes.json();
+          leadId = inserted[0]?.id;
+          console.log("[extract-chat-lead] Lead created:", leadId);
+        }
       } catch (err) {
         console.log("[extract-chat-lead] leads_inbox insert failed:", err);
+      }
+
+      // Trigger MightyMail follow-up if we have an email and it's a follow-up action
+      if (leadId && extractedData.contact?.email && 
+          (action === "send_quote_followup" || action === "send_pricing_explainer")) {
+        try {
+          const followupRes = await fetch(`${SUPABASE_URL}/functions/v1/mightymail-followup`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+            },
+            body: JSON.stringify({
+              lead_id: leadId,
+              to_email: extractedData.contact.email,
+              to_name: extractedData.contact.name,
+              intent: extractedData.intent,
+              summary: extractedData.summary,
+            }),
+          });
+          console.log("[extract-chat-lead] MightyMail triggered:", followupRes.status);
+        } catch (err) {
+          console.log("[extract-chat-lead] MightyMail failed:", err);
+        }
       }
     }
 
@@ -219,7 +250,7 @@ For confidence, rate 0.0-1.0 based on how clear their intent was.`;
             "Content-Type": "application/json",
             ...(LUIGI_INGEST_SECRET ? { "x-luigi-secret": LUIGI_INGEST_SECRET } : {}),
           },
-          body: JSON.stringify(luigiPayload),
+          body: JSON.stringify({ ...luigiPayload, lead_id: leadId }),
         });
         console.log("[extract-chat-lead] Luigi handoff status:", luigiRes.status);
       } catch (err) {
@@ -228,7 +259,7 @@ For confidence, rate 0.0-1.0 based on how clear their intent was.`;
     }
 
     return new Response(
-      JSON.stringify({ ok: true, lead: luigiPayload, action }),
+      JSON.stringify({ ok: true, lead: luigiPayload, action, lead_id: leadId }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {

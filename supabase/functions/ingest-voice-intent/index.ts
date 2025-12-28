@@ -102,9 +102,11 @@ serve(async (req) => {
     action,
   });
 
-  // Persist call to leads_inbox (optional - table may not exist yet)
+  // Persist call to leads_inbox
   const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
   const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+
+  let leadId: string | null = null;
 
   if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
     try {
@@ -114,7 +116,7 @@ serve(async (req) => {
           "Content-Type": "application/json",
           apikey: SUPABASE_SERVICE_ROLE_KEY,
           Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-          Prefer: "return=minimal",
+          Prefer: "return=representation",
         },
         body: JSON.stringify({
           source: "phone",
@@ -130,10 +132,40 @@ serve(async (req) => {
           next_action: action,
         }),
       });
-      console.log("[ingest-voice-intent] leads_inbox insert status:", insertRes.status);
+      
+      if (insertRes.ok) {
+        const inserted = await insertRes.json();
+        leadId = inserted[0]?.id;
+        console.log("[ingest-voice-intent] Lead created:", leadId);
+      } else {
+        console.log("[ingest-voice-intent] leads_inbox insert failed:", insertRes.status);
+      }
     } catch (err) {
-      console.log("[ingest-voice-intent] leads_inbox insert failed (table may not exist):", err);
-      // Do not fail the webhook if storage fails
+      console.log("[ingest-voice-intent] leads_inbox insert error:", err);
+    }
+
+    // Trigger MightyMail follow-up if we have an email and it's a follow-up action
+    if (leadId && payload.caller?.email && 
+        (action === "send_quote_followup" || action === "send_pricing_explainer")) {
+      try {
+        const followupRes = await fetch(`${SUPABASE_URL}/functions/v1/mightymail-followup`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+          },
+          body: JSON.stringify({
+            lead_id: leadId,
+            to_email: payload.caller.email,
+            to_name: payload.caller.name,
+            intent: payload.intent,
+            summary: payload.summary,
+          }),
+        });
+        console.log("[ingest-voice-intent] MightyMail triggered:", followupRes.status);
+      } catch (err) {
+        console.log("[ingest-voice-intent] MightyMail failed:", err);
+      }
     }
   }
 
@@ -153,16 +185,16 @@ serve(async (req) => {
           source: "commercialpro_phone",
           action,
           payload,
+          lead_id: leadId,
         }),
       });
       console.log("[ingest-voice-intent] Luigi handoff status:", luigiRes.status);
     } catch (err) {
       console.log("[ingest-voice-intent] Luigi handoff failed:", err);
-      // Still return OK so the voice provider doesn't retry forever
     }
   } else {
     console.log("[ingest-voice-intent] LUIGI_INGEST_URL not set, skipping handoff");
   }
 
-  return json({ ok: true, routed_action: action });
+  return json({ ok: true, routed_action: action, lead_id: leadId });
 });
