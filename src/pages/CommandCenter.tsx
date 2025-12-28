@@ -1,45 +1,148 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Phone, FileText, FolderOpen, RotateCcw, Palette, Users, ChevronRight, Sparkles } from "lucide-react";
+import { ArrowLeft, Phone, FileText, FolderOpen, RotateCcw, Palette, Users, ChevronRight, Sparkles, MessageCircle, Loader2, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
-// Placeholder panels - will be replaced with real data from WrapCommandAI APIs
-const RecentLeadsPanel = () => (
-  <Card>
-    <CardHeader className="pb-3">
-      <CardTitle className="flex items-center gap-2 text-base">
-        <Phone className="h-4 w-4 text-primary" />
-        Recent Leads
-      </CardTitle>
-      <CardDescription>Phone calls & chat inquiries</CardDescription>
-    </CardHeader>
-    <CardContent className="space-y-3">
-      <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-        <div>
-          <p className="font-medium text-sm">Fleet Quote Request</p>
-          <p className="text-xs text-muted-foreground">via Phone • 2 hours ago</p>
-        </div>
-        <Badge variant="secondary" className="text-xs">Pending</Badge>
-      </div>
-      <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-        <div>
-          <p className="font-medium text-sm">Pricing Question</p>
-          <p className="text-xs text-muted-foreground">via Chat • 5 hours ago</p>
-        </div>
-        <Badge variant="outline" className="text-xs">Followed Up</Badge>
-      </div>
-      <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-        <div>
-          <p className="font-medium text-sm">Reorder Inquiry</p>
-          <p className="text-xs text-muted-foreground">via Phone • Yesterday</p>
-        </div>
-        <Badge className="text-xs bg-green-600">Converted</Badge>
-      </div>
-    </CardContent>
-  </Card>
-);
+interface Lead {
+  id: string;
+  source: string;
+  intent: string;
+  caller_name: string | null;
+  caller_company: string | null;
+  summary: string | null;
+  status: string;
+  created_at: string;
+}
 
+// Real data panel - fetches from leads_inbox
+const RecentLeadsPanel = ({ leads, isLoading }: { leads: Lead[]; isLoading: boolean }) => {
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case "new":
+        return <Badge variant="secondary" className="text-xs">New</Badge>;
+      case "followup_sent":
+        return <Badge variant="outline" className="text-xs text-green-600 border-green-600">Followed Up</Badge>;
+      case "human_review":
+        return <Badge variant="destructive" className="text-xs">Review</Badge>;
+      case "converted":
+        return <Badge className="text-xs bg-green-600">Converted</Badge>;
+      case "closed":
+        return <Badge variant="outline" className="text-xs">Closed</Badge>;
+      default:
+        return <Badge variant="secondary" className="text-xs">{status}</Badge>;
+    }
+  };
+
+  const getIntentLabel = (intent: string) => {
+    switch (intent) {
+      case "quote_request":
+        return "Quote Request";
+      case "pricing_question":
+        return "Pricing Question";
+      case "reorder":
+        return "Reorder";
+      case "info_only":
+        return "Info Request";
+      default:
+        return "Inquiry";
+    }
+  };
+
+  const getTimeAgo = (dateStr: string) => {
+    const date = new Date(dateStr);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 60) return `${diffMins}m ago`;
+    if (diffHours < 24) return `${diffHours}h ago`;
+    if (diffDays === 1) return "Yesterday";
+    return `${diffDays}d ago`;
+  };
+
+  return (
+    <Card>
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center gap-2 text-base">
+          <Phone className="h-4 w-4 text-primary" />
+          Recent Leads
+        </CardTitle>
+        <CardDescription>Phone calls & chat inquiries</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        {isLoading ? (
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+          </div>
+        ) : leads.length === 0 ? (
+          <div className="text-center py-8 text-muted-foreground">
+            <MessageCircle className="h-8 w-8 mx-auto mb-2 opacity-50" />
+            <p className="text-sm">No leads yet</p>
+            <p className="text-xs">Leads from phone calls and chats will appear here</p>
+          </div>
+        ) : (
+          leads.slice(0, 5).map((lead) => (
+            <div key={lead.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-sm truncate">
+                  {lead.caller_name || lead.caller_company || getIntentLabel(lead.intent)}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  via {lead.source === "phone" ? "Phone" : "Chat"} • {getTimeAgo(lead.created_at)}
+                </p>
+                {lead.summary && (
+                  <p className="text-xs text-muted-foreground truncate mt-1">{lead.summary}</p>
+                )}
+              </div>
+              {getStatusBadge(lead.status)}
+            </div>
+          ))
+        )}
+      </CardContent>
+    </Card>
+  );
+};
+
+// Lead stats summary
+const LeadStatsPanel = ({ leads }: { leads: Lead[] }) => {
+  const newLeads = leads.filter(l => l.status === "new").length;
+  const followedUp = leads.filter(l => l.status === "followup_sent").length;
+  const needsReview = leads.filter(l => l.status === "human_review").length;
+
+  return (
+    <Card>
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center gap-2 text-base">
+          <Users className="h-4 w-4 text-primary" />
+          Lead Stats (This Week)
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-3 gap-4 text-center">
+          <div>
+            <p className="text-2xl font-bold text-foreground">{leads.length}</p>
+            <p className="text-xs text-muted-foreground">Total</p>
+          </div>
+          <div>
+            <p className="text-2xl font-bold text-green-600">{followedUp}</p>
+            <p className="text-xs text-muted-foreground">Followed Up</p>
+          </div>
+          <div>
+            <p className="text-2xl font-bold text-amber-600">{needsReview + newLeads}</p>
+            <p className="text-xs text-muted-foreground">Pending</p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+// Placeholder panels (to be wired later)
 const SavedQuotesPanel = () => (
   <Card>
     <CardHeader className="pb-3">
@@ -49,27 +152,11 @@ const SavedQuotesPanel = () => (
       </CardTitle>
       <CardDescription>Your recent quote history</CardDescription>
     </CardHeader>
-    <CardContent className="space-y-3">
-      <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-        <div>
-          <p className="font-medium text-sm">Ford Transit - 800 sq ft</p>
-          <p className="text-xs text-muted-foreground">$4,216 • Dec 26</p>
-        </div>
-        <Button size="sm" variant="outline" className="text-xs h-7">View</Button>
-      </div>
-      <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-        <div>
-          <p className="font-medium text-sm">Sprinter Fleet (x5)</p>
-          <p className="text-xs text-muted-foreground">$18,750 • Dec 24</p>
-        </div>
-        <Button size="sm" variant="outline" className="text-xs h-7">View</Button>
-      </div>
-      <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-        <div>
-          <p className="font-medium text-sm">Box Truck - 1200 sq ft</p>
-          <p className="text-xs text-muted-foreground">$6,324 • Dec 20</p>
-        </div>
-        <Button size="sm" variant="outline" className="text-xs h-7">View</Button>
+    <CardContent>
+      <div className="text-center py-6 text-muted-foreground">
+        <FileText className="h-8 w-8 mx-auto mb-2 opacity-50" />
+        <p className="text-sm">Coming soon</p>
+        <p className="text-xs">Quote history will sync from WPW</p>
       </div>
     </CardContent>
   </Card>
@@ -84,26 +171,11 @@ const WrapBoxPanel = () => (
       </CardTitle>
       <CardDescription>Past WPW orders & artwork</CardDescription>
     </CardHeader>
-    <CardContent className="space-y-3">
-      <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-        <div>
-          <p className="font-medium text-sm">Viking Fleet - Transit</p>
-          <p className="text-xs text-muted-foreground">Completed Dec 15</p>
-        </div>
-        <Button size="sm" variant="ghost" className="text-xs h-7">
-          <RotateCcw className="h-3 w-3 mr-1" />
-          Reorder
-        </Button>
-      </div>
-      <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-        <div>
-          <p className="font-medium text-sm">Ghost Industries - Sprinter</p>
-          <p className="text-xs text-muted-foreground">Completed Dec 10</p>
-        </div>
-        <Button size="sm" variant="ghost" className="text-xs h-7">
-          <RotateCcw className="h-3 w-3 mr-1" />
-          Reorder
-        </Button>
+    <CardContent>
+      <div className="text-center py-6 text-muted-foreground">
+        <FolderOpen className="h-8 w-8 mx-auto mb-2 opacity-50" />
+        <p className="text-sm">Coming soon</p>
+        <p className="text-xs">Past orders will sync from WPW</p>
       </div>
     </CardContent>
   </Card>
@@ -118,54 +190,45 @@ const ApproveProStatusPanel = () => (
       </CardTitle>
       <CardDescription>3D proof generation queue</CardDescription>
     </CardHeader>
-    <CardContent className="space-y-3">
-      <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-        <div>
-          <p className="font-medium text-sm">Transit Full Wrap</p>
-          <p className="text-xs text-muted-foreground">In Progress</p>
-        </div>
-        <Badge variant="secondary" className="text-xs animate-pulse">Rendering</Badge>
-      </div>
-      <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-        <div>
-          <p className="font-medium text-sm">Sprinter Partial</p>
-          <p className="text-xs text-muted-foreground">Awaiting Files</p>
-        </div>
-        <Badge variant="outline" className="text-xs">Upload Art</Badge>
-      </div>
-    </CardContent>
-  </Card>
-);
-
-const AffiliateStatsPanel = () => (
-  <Card>
-    <CardHeader className="pb-3">
-      <CardTitle className="flex items-center gap-2 text-base">
-        <Users className="h-4 w-4 text-primary" />
-        MightyAffiliate Stats
-      </CardTitle>
-      <CardDescription>Your referral performance</CardDescription>
-    </CardHeader>
     <CardContent>
-      <div className="grid grid-cols-3 gap-4 text-center">
-        <div>
-          <p className="text-2xl font-bold text-foreground">12</p>
-          <p className="text-xs text-muted-foreground">Referrals</p>
-        </div>
-        <div>
-          <p className="text-2xl font-bold text-green-600">$1,840</p>
-          <p className="text-xs text-muted-foreground">Earned</p>
-        </div>
-        <div>
-          <p className="text-2xl font-bold text-foreground">3</p>
-          <p className="text-xs text-muted-foreground">Pending</p>
-        </div>
+      <div className="text-center py-6 text-muted-foreground">
+        <Palette className="h-8 w-8 mx-auto mb-2 opacity-50" />
+        <p className="text-sm">No active proofs</p>
+        <p className="text-xs">3D proof status will appear here</p>
       </div>
     </CardContent>
   </Card>
 );
 
 const CommandCenter = () => {
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchLeads = async () => {
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from("leads_inbox")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(20);
+
+      if (error) {
+        console.error("Error fetching leads:", error);
+      } else {
+        setLeads((data as Lead[]) || []);
+      }
+    } catch (err) {
+      console.error("Failed to fetch leads:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchLeads();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -185,6 +248,10 @@ const CommandCenter = () => {
                 </Badge>
               </div>
             </div>
+            <Button variant="ghost" size="sm" onClick={fetchLeads} disabled={isLoading}>
+              <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+              Refresh
+            </Button>
           </div>
         </div>
       </header>
@@ -201,11 +268,11 @@ const CommandCenter = () => {
 
         {/* Dashboard Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          <RecentLeadsPanel />
+          <RecentLeadsPanel leads={leads} isLoading={isLoading} />
+          <LeadStatsPanel leads={leads} />
           <SavedQuotesPanel />
           <WrapBoxPanel />
           <ApproveProStatusPanel />
-          <AffiliateStatsPanel />
           
           {/* Quick Actions */}
           <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
@@ -216,13 +283,17 @@ const CommandCenter = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <Button variant="outline" className="w-full justify-start text-sm h-9">
-                <FileText className="h-4 w-4 mr-2" />
-                New Quote
+              <Button variant="outline" className="w-full justify-start text-sm h-9" asChild>
+                <Link to="/#pricing">
+                  <FileText className="h-4 w-4 mr-2" />
+                  New Quote
+                </Link>
               </Button>
-              <Button variant="outline" className="w-full justify-start text-sm h-9">
-                <Palette className="h-4 w-4 mr-2" />
-                Request 3D Proof
+              <Button variant="outline" className="w-full justify-start text-sm h-9" asChild>
+                <Link to="/approvepro">
+                  <Palette className="h-4 w-4 mr-2" />
+                  Request 3D Proof
+                </Link>
               </Button>
               <Button variant="outline" className="w-full justify-start text-sm h-9">
                 <RotateCcw className="h-4 w-4 mr-2" />
