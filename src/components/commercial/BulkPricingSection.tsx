@@ -29,15 +29,20 @@ export const BulkPricingSection = () => {
     const activeTier = VOLUME_TIERS.find(
       (tier) => sqft >= tier.minSqFt && sqft <= tier.maxSqFt
     ) || VOLUME_TIERS[0];
-    
+
     const discountedPrice = BASE_PRICE * (1 - activeTier.discount / 100);
     const baseTotal = sqft * BASE_PRICE;
     const discountedTotal = sqft * discountedPrice;
     const totalSavings = baseTotal - discountedTotal;
 
+    const nextTier = VOLUME_TIERS.find((tier) => tier.minSqFt > sqft);
+    const sqftToNextTier = nextTier ? Math.ceil(nextTier.minSqFt - sqft) : 0;
+
     return {
       sqft,
       activeTier,
+      nextTier,
+      sqftToNextTier,
       discountedPrice,
       baseTotal,
       discountedTotal,
@@ -45,21 +50,36 @@ export const BulkPricingSection = () => {
     };
   }, [sqftInput]);
 
+  const bestTier = VOLUME_TIERS[VOLUME_TIERS.length - 1];
+  const bestPrice = BASE_PRICE * (1 - bestTier.discount / 100);
+
   return (
-    <section className="w-full bg-card py-16">
+    <section className="w-full bg-gradient-to-b from-secondary/60 via-card to-card py-20 border-y border-border">
       <div className="max-w-4xl mx-auto px-6">
         {/* Header */}
-        <div className="text-center mb-8">
-          <span className="inline-block text-xs font-medium tracking-widest uppercase text-primary mb-3">
+        <div className="text-center mb-10">
+          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-3">
             Volume Discounts
           </span>
-          <h2 className="text-3xl font-semibold text-foreground mb-2">
+          <h2 className="text-4xl md:text-5xl font-black text-foreground tracking-tight mb-3">
             Save up to 20% on bulk orders
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Transparent volume discounts. No quote required to see your savings.
           </p>
+          <div className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mt-5 rounded-full border border-border bg-background px-5 py-2.5">
+            <span className="text-sm text-muted-foreground">
+              Base <span className="font-semibold text-foreground">${BASE_PRICE.toFixed(2)}</span>/sq ft
+            </span>
+            <span className="text-muted-foreground/40">→</span>
+            <span className="text-sm text-muted-foreground">
+              As low as{" "}
+              <span className="text-lg font-bold text-success">${bestPrice.toFixed(2)}</span>/sq ft
+              <span className="ml-1">at {bestTier.label.toLowerCase()}</span>
+            </span>
+          </div>
         </div>
+
 
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-2 gap-6">
