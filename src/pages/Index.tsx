@@ -1,4 +1,4 @@
-import { Truck, Shield, ChevronRight, Phone, Mail, Upload, DollarSign, Zap, LayoutDashboard, MessageCircle, Grid } from "lucide-react";
+import { Truck, Shield, ChevronRight, Phone, Mail, Upload, DollarSign, Zap, LayoutDashboard, MessageCircle, Grid, TrendingDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   CommercialInfoStrip,
@@ -56,9 +56,10 @@ const Index = () => {
                 <a href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                   Pricing
                 </a>
-                <a href="#volume" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                  Volume Discounts
+                <a href="#volume" className="text-sm font-semibold text-primary hover:text-primary/80 transition-colors">
+                  Volume Pricing
                 </a>
+
                 <Link to="/approvepro" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                   ApprovePro
                 </Link>
@@ -119,9 +120,19 @@ const Index = () => {
                 <span className="text-white">Built for Business</span>
               </h1>
               
-              <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-6 max-w-xl">
+              <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-5 max-w-xl">
                 Built for wrap shops that don't own printers. Wholesale pricing, volume discounts, and 3D proofs that sell jobs.
               </p>
+
+              {/* Bulk pricing hook */}
+              <a
+                href="#volume"
+                className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/15 px-4 py-2 mb-6 text-sm font-semibold text-white hover:bg-primary/25 transition-colors"
+              >
+                <TrendingDown className="h-4 w-4 text-primary" />
+                Save up to 20% on volume orders
+                <ChevronRight className="h-4 w-4 opacity-70" />
+              </a>
 
               {/* Quick value props */}
               <div className="grid grid-cols-2 gap-3 mb-6">
@@ -135,13 +146,14 @@ const Index = () => {
                 </div>
                 <div className="flex items-center gap-2 text-white/90">
                   <DollarSign className="h-4 w-4 text-primary flex-shrink-0" />
-                  <span className="text-sm">From $5.27/sq ft</span>
+                  <span className="text-sm">From $4.22/sq ft at 2,500+ sq ft</span>
                 </div>
                 <div className="flex items-center gap-2 text-white/90">
                   <Truck className="h-4 w-4 text-primary flex-shrink-0" />
                   <span className="text-sm">3M Premium Materials</span>
                 </div>
               </div>
+
 
               {/* Premium Wrap Guarantee Badge */}
               <div className="flex items-center gap-3">
@@ -216,15 +228,16 @@ const Index = () => {
       {/* Commercial Info Strip */}
       <CommercialInfoStrip />
 
+      {/* Volume Pricing Section - lead pricing content */}
+      <section id="volume" className="scroll-mt-20">
+        <BulkPricingSection />
+      </section>
+
       {/* Pricing Section */}
       <section id="pricing" className="scroll-mt-20">
         <PricingUpdateExplainer />
       </section>
 
-      {/* Volume Pricing Section */}
-      <section id="volume" className="scroll-mt-20">
-        <BulkPricingSection />
-      </section>
 
       {/* 3D Proofing Section */}
       <section id="proofing" className="scroll-mt-20">
