@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Check, TrendingDown, Calculator, Ruler, DollarSign, Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { RewardsCallout } from "./RewardsCallout";
 import premiumGuaranteeBadge from "@/assets/premium-wrap-guarantee-gold.png";
 
 /**
@@ -273,6 +274,9 @@ export const BulkPricingSection = () => {
             </div>
           </div>
         </div>
+
+        {/* Rewards (WP Rewards via live WooCommerce) */}
+        <RewardsCallout orderTotal={calculations.discountedTotal} />
 
         {/* Disclaimer */}
         <p className="text-center text-xs text-muted-foreground/70 mt-6">
