@@ -215,18 +215,18 @@ export const BulkPricingSection = () => {
                 Volume Tiers
               </p>
 
-              {VOLUME_TIERS.filter(t => t.discount > 0).map((tier, index) => {
+              {VOLUME_TIERS.map((tier, index) => {
                 const discountedPrice = BASE_PRICE * (1 - tier.discount / 100);
                 const isActive = calculations.activeTier.label === tier.label;
-                
+
                 return (
                   <div
                     key={tier.label}
                     className={`flex items-center justify-between py-3 px-3 -mx-3 rounded-lg transition-colors ${
-                      isActive 
-                        ? "bg-primary/10 border border-primary/20" 
-                        : index < VOLUME_TIERS.filter(t => t.discount > 0).length - 1 
-                          ? "border-b border-border/50" 
+                      isActive
+                        ? "bg-primary/10 border border-primary/20"
+                        : index < VOLUME_TIERS.length - 1
+                          ? "border-b border-border/50"
                           : ""
                     }`}
                   >
@@ -243,7 +243,7 @@ export const BulkPricingSection = () => {
                     </div>
                     <div className="flex items-center gap-4">
                       <span className={`text-sm font-medium ${isActive ? "text-primary" : "text-muted-foreground"}`}>
-                        {tier.discount}% off
+                        {tier.discount > 0 ? `${tier.discount}% off` : "—"}
                       </span>
                       <span className={`text-sm font-semibold ${isActive ? "text-foreground" : "text-muted-foreground"}`}>
                         ${discountedPrice.toFixed(2)}/sq ft
@@ -252,6 +252,7 @@ export const BulkPricingSection = () => {
                   </div>
                 );
               })}
+
             </div>
 
             {/* Guarantee */}
