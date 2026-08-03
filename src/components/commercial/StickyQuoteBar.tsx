@@ -73,8 +73,9 @@ export const StickyQuoteBar = ({ className = "" }: StickyQuoteBarProps) => {
                   Get instant price in 60 seconds
                 </p>
                 <p className="text-xs text-muted-foreground hidden sm:block">
-                  No account required • Wholesale pricing included
+                  No account required • Volume discounts up to 20% applied automatically
                 </p>
+
               </div>
             </div>
             <Button onClick={scrollToQuote} size="sm" className="font-medium">
