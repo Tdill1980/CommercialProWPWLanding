@@ -275,6 +275,9 @@ export const BulkPricingSection = () => {
           </div>
         </div>
 
+        {/* Rewards (WP Rewards via live WooCommerce) */}
+        <RewardsCallout orderTotal={calculations.discountedTotal} />
+
         {/* Disclaimer */}
         <p className="text-center text-xs text-muted-foreground/70 mt-6">
           This calculator is for estimation only. Final pricing confirmed at checkout or via{" "}
