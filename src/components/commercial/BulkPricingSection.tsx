@@ -163,6 +163,24 @@ export const BulkPricingSection = () => {
                 </div>
               )}
 
+              {/* Next Tier Nudge */}
+              {calculations.nextTier && calculations.sqft > 0 && (
+                <div className="flex items-start gap-2 rounded-lg border border-primary/20 bg-primary/5 p-3">
+                  <TrendingDown className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-foreground">
+                    Add{" "}
+                    <span className="font-semibold">
+                      {calculations.sqftToNextTier.toLocaleString()} sq ft
+                    </span>{" "}
+                    to unlock{" "}
+                    <span className="font-semibold text-primary">
+                      {calculations.nextTier.discount}% off
+                    </span>{" "}
+                    at ${(BASE_PRICE * (1 - calculations.nextTier.discount / 100)).toFixed(2)}/sq ft
+                  </p>
+                </div>
+              )}
+
               {/* Estimated Total */}
               <div className="pt-4 border-t border-border">
                 <div className="flex items-center justify-between">
@@ -172,6 +190,7 @@ export const BulkPricingSection = () => {
                   </span>
                 </div>
               </div>
+
             </div>
           </div>
 
