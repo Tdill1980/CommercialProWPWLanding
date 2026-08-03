@@ -24,3 +24,6 @@ export { VoiceAgentButton } from "./VoiceAgentButton";
 
 // New: Trust Logos Strip
 export { TrustLogosStrip } from "./TrustLogosStrip";
+
+// New: WooCommerce + WP Rewards
+export { RewardsCallout } from "./RewardsCallout";
