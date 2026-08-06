@@ -8,6 +8,7 @@ import ApprovePro from "./pages/ApprovePro";
 import WallWraps from "./pages/WallWraps";
 import CommandCenter from "./pages/CommandCenter";
 import WooDiagnostics from "./pages/WooDiagnostics";
+import EmbedCommercial from "./pages/EmbedCommercial";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/wall-wraps" element={<WallWraps />} />
           <Route path="/commercial/command-center" element={<CommandCenter />} />
           <Route path="/admin/woo-diagnostics" element={<WooDiagnostics />} />
+          <Route path="/embed/commercial" element={<EmbedCommercial />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
