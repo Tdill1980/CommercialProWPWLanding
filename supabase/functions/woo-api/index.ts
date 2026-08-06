@@ -376,18 +376,23 @@ Deno.serve(async (req) => {
           for (const path of ['/settings', '/config', '/rules', '/points']) {
             const r = await wp(ns, path);
             attempts.push({ namespace: `${ns}${path}`, status: r.status });
-            if (r.ok) return json({ namespace: ns, path, config: r.data });
+            if (r.ok) return json({ source: 'rewards_plugin', namespace: ns, path, config: r.data });
           }
         }
-        return json(
-          {
-            error: 'rewards_namespace_not_found',
-            message:
-              'No WP Rewards REST namespace responded. Set WP_REWARDS_NAMESPACE to the plugin namespace shown at /wp-json.',
-            attempts,
+        // Fallback: no rewards REST namespace — serve the store-level defaults so
+        // the UI can still show earn rate and eligibility from WooCommerce data.
+        return json({
+          source: 'woocommerce_fallback',
+          degraded: true,
+          message:
+            'No WP Rewards REST namespace responded; using WooCommerce customer data and configured defaults.',
+          config: {
+            points_per_currency: FALLBACK_POINTS_PER_DOLLAR,
+            redeem_value_per_point: FALLBACK_REDEEM_VALUE,
+            eligibility_min_spend: FALLBACK_ELIGIBILITY_MIN_SPEND,
           },
-          404,
-        );
+          attempts,
+        });
       }
 
       case 'rewards_balance': {
@@ -403,19 +408,32 @@ Deno.serve(async (req) => {
               query: { email, customer_id: customerId, user_id: customerId },
             });
             attempts.push({ endpoint: `${ns}${path}`, status: r.status });
-            if (r.ok) return json({ namespace: ns, path, rewards: r.data });
+            if (r.ok) return json({ source: 'rewards_plugin', namespace: ns, path, rewards: r.data });
           }
         }
-        return json(
-          {
-            error: 'rewards_lookup_failed',
-            message:
-              'Could not read a points balance. Confirm the WP Rewards plugin exposes REST routes and set WP_REWARDS_NAMESPACE.',
-            attempts,
-          },
-          404,
-        );
+
+        // ---- Fallback: read points / eligibility from WooCommerce customer meta ----
+        const fb = await rewardsFromWooCustomer({ email, customerId });
+        if (fb.error) {
+          return json(
+            {
+              error: 'rewards_lookup_failed',
+              message: fb.error,
+              attempts,
+            },
+            fb.status ?? 404,
+          );
+        }
+        return json({
+          source: 'woocommerce_fallback',
+          degraded: true,
+          message:
+            'WP Rewards REST namespace unavailable — points and eligibility derived from WooCommerce customer data.',
+          rewards: fb.rewards,
+          attempts,
+        });
       }
+
 
       case 'raw': {
         const namespace = String(payload.namespace ?? '');
