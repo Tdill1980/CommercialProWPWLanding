@@ -50,6 +50,111 @@ const REWARDS_CANDIDATES = REWARDS_NS_ENV
   ? [REWARDS_NS_ENV]
   : ['wlr/v2', 'wp-rewards/v1', 'wprewards/v1', 'points-rewards/v1', 'sumo-reward-points/v1'];
 
+// ---- Fallback rewards settings (used when no rewards REST namespace exists) ----
+const num = (v: string | undefined, d: number) => {
+  const n = Number(v);
+  return Number.isFinite(n) && n > 0 ? n : d;
+};
+const FALLBACK_POINTS_PER_DOLLAR = num(Deno.env.get('WP_REWARDS_POINTS_PER_DOLLAR'), 1);
+const FALLBACK_REDEEM_VALUE = num(Deno.env.get('WP_REWARDS_REDEEM_VALUE'), 0.01);
+const FALLBACK_ELIGIBILITY_MIN_SPEND = num(Deno.env.get('WP_REWARDS_MIN_SPEND'), 0);
+
+// Meta keys used by the common WordPress rewards plugins to store balances.
+const POINTS_META_KEYS = [
+  '_wlr_points',
+  'wlr_points',
+  '_wc_points_balance',
+  'wc_points_balance',
+  '_points_balance',
+  'points_balance',
+  '_rs_points',
+  'reward_points',
+  '_reward_points',
+  'sumo_available_points',
+  '_sumo_available_points',
+];
+
+function pointsFromMeta(meta: Array<{ key?: string; value?: unknown }> | undefined) {
+  if (!Array.isArray(meta)) return null;
+  for (const key of POINTS_META_KEYS) {
+    const hit = meta.find((m) => m?.key === key);
+    if (hit === undefined) continue;
+    const n = Number(typeof hit.value === 'object' ? JSON.stringify(hit.value) : hit.value);
+    if (Number.isFinite(n)) return n;
+  }
+  // Last resort: any meta key that mentions points and holds a number.
+  const loose = meta.find(
+    (m) => typeof m?.key === 'string' && /point/i.test(m.key) && Number.isFinite(Number(m.value)),
+  );
+  return loose ? Number(loose.value) : null;
+}
+
+/**
+ * Derives a points balance and eligibility from WooCommerce customer data when the
+ * rewards plugin exposes no REST routes. Points come from customer meta when present,
+ * otherwise they are estimated from lifetime spend at the configured earn rate.
+ */
+async function rewardsFromWooCustomer({ email, customerId }: { email: string; customerId: string }) {
+  let customer: any = null;
+
+  if (customerId) {
+    const r = await wp('wc/v3', `/customers/${customerId}`);
+    if (r.ok) customer = r.data;
+    else if (r.status === 401 || r.status === 403)
+      return { error: 'WooCommerce returned 401/403 — the REST key lacks permission, or a WAF/Cloudflare rule is blocking the request. See /admin/woo-diagnostics.', status: r.status };
+  }
+
+  if (!customer && email) {
+    const r = await wp('wc/v3', '/customers', { query: { email, per_page: '1', role: 'all' } });
+    if (!r.ok) {
+      if (r.status === 401 || r.status === 403)
+        return { error: 'WooCommerce returned 401/403 — the REST key lacks permission, or a WAF/Cloudflare rule is blocking the request. See /admin/woo-diagnostics.', status: r.status };
+      return { error: `WooCommerce customer lookup failed (${r.status}).`, status: r.status };
+    }
+    customer = Array.isArray(r.data) ? r.data[0] : null;
+  }
+
+  if (!customer) {
+    return { error: 'No WooCommerce customer found for that email.', status: 404 };
+  }
+
+  const metaPoints = pointsFromMeta(customer.meta_data);
+
+  // Lifetime spend: prefer the customer object, fall back to summing completed orders.
+  let totalSpent = Number(customer.total_spent);
+  let orderCount = Number(customer.orders_count);
+  if (!Number.isFinite(totalSpent) || !Number.isFinite(orderCount)) {
+    const orders = await wp('wc/v3', '/orders', {
+      query: { customer: String(customer.id), per_page: '100', status: 'completed' },
+    });
+    const list = orders.ok && Array.isArray(orders.data) ? (orders.data as any[]) : [];
+    totalSpent = list.reduce((sum, o) => sum + (Number(o?.total) || 0), 0);
+    orderCount = list.length;
+  }
+  totalSpent = Number.isFinite(totalSpent) ? totalSpent : 0;
+  orderCount = Number.isFinite(orderCount) ? orderCount : 0;
+
+  const points = metaPoints ?? Math.floor(totalSpent * FALLBACK_POINTS_PER_DOLLAR);
+
+  return {
+    rewards: {
+      points,
+      points_source: metaPoints !== null ? 'customer_meta' : 'estimated_from_spend',
+      estimated: metaPoints === null,
+      customer_id: customer.id,
+      email: customer.email ?? email,
+      total_spent: Number(totalSpent.toFixed(2)),
+      orders_count: orderCount,
+      eligible: totalSpent >= FALLBACK_ELIGIBILITY_MIN_SPEND,
+      eligibility_min_spend: FALLBACK_ELIGIBILITY_MIN_SPEND,
+      points_per_currency: FALLBACK_POINTS_PER_DOLLAR,
+      redeem_value_per_point: FALLBACK_REDEEM_VALUE,
+      redeemable_value: Number((points * FALLBACK_REDEEM_VALUE).toFixed(2)),
+    },
+  };
+}
+
+
 function authHeader() {
   return 'Basic ' + btoa(`${CK}:${CS}`);
 }
@@ -376,18 +481,23 @@ Deno.serve(async (req) => {
           for (const path of ['/settings', '/config', '/rules', '/points']) {
             const r = await wp(ns, path);
             attempts.push({ namespace: `${ns}${path}`, status: r.status });
-            if (r.ok) return json({ namespace: ns, path, config: r.data });
+            if (r.ok) return json({ source: 'rewards_plugin', namespace: ns, path, config: r.data });
           }
         }
-        return json(
-          {
-            error: 'rewards_namespace_not_found',
-            message:
-              'No WP Rewards REST namespace responded. Set WP_REWARDS_NAMESPACE to the plugin namespace shown at /wp-json.',
-            attempts,
+        // Fallback: no rewards REST namespace — serve the store-level defaults so
+        // the UI can still show earn rate and eligibility from WooCommerce data.
+        return json({
+          source: 'woocommerce_fallback',
+          degraded: true,
+          message:
+            'No WP Rewards REST namespace responded; using WooCommerce customer data and configured defaults.',
+          config: {
+            points_per_currency: FALLBACK_POINTS_PER_DOLLAR,
+            redeem_value_per_point: FALLBACK_REDEEM_VALUE,
+            eligibility_min_spend: FALLBACK_ELIGIBILITY_MIN_SPEND,
           },
-          404,
-        );
+          attempts,
+        });
       }
 
       case 'rewards_balance': {
@@ -403,19 +513,32 @@ Deno.serve(async (req) => {
               query: { email, customer_id: customerId, user_id: customerId },
             });
             attempts.push({ endpoint: `${ns}${path}`, status: r.status });
-            if (r.ok) return json({ namespace: ns, path, rewards: r.data });
+            if (r.ok) return json({ source: 'rewards_plugin', namespace: ns, path, rewards: r.data });
           }
         }
-        return json(
-          {
-            error: 'rewards_lookup_failed',
-            message:
-              'Could not read a points balance. Confirm the WP Rewards plugin exposes REST routes and set WP_REWARDS_NAMESPACE.',
-            attempts,
-          },
-          404,
-        );
+
+        // ---- Fallback: read points / eligibility from WooCommerce customer meta ----
+        const fb = await rewardsFromWooCustomer({ email, customerId });
+        if (fb.error) {
+          return json(
+            {
+              error: 'rewards_lookup_failed',
+              message: fb.error,
+              attempts,
+            },
+            fb.status ?? 404,
+          );
+        }
+        return json({
+          source: 'woocommerce_fallback',
+          degraded: true,
+          message:
+            'WP Rewards REST namespace unavailable — points and eligibility derived from WooCommerce customer data.',
+          rewards: fb.rewards,
+          attempts,
+        });
       }
+
 
       case 'raw': {
         const namespace = String(payload.namespace ?? '');
