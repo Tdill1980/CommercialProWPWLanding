@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Loader2, Settings } from "lucide-react";
+import { useQuotePrefill, prefillToParams, prefillToMessage } from "@/lib/quotePrefill";
 
 // Environment variable for quote tool URL
 const QUOTE_TOOL_URL = import.meta.env.VITE_QUOTE_TOOL_URL || "";
@@ -20,11 +21,28 @@ export const JacksonQuoteEmbed = ({
   const [isLoading, setIsLoading] = useState(true);
   const [iframeHeight, setIframeHeight] = useState(500);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const isReadyRef = useRef(false);
+  const prefill = useQuotePrefill();
 
-  // Build embed URL with parameters
-  const embedUrl = QUOTE_TOOL_URL
-    ? `${QUOTE_TOOL_URL}?embed=1&source=commercialpro`
-    : "";
+  // Build embed URL once — prefill present at mount goes in the query string.
+  // Later estimator changes are pushed over postMessage so the iframe never reloads.
+  const embedUrlRef = useRef<string>("");
+  if (!embedUrlRef.current && QUOTE_TOOL_URL) {
+    const params = new URLSearchParams({
+      embed: "1",
+      source: "commercialpro",
+      ...prefillToParams(prefill),
+    });
+    embedUrlRef.current = `${QUOTE_TOOL_URL}?${params.toString()}`;
+  }
+  const embedUrl = embedUrlRef.current;
+
+  // Push prefill updates into the iframe whenever the estimator changes
+  useEffect(() => {
+    if (!isReadyRef.current) return;
+    iframeRef.current?.contentWindow?.postMessage(prefillToMessage(prefill), "*");
+  }, [prefill]);
+
 
   // Listen for postMessage events from the iframe
   useEffect(() => {
