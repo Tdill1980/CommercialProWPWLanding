@@ -101,14 +101,14 @@ async function rewardsFromWooCustomer({ email, customerId }: { email: string; cu
     const r = await wp('wc/v3', `/customers/${customerId}`);
     if (r.ok) customer = r.data;
     else if (r.status === 401 || r.status === 403)
-      return { error: 'WooCommerce rejected the request (check REST key permissions).', status: r.status };
+      return { error: 'WooCommerce returned 401/403 — the REST key lacks permission, or a WAF/Cloudflare rule is blocking the request. See /admin/woo-diagnostics.', status: r.status };
   }
 
   if (!customer && email) {
     const r = await wp('wc/v3', '/customers', { query: { email, per_page: '1', role: 'all' } });
     if (!r.ok) {
       if (r.status === 401 || r.status === 403)
-        return { error: 'WooCommerce rejected the request (check REST key permissions).', status: r.status };
+        return { error: 'WooCommerce returned 401/403 — the REST key lacks permission, or a WAF/Cloudflare rule is blocking the request. See /admin/woo-diagnostics.', status: r.status };
       return { error: `WooCommerce customer lookup failed (${r.status}).`, status: r.status };
     }
     customer = Array.isArray(r.data) ? r.data[0] : null;
