@@ -134,3 +134,8 @@
     text-wrap: balance;
   }
 }
+
+@keyframes flash {
+  0% { color: hsl(var(--primary)); transform: scale(1.08); }
+  100% { color: hsl(var(--foreground)); transform: scale(1); }
+}
