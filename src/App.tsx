@@ -23,6 +23,7 @@ const App = () => (
           <Route path="/approvepro" element={<ApprovePro />} />
           <Route path="/wall-wraps" element={<WallWraps />} />
           <Route path="/commercial/command-center" element={<CommandCenter />} />
+          <Route path="/admin/woo-diagnostics" element={<WooDiagnostics />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
