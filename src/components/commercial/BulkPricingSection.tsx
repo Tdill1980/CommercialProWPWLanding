@@ -135,12 +135,49 @@ export const BulkPricingSection = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-foreground">Savings Calculator</h3>
-                <p className="text-xs text-muted-foreground">Enter your project size</p>
+                <p className="text-xs text-muted-foreground">Pick your vehicle and project size</p>
+              </div>
+            </div>
+
+            {/* Vehicle selection */}
+            <div className="mb-6 space-y-3">
+              <label className="text-sm text-muted-foreground block">
+                What are you wrapping?
+              </label>
+              <Select value={vehicleType} onValueChange={setVehicleType}>
+                <SelectTrigger className="h-12">
+                  <div className="flex items-center gap-2">
+                    <Car className="w-4 h-4 text-muted-foreground" />
+                    <SelectValue placeholder="Select vehicle type" />
+                  </div>
+                </SelectTrigger>
+                <SelectContent>
+                  {VEHICLE_TYPES.map((type) => (
+                    <SelectItem key={type.value} value={type.value}>
+                      {type.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <div className="grid grid-cols-2 gap-3">
+                <Input
+                  value={makeInput}
+                  onChange={(e) => setMakeInput(e.target.value)}
+                  placeholder="Make (optional)"
+                  aria-label="Vehicle make"
+                />
+                <Input
+                  value={modelInput}
+                  onChange={(e) => setModelInput(e.target.value)}
+                  placeholder="Model (optional)"
+                  aria-label="Vehicle model"
+                />
               </div>
             </div>
 
             {/* Input */}
             <div className="mb-6">
+
               <label className="text-sm text-muted-foreground mb-2 block">
                 Project Size (sq ft)
               </label>
