@@ -156,13 +156,13 @@ const Index = () => {
 
 
               {/* Premium Wrap Guarantee Badge */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4 rounded-xl border border-white/15 bg-slate-950/50 backdrop-blur-sm px-4 py-3 max-w-md">
                 <img 
                   src={premiumGuaranteeBadge} 
                   alt="Premium Wrap Guarantee" 
-                  className="h-14 w-auto drop-shadow-lg"
+                  className="h-20 md:h-24 w-auto drop-shadow-lg flex-shrink-0"
                 />
-                <p className="text-xs text-white/70 max-w-[180px]">
+                <p className="text-sm md:text-base font-medium text-white leading-snug">
                   Print flaws reprinted at no cost. Quality guaranteed.
                 </p>
               </div>
