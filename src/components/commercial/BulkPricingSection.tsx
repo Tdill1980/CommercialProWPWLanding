@@ -115,6 +115,23 @@ export const BulkPricingSection = () => {
                   sq ft
                 </span>
               </div>
+              {/* Synced slider for fast visual adjustment */}
+              <input
+                type="range"
+                min={0}
+                max={3500}
+                step={10}
+                value={Math.min(Math.max(parseFloat(sqftInput) || 0, 0), 3500)}
+                onChange={(e) => setSqftInput(e.target.value)}
+                className="mt-4 w-full h-2 rounded-full appearance-none cursor-pointer bg-muted accent-primary"
+                aria-label="Adjust project size in square feet"
+              />
+              <div className="flex justify-between text-xs text-muted-foreground/60 mt-1">
+                <span>0</span>
+                <span>1k</span>
+                <span>2k</span>
+                <span>3.5k+</span>
+              </div>
             </div>
 
             {/* Results */}
