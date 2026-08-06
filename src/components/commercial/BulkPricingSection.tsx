@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Check, TrendingDown, Calculator, Ruler, DollarSign, Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { RewardsCallout } from "./RewardsCallout";
@@ -115,6 +115,23 @@ export const BulkPricingSection = () => {
                   sq ft
                 </span>
               </div>
+              {/* Synced slider for fast visual adjustment */}
+              <input
+                type="range"
+                min={0}
+                max={3500}
+                step={10}
+                value={Math.min(Math.max(parseFloat(sqftInput) || 0, 0), 3500)}
+                onChange={(e) => setSqftInput(e.target.value)}
+                className="mt-4 w-full h-2 rounded-full appearance-none cursor-pointer bg-muted accent-primary"
+                aria-label="Adjust project size in square feet"
+              />
+              <div className="flex justify-between text-xs text-muted-foreground/60 mt-1">
+                <span>0</span>
+                <span>1k</span>
+                <span>2k</span>
+                <span>3.5k+</span>
+              </div>
             </div>
 
             {/* Results */}
@@ -139,7 +156,12 @@ export const BulkPricingSection = () => {
                   <span className="text-sm text-muted-foreground">Your Price Per Sq Ft</span>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-2xl font-bold text-foreground">${calculations.discountedPrice.toFixed(2)}</p>
+                  <p
+                    key={calculations.activeTier.discount}
+                    className="text-2xl font-bold text-foreground animate-[flash_600ms_ease-out]"
+                  >
+                    ${calculations.discountedPrice.toFixed(2)}
+                  </p>
                   {calculations.activeTier.discount > 0 && (
                     <span className="text-muted-foreground line-through text-base">
                       ${BASE_PRICE.toFixed(2)}
@@ -186,7 +208,10 @@ export const BulkPricingSection = () => {
               <div className="pt-4 border-t border-border">
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Estimated Total</span>
-                  <span className="text-xl font-bold text-foreground">
+                  <span
+                    key={Math.round(calculations.discountedTotal)}
+                    className="text-xl font-bold text-foreground animate-[flash_600ms_ease-out]"
+                  >
                     ${calculations.discountedTotal.toFixed(2)}
                   </span>
                 </div>
