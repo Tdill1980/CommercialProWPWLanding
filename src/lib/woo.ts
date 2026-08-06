@@ -12,7 +12,8 @@ export type WooAction =
   | "rewards_config"
   | "rewards_balance"
   | "raw"
-  | "discover";
+  | "discover"
+  | "diagnostics";
 
 export async function callWoo<T = any>(
   action: WooAction,
@@ -42,3 +43,30 @@ export const wooProducts = (search?: string, per_page = 10) =>
 export const wooRewardsConfig = () => callWoo("rewards_config");
 export const wooRewardsBalance = (email: string) =>
   callWoo("rewards_balance", { email });
+
+export type WooDiagnosticStep = {
+  id: string;
+  label: string;
+  status: "ok" | "fail" | "warn" | "skipped";
+  http_status?: number;
+  request?: string;
+  detail?: string;
+  response_snippet?: string;
+  hint?: string;
+};
+
+export type WooDiagnostics = {
+  overall: "ok" | "partial" | "blocked" | "error" | "not_configured";
+  failed_step: string | null;
+  failure_kind?:
+    | "cloudflare_block"
+    | "network_error"
+    | "auth_rejected"
+    | "woocommerce_error"
+    | "missing_rewards_endpoints"
+    | null;
+  steps: WooDiagnosticStep[];
+  checked_at: string;
+};
+
+export const wooDiagnostics = () => callWoo<WooDiagnostics>("diagnostics");
