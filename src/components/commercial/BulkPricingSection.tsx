@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Check, TrendingDown, Calculator, Ruler, DollarSign, Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { RewardsCallout } from "./RewardsCallout";
