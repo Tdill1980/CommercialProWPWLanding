@@ -27,3 +27,6 @@ export { TrustLogosStrip } from "./TrustLogosStrip";
 
 // New: WooCommerce + WP Rewards
 export { RewardsCallout } from "./RewardsCallout";
+
+// New: WooCommerce product slider
+export { ProductSlider } from "./ProductSlider";

@@ -9,6 +9,7 @@ import {
   StickyQuoteBar,
   TrustLogosStrip,
   CommercialInfoStrip,
+  ProductSlider,
 } from "@/components/commercial";
 
 /**
@@ -103,6 +104,23 @@ const EmbedCommercial = () => {
 
       {/* Commercial Info Strip */}
       <CommercialInfoStrip />
+
+      {/* Shop Our Products - WooCommerce slider */}
+      <section className="border-y border-border bg-muted/30">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          <div className="flex items-end justify-between mb-6">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+                Shop Our Products
+              </h2>
+              <p className="text-muted-foreground text-sm mt-1">
+                Featured wrap materials and supplies from our store
+              </p>
+            </div>
+          </div>
+          <ProductSlider sort="featured" count={12} />
+        </div>
+      </section>
 
       {/* Volume Pricing */}
       <section id="volume" className="scroll-mt-20">
