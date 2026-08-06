@@ -1,7 +1,16 @@
 import { useState, useMemo, useEffect, useRef } from "react";
-import { Check, TrendingDown, Calculator, Ruler, DollarSign, Sparkles } from "lucide-react";
+import { Check, TrendingDown, Calculator, Ruler, DollarSign, Sparkles, Car, ArrowUp } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { RewardsCallout } from "./RewardsCallout";
+import { setQuotePrefill } from "@/lib/quotePrefill";
 import premiumGuaranteeBadge from "@/assets/premium-wrap-guarantee-gold.png";
 
 /**
@@ -22,8 +31,24 @@ const VOLUME_TIERS = [
   { label: "2,500+ sq ft", minSqFt: 2500, maxSqFt: Infinity, discount: 20, isBest: true },
 ];
 
+// Values match the Quote Builder's wrapCategory enum
+const VEHICLE_TYPES = [
+  { value: "car-truck", label: "Car / Truck" },
+  { value: "fleet", label: "Fleet (multiple vehicles)" },
+  { value: "trailer", label: "Trailer" },
+  { value: "boat", label: "Boat" },
+  { value: "signs", label: "Signs" },
+  { value: "walls", label: "Walls" },
+  { value: "windows", label: "Windows" },
+  { value: "other", label: "Other" },
+];
+
 export const BulkPricingSection = () => {
   const [sqftInput, setSqftInput] = useState<string>("500");
+  const [vehicleType, setVehicleType] = useState<string>("fleet");
+  const [makeInput, setMakeInput] = useState<string>("");
+  const [modelInput, setModelInput] = useState<string>("");
+
 
   const calculations = useMemo(() => {
     const sqft = parseFloat(sqftInput) || 0;
