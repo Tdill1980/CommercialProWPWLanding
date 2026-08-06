@@ -453,15 +453,18 @@ Deno.serve(async (req) => {
       }
 
       case 'products': {
-        const r = await wp('wc/v3', '/products', {
-          query: {
-            search: payload.search ? String(payload.search) : '',
-            per_page: String(Math.min(Number(payload.per_page) || 10, 50)),
-            page: String(Math.max(Number(payload.page) || 1, 1)),
-            category: payload.category ? String(payload.category) : '',
-            status: 'publish',
-          },
-        });
+        const q: Record<string, string> = {
+          per_page: String(Math.min(Number(payload.per_page) || 10, 50)),
+          page: String(Math.max(Number(payload.page) || 1, 1)),
+          status: 'publish',
+        };
+        if (payload.search) q.search = String(payload.search);
+        if (payload.category) q.category = String(payload.category);
+        if (payload.featured === true || payload.featured === 'true') q.featured = 'true';
+        // Optional ordering: e.g. orderby=date&order=desc for newest, orderby=price&order=asc for cheapest
+        if (payload.orderby) q.orderby = String(payload.orderby);
+        if (payload.order) q.order = String(payload.order) === 'asc' ? 'asc' : 'desc';
+        const r = await wp('wc/v3', '/products', { query: q });
         if (!r.ok) return json({ error: 'woocommerce_error', status: r.status, details: r.data }, r.status);
         return json({ products: r.data });
       }
