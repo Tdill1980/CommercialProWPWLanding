@@ -111,10 +111,16 @@ export const JacksonQuoteEmbed = ({
         src={embedUrl}
         className="w-full rounded-xl border-0"
         style={{ height: `${iframeHeight}px` }}
-        onLoad={() => setIsLoading(false)}
+        onLoad={() => {
+          setIsLoading(false);
+          isReadyRef.current = true;
+          // Re-send current prefill in case the estimator changed before load
+          iframeRef.current?.contentWindow?.postMessage(prefillToMessage(prefill), "*");
+        }}
         title="WePrintWraps Quote Calculator"
         allow="clipboard-write"
       />
+
     </div>
   );
 };
