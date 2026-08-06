@@ -208,7 +208,10 @@ export const BulkPricingSection = () => {
               <div className="pt-4 border-t border-border">
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Estimated Total</span>
-                  <span className="text-xl font-bold text-foreground">
+                  <span
+                    key={Math.round(calculations.discountedTotal)}
+                    className="text-xl font-bold text-foreground animate-[flash_600ms_ease-out]"
+                  >
                     ${calculations.discountedTotal.toFixed(2)}
                   </span>
                 </div>
