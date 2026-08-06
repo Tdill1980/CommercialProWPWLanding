@@ -9,6 +9,7 @@ import {
   StickyQuoteBar,
   TrustLogosStrip,
   CommercialInfoStrip,
+  ProductSlider,
 } from "@/components/commercial";
 
 /**
