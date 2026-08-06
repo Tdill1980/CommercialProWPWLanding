@@ -99,10 +99,10 @@ const Index = () => {
           <img 
             src={heroFleet} 
             alt="Fleet of professionally wrapped commercial vehicles" 
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-cover object-center brightness-125 contrast-105"
           />
-          {/* Strong gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 via-40% to-slate-950/40" />
+          {/* Lighter gradient overlay — keeps text readable without hiding the fleet */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/35 to-slate-950/60 lg:bg-gradient-to-r lg:from-slate-950/85 lg:via-slate-950/45 lg:via-45% lg:to-slate-950/10" />
           {/* Image credit caption */}
           <p className="absolute bottom-2 right-4 text-xs text-white/50 italic z-10">
             Image is a fleet done by VikingFleet Prescott, Arizona using WePrintWraps.com for printing.
@@ -156,13 +156,13 @@ const Index = () => {
 
 
               {/* Premium Wrap Guarantee Badge */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4 rounded-xl border border-white/15 bg-slate-950/50 backdrop-blur-sm px-4 py-3 max-w-md">
                 <img 
                   src={premiumGuaranteeBadge} 
                   alt="Premium Wrap Guarantee" 
-                  className="h-14 w-auto drop-shadow-lg"
+                  className="h-20 md:h-24 w-auto drop-shadow-lg flex-shrink-0"
                 />
-                <p className="text-xs text-white/70 max-w-[180px]">
+                <p className="text-sm md:text-base font-medium text-white leading-snug">
                   Print flaws reprinted at no cost. Quality guaranteed.
                 </p>
               </div>
