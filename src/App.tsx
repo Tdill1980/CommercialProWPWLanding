@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import ApprovePro from "./pages/ApprovePro";
 import WallWraps from "./pages/WallWraps";
 import CommandCenter from "./pages/CommandCenter";
+import WooDiagnostics from "./pages/WooDiagnostics";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
