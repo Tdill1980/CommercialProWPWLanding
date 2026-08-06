@@ -92,10 +92,227 @@ async function wp(
   return { ok: res.ok, status: res.status, data: parsed, url: url.toString() };
 }
 
+const UA =
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
+
+type Step = {
+  id: string;
+  label: string;
+  status: 'ok' | 'fail' | 'warn' | 'skipped';
+  http_status?: number;
+  request?: string;
+  detail?: string;
+  response_snippet?: string;
+  hint?: string;
+};
+
+function looksLikeCloudflareBlock(status: number, headers: Headers, body: string) {
+  const b = body.slice(0, 4000).toLowerCase();
+  const cfRay = headers.get('cf-ray');
+  const blocked =
+    b.includes('you have been blocked') ||
+    b.includes('attention required') ||
+    b.includes('cloudflare') && (status === 403 || status === 503 || status === 429);
+  return Boolean(blocked || (cfRay && (status === 403 || status === 503) && !b.trim().startsWith('{')));
+}
+
+async function probe(url: string, withAuth: boolean) {
+  const started = Date.now();
+  const headers: Record<string, string> = { Accept: 'application/json', 'User-Agent': UA };
+  if (withAuth) headers.Authorization = authHeader();
+  try {
+    const res = await fetch(url, { headers });
+    const body = await res.text();
+    return {
+      ok: res.ok,
+      status: res.status,
+      headers: res.headers,
+      body,
+      ms: Date.now() - started,
+      networkError: null as string | null,
+    };
+  } catch (e) {
+    return {
+      ok: false,
+      status: 0,
+      headers: new Headers(),
+      body: '',
+      ms: Date.now() - started,
+      networkError: String((e as Error)?.message ?? e),
+    };
+  }
+}
+
+async function runDiagnostics() {
+  const steps: Step[] = [];
+  const push = (s: Step) => steps.push(s);
+
+  // 1. Secrets
+  const missing = [
+    !STORE_URL && 'WOO_STORE_URL',
+    !CK && 'WOO_CONSUMER_KEY',
+    !CS && 'WOO_CONSUMER_SECRET',
+  ].filter(Boolean) as string[];
+  push({
+    id: 'secrets',
+    label: 'Credentials configured',
+    status: missing.length ? 'fail' : 'ok',
+    detail: missing.length ? `Missing: ${missing.join(', ')}` : `Store URL: ${STORE_URL}`,
+    hint: missing.length ? 'Save the missing project secrets, then re-run diagnostics.' : undefined,
+  });
+
+  if (missing.length) {
+    return { overall: 'not_configured', failed_step: 'secrets', steps, checked_at: new Date().toISOString() };
+  }
+
+  // 2. Reachability (unauthenticated WP REST index)
+  const idxUrl = `${STORE_URL}/wp-json`;
+  const idx = await probe(idxUrl, false);
+  const cfBlocked = looksLikeCloudflareBlock(idx.status, idx.headers, idx.body);
+  push({
+    id: 'reachability',
+    label: 'Store REST API reachable',
+    status: idx.networkError ? 'fail' : cfBlocked ? 'fail' : idx.status < 400 ? 'ok' : 'warn',
+    http_status: idx.status || undefined,
+    request: `GET ${idxUrl}`,
+    detail: idx.networkError
+      ? `Network error: ${idx.networkError}`
+      : cfBlocked
+        ? 'Cloudflare/WAF returned a block page before WordPress was reached.'
+        : `Responded in ${idx.ms}ms`,
+    response_snippet: idx.body.slice(0, 600),
+    hint: cfBlocked
+      ? 'Cloudflare → Security → WAF → Custom rules: add a Skip rule for (http.request.uri.path contains "/wp-json/") covering managed rules, rate limiting and Super Bot Fight Mode.'
+      : idx.networkError
+        ? 'Check that WOO_STORE_URL resolves and uses https.'
+        : undefined,
+  });
+
+  if (idx.networkError || cfBlocked) {
+    return {
+      overall: 'blocked',
+      failed_step: 'reachability',
+      failure_kind: cfBlocked ? 'cloudflare_block' : 'network_error',
+      steps,
+      checked_at: new Date().toISOString(),
+    };
+  }
+
+  // 3. Authenticated WooCommerce call
+  const wcUrl = `${STORE_URL}/wp-json/wc/v3/products?per_page=1`;
+  const wc = await probe(wcUrl, true);
+  const wcCf = looksLikeCloudflareBlock(wc.status, wc.headers, wc.body);
+  const authFail = wc.status === 401 || wc.status === 403;
+  push({
+    id: 'woocommerce_auth',
+    label: 'WooCommerce API authentication',
+    status: wc.ok ? 'ok' : 'fail',
+    http_status: wc.status || undefined,
+    request: `GET ${wcUrl} (Basic ck/cs)`,
+    detail: wc.networkError
+      ? `Network error: ${wc.networkError}`
+      : wcCf
+        ? 'Cloudflare blocked the authenticated request.'
+        : wc.ok
+          ? `Authenticated OK in ${wc.ms}ms`
+          : `WooCommerce returned ${wc.status}`,
+    response_snippet: wc.body.slice(0, 600),
+    hint: wcCf
+      ? 'Allow /wp-json/wc/ through Cloudflare WAF.'
+      : authFail
+        ? 'Regenerate a Read/Write REST key in WooCommerce → Settings → Advanced → REST API and update the secrets.'
+        : undefined,
+  });
+
+  if (!wc.ok) {
+    return {
+      overall: 'error',
+      failed_step: 'woocommerce_auth',
+      failure_kind: wcCf ? 'cloudflare_block' : authFail ? 'auth_rejected' : 'woocommerce_error',
+      steps,
+      checked_at: new Date().toISOString(),
+    };
+  }
+
+  // 4. Rewards namespaces
+  let namespaces: string[] = [];
+  try {
+    namespaces = (JSON.parse(idx.body) as any)?.namespaces ?? [];
+  } catch {
+    namespaces = [];
+  }
+  const rewardsNamespaces = namespaces.filter((ns) =>
+    /reward|loyal|point|wlr/i.test(ns),
+  );
+  push({
+    id: 'rewards_namespace',
+    label: 'WP Rewards REST namespace exposed',
+    status: rewardsNamespaces.length ? 'ok' : 'fail',
+    detail: rewardsNamespaces.length
+      ? `Found: ${rewardsNamespaces.join(', ')}`
+      : `No rewards namespace among ${namespaces.length} exposed namespaces.`,
+    response_snippet: namespaces.join(', ').slice(0, 900),
+    hint: rewardsNamespaces.length
+      ? undefined
+      : 'The rewards plugin is either inactive or does not register REST routes. Confirm the plugin name in WP Admin → Plugins, then set WP_REWARDS_NAMESPACE.',
+  });
+
+  // 5. Probe rewards endpoints
+  const attempts: Array<{ endpoint: string; status: number }> = [];
+  let rewardsHit: { endpoint: string; snippet: string } | null = null;
+  for (const ns of [...rewardsNamespaces, ...REWARDS_CANDIDATES]) {
+    for (const path of ['/settings', '/config', '/rules', '/points']) {
+      const url = `${STORE_URL}/wp-json/${ns}${path}`;
+      const r = await probe(url, true);
+      attempts.push({ endpoint: `${ns}${path}`, status: r.status });
+      if (r.ok) {
+        rewardsHit = { endpoint: `${ns}${path}`, snippet: r.body.slice(0, 600) };
+        break;
+      }
+    }
+    if (rewardsHit) break;
+  }
+  push({
+    id: 'rewards_endpoint',
+    label: 'Rewards endpoint responds',
+    status: rewardsHit ? 'ok' : 'fail',
+    request: rewardsHit ? `GET ${STORE_URL}/wp-json/${rewardsHit.endpoint}` : `Probed ${attempts.length} endpoints`,
+    detail: rewardsHit
+      ? `Live endpoint: ${rewardsHit.endpoint}`
+      : attempts.map((a) => `${a.endpoint} → ${a.status}`).join('\n'),
+    response_snippet: rewardsHit?.snippet,
+    hint: rewardsHit ? undefined : 'Set WP_REWARDS_NAMESPACE once the plugin exposes routes at /wp-json.',
+  });
+
+  const failed = steps.find((s) => s.status === 'fail');
+  return {
+    overall: failed ? 'partial' : 'ok',
+    failed_step: failed?.id ?? null,
+    failure_kind: failed ? 'missing_rewards_endpoints' : null,
+    steps,
+    checked_at: new Date().toISOString(),
+  };
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
+  let earlyAction = '';
+  try {
+    const clone = req.clone();
+    earlyAction =
+      req.method === 'POST'
+        ? String(((await clone.json()) as any)?.action ?? '')
+        : String(new URL(req.url).searchParams.get('action') ?? '');
+  } catch {
+    earlyAction = '';
+  }
+  if (earlyAction === 'diagnostics') {
+    return json(await runDiagnostics());
+  }
+
   if (!STORE_URL || !CK || !CS) {
+
     return json(
       {
         error: 'store_not_configured',
