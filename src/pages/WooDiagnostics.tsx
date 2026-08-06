@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -48,7 +47,15 @@ export default function WooDiagnosticsPage() {
   };
 
   useEffect(() => {
+    document.title = "Woo API Diagnostics | CommercialPro Admin";
+    const robots = document.createElement("meta");
+    robots.name = "robots";
+    robots.content = "noindex,nofollow";
+    document.head.appendChild(robots);
     run();
+    return () => {
+      robots.remove();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -56,12 +63,6 @@ export default function WooDiagnosticsPage() {
 
   return (
     <>
-      <Helmet>
-        <title>Woo API Diagnostics | CommercialPro Admin</title>
-        <meta name="description" content="Internal diagnostics for the WooCommerce and WP Rewards API connection." />
-        <meta name="robots" content="noindex,nofollow" />
-      </Helmet>
-
       <main className="mx-auto max-w-4xl px-4 py-10">
         <header className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <div>
