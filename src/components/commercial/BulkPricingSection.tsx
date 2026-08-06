@@ -297,8 +297,22 @@ export const BulkPricingSection = () => {
                 </div>
               </div>
 
+              {/* Handoff to the quote builder */}
+              <Button onClick={sendToQuoteBuilder} className="w-full font-medium">
+                <ArrowUp className="w-4 h-4 mr-2" />
+                Continue in Quote Builder
+              </Button>
+              <p className="text-xs text-muted-foreground text-center">
+                Your vehicle type and {calculations.sqft.toLocaleString()} sq ft
+                {calculations.activeTier.discount > 0
+                  ? ` (${calculations.activeTier.discount}% tier)`
+                  : ""}{" "}
+                are carried into the quote.
+              </p>
+
             </div>
           </div>
+
 
           {/* Right: Pricing Table */}
           <div className="bg-background border border-border rounded-xl p-6">
