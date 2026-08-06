@@ -24,17 +24,19 @@ export interface QuotePrefill {
   pricePerSqFt: number;
 }
 
-const EMPTY: QuotePrefill = {
-  category: "",
+// Defaults mirror the estimator's initial state so the very first
+// embed URL already carries a sensible prefill.
+const INITIAL: QuotePrefill = {
+  category: "fleet",
   make: "",
   model: "",
-  sqft: 0,
-  tierLabel: "",
-  tierDiscount: 0,
-  pricePerSqFt: 0,
+  sqft: 500,
+  tierLabel: "500–999 sq ft",
+  tierDiscount: 10,
+  pricePerSqFt: 4.74,
 };
 
-let state: QuotePrefill = EMPTY;
+let state: QuotePrefill = INITIAL;
 const listeners = new Set<() => void>();
 
 const emit = () => listeners.forEach((l) => l());
