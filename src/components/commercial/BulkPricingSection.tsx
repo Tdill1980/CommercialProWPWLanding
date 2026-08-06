@@ -156,7 +156,12 @@ export const BulkPricingSection = () => {
                   <span className="text-sm text-muted-foreground">Your Price Per Sq Ft</span>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-2xl font-bold text-foreground">${calculations.discountedPrice.toFixed(2)}</p>
+                  <p
+                    key={calculations.activeTier.discount}
+                    className="text-2xl font-bold text-foreground animate-[flash_600ms_ease-out]"
+                  >
+                    ${calculations.discountedPrice.toFixed(2)}
+                  </p>
                   {calculations.activeTier.discount > 0 && (
                     <span className="text-muted-foreground line-through text-base">
                       ${BASE_PRICE.toFixed(2)}
