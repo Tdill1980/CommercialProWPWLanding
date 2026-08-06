@@ -79,6 +79,24 @@ export const BulkPricingSection = () => {
   const bestTier = VOLUME_TIERS[VOLUME_TIERS.length - 1];
   const bestPrice = BASE_PRICE * (1 - bestTier.discount / 100);
 
+  // Hand selection + tier off to the embedded Quote Builder
+  useEffect(() => {
+    setQuotePrefill({
+      category: vehicleType,
+      make: makeInput.trim(),
+      model: modelInput.trim(),
+      sqft: calculations.sqft,
+      tierLabel: calculations.activeTier.label,
+      tierDiscount: calculations.activeTier.discount,
+      pricePerSqFt: Number(calculations.discountedPrice.toFixed(2)),
+    });
+  }, [vehicleType, makeInput, modelInput, calculations]);
+
+  const sendToQuoteBuilder = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+
   return (
     <section className="w-full bg-gradient-to-b from-secondary/60 via-card to-card py-20 border-y border-border">
       <div className="max-w-4xl mx-auto px-6">
