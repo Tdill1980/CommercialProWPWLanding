@@ -1,7 +1,16 @@
 import { useState, useMemo, useEffect, useRef } from "react";
-import { Check, TrendingDown, Calculator, Ruler, DollarSign, Sparkles } from "lucide-react";
+import { Check, TrendingDown, Calculator, Ruler, DollarSign, Sparkles, Car, ArrowUp } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { RewardsCallout } from "./RewardsCallout";
+import { setQuotePrefill } from "@/lib/quotePrefill";
 import premiumGuaranteeBadge from "@/assets/premium-wrap-guarantee-gold.png";
 
 /**
@@ -22,8 +31,24 @@ const VOLUME_TIERS = [
   { label: "2,500+ sq ft", minSqFt: 2500, maxSqFt: Infinity, discount: 20, isBest: true },
 ];
 
+// Values match the Quote Builder's wrapCategory enum
+const VEHICLE_TYPES = [
+  { value: "car-truck", label: "Car / Truck" },
+  { value: "fleet", label: "Fleet (multiple vehicles)" },
+  { value: "trailer", label: "Trailer" },
+  { value: "boat", label: "Boat" },
+  { value: "signs", label: "Signs" },
+  { value: "walls", label: "Walls" },
+  { value: "windows", label: "Windows" },
+  { value: "other", label: "Other" },
+];
+
 export const BulkPricingSection = () => {
   const [sqftInput, setSqftInput] = useState<string>("500");
+  const [vehicleType, setVehicleType] = useState<string>("fleet");
+  const [makeInput, setMakeInput] = useState<string>("");
+  const [modelInput, setModelInput] = useState<string>("");
+
 
   const calculations = useMemo(() => {
     const sqft = parseFloat(sqftInput) || 0;
@@ -53,6 +78,24 @@ export const BulkPricingSection = () => {
 
   const bestTier = VOLUME_TIERS[VOLUME_TIERS.length - 1];
   const bestPrice = BASE_PRICE * (1 - bestTier.discount / 100);
+
+  // Hand selection + tier off to the embedded Quote Builder
+  useEffect(() => {
+    setQuotePrefill({
+      category: vehicleType,
+      make: makeInput.trim(),
+      model: modelInput.trim(),
+      sqft: calculations.sqft,
+      tierLabel: calculations.activeTier.label,
+      tierDiscount: calculations.activeTier.discount,
+      pricePerSqFt: Number(calculations.discountedPrice.toFixed(2)),
+    });
+  }, [vehicleType, makeInput, modelInput, calculations]);
+
+  const sendToQuoteBuilder = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
 
   return (
     <section className="w-full bg-gradient-to-b from-secondary/60 via-card to-card py-20 border-y border-border">
@@ -92,12 +135,49 @@ export const BulkPricingSection = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-foreground">Savings Calculator</h3>
-                <p className="text-xs text-muted-foreground">Enter your project size</p>
+                <p className="text-xs text-muted-foreground">Pick your vehicle and project size</p>
+              </div>
+            </div>
+
+            {/* Vehicle selection */}
+            <div className="mb-6 space-y-3">
+              <label className="text-sm text-muted-foreground block">
+                What are you wrapping?
+              </label>
+              <Select value={vehicleType} onValueChange={setVehicleType}>
+                <SelectTrigger className="h-12">
+                  <div className="flex items-center gap-2">
+                    <Car className="w-4 h-4 text-muted-foreground" />
+                    <SelectValue placeholder="Select vehicle type" />
+                  </div>
+                </SelectTrigger>
+                <SelectContent>
+                  {VEHICLE_TYPES.map((type) => (
+                    <SelectItem key={type.value} value={type.value}>
+                      {type.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <div className="grid grid-cols-2 gap-3">
+                <Input
+                  value={makeInput}
+                  onChange={(e) => setMakeInput(e.target.value)}
+                  placeholder="Make (optional)"
+                  aria-label="Vehicle make"
+                />
+                <Input
+                  value={modelInput}
+                  onChange={(e) => setModelInput(e.target.value)}
+                  placeholder="Model (optional)"
+                  aria-label="Vehicle model"
+                />
               </div>
             </div>
 
             {/* Input */}
             <div className="mb-6">
+
               <label className="text-sm text-muted-foreground mb-2 block">
                 Project Size (sq ft)
               </label>
@@ -217,8 +297,22 @@ export const BulkPricingSection = () => {
                 </div>
               </div>
 
+              {/* Handoff to the quote builder */}
+              <Button onClick={sendToQuoteBuilder} className="w-full font-medium">
+                <ArrowUp className="w-4 h-4 mr-2" />
+                Continue in Quote Builder
+              </Button>
+              <p className="text-xs text-muted-foreground text-center">
+                Your vehicle type and {calculations.sqft.toLocaleString()} sq ft
+                {calculations.activeTier.discount > 0
+                  ? ` (${calculations.activeTier.discount}% tier)`
+                  : ""}{" "}
+                are carried into the quote.
+              </p>
+
             </div>
           </div>
+
 
           {/* Right: Pricing Table */}
           <div className="bg-background border border-border rounded-xl p-6">
