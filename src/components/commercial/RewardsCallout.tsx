@@ -41,6 +41,14 @@ export const RewardsCallout = ({ orderTotal = 0 }: RewardsCalloutProps) => {
   const [balance, setBalance] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [redeemValue, setRedeemValue] = useState<number>(0.01);
+  const [estimated, setEstimated] = useState(false);
+  const [detail, setDetail] = useState<{
+    totalSpent?: number;
+    ordersCount?: number;
+    eligible?: boolean;
+    redeemableValue?: number;
+  } | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -51,6 +59,8 @@ export const RewardsCallout = ({ orderTotal = 0 }: RewardsCalloutProps) => {
         data?.config?.earn_point ??
         data?.config?.points_per_dollar;
       if (typeof rate === "number" && rate > 0) setPointsPerDollar(rate);
+      const redeem = data?.config?.redeem_value_per_point;
+      if (typeof redeem === "number" && redeem > 0) setRedeemValue(redeem);
     });
     return () => {
       active = false;
@@ -64,6 +74,8 @@ export const RewardsCallout = ({ orderTotal = 0 }: RewardsCalloutProps) => {
     setLoading(true);
     setMessage(null);
     setBalance(null);
+    setDetail(null);
+    setEstimated(false);
     const { data, error } = await wooRewardsBalance(email.trim());
     setLoading(false);
 
@@ -71,12 +83,25 @@ export const RewardsCallout = ({ orderTotal = 0 }: RewardsCalloutProps) => {
       setMessage("Rewards lookup unavailable right now.");
       return;
     }
-    const pts = extractPoints(data?.rewards);
+    const rewards = data?.rewards;
+    const pts = extractPoints(rewards);
     if (pts === null) {
       setMessage("No rewards account found for that email.");
       return;
     }
     setBalance(pts);
+    setEstimated(Boolean(rewards?.estimated));
+    if (data?.source === "woocommerce_fallback") {
+      setDetail({
+        totalSpent: Number(rewards?.total_spent) || 0,
+        ordersCount: Number(rewards?.orders_count) || 0,
+        eligible: rewards?.eligible !== false,
+        redeemableValue:
+          typeof rewards?.redeemable_value === "number"
+            ? rewards.redeemable_value
+            : pts * redeemValue,
+      });
+    }
   };
 
   return (
@@ -123,10 +148,31 @@ export const RewardsCallout = ({ orderTotal = 0 }: RewardsCalloutProps) => {
           </div>
 
           {balance !== null && (
-            <p className="mt-3 text-sm text-foreground">
-              Current balance:{" "}
-              <span className="font-bold text-success">{balance.toLocaleString()} points</span>
-            </p>
+            <div className="mt-3 space-y-1 text-sm text-foreground">
+              <p>
+                {estimated ? "Estimated balance" : "Current balance"}:{" "}
+                <span className="font-bold text-success">{balance.toLocaleString()} points</span>
+                {detail?.redeemableValue !== undefined && detail.redeemableValue > 0 && (
+                  <span className="text-muted-foreground">
+                    {" "}
+                    (~${detail.redeemableValue.toFixed(2)} store credit)
+                  </span>
+                )}
+              </p>
+              {detail && (
+                <p className="text-xs text-muted-foreground">
+                  Based on {detail.ordersCount?.toLocaleString()} order
+                  {detail.ordersCount === 1 ? "" : "s"} and $
+                  {(detail.totalSpent ?? 0).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}{" "}
+                  lifetime spend
+                  {detail.eligible === false ? " — not yet eligible to redeem." : "."}
+                  {estimated && " Estimated from account history while the rewards plugin API is unavailable."}
+                </p>
+              )}
+            </div>
           )}
           {message && <p className="mt-3 text-sm text-muted-foreground">{message}</p>}
         </div>
