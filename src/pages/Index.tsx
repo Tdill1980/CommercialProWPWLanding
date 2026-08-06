@@ -15,6 +15,7 @@ import {
   SalesAgentDrawer,
   VoiceAgentButton,
   TrustLogosStrip,
+  ProductSlider,
 } from "@/components/commercial";
 import { Button } from "@/components/ui/button";
 import heroFleet from "@/assets/hero-fleet.jpg";
@@ -227,6 +228,29 @@ const Index = () => {
 
       {/* Commercial Info Strip */}
       <CommercialInfoStrip />
+
+      {/* Shop Our Products — live WooCommerce slider */}
+      <section id="shop" className="scroll-mt-20 border-y border-border bg-muted/30">
+        <div className="max-w-7xl mx-auto px-6 py-14">
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+            <div>
+              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary mb-2">
+                <Grid className="h-3.5 w-3.5" />
+                From Our Store
+              </div>
+              <h2 className="text-2xl md:text-3xl font-black text-foreground tracking-tight">
+                Shop Our Products
+              </h2>
+              <p className="text-muted-foreground text-sm mt-1 max-w-xl">
+                Featured wrap materials and supplies — same wholesale pricing, shipped fast.
+              </p>
+            </div>
+          </div>
+          <ProductSlider sort="featured" count={12} />
+        </div>
+      </section>
+
+
 
       {/* Volume Pricing Section - lead pricing content */}
       <section id="volume" className="scroll-mt-20">
