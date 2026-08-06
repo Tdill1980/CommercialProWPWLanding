@@ -24,7 +24,11 @@ import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
  *  WP_REWARDS_NAMESPACE  optional, e.g. "wlr/v2" (auto-detected when unset)
  */
 
-const STORE_URL = (Deno.env.get('WOO_STORE_URL') ?? '').replace(/\/+$/, '');
+const RAW_STORE_URL = (Deno.env.get('WOO_STORE_URL') ?? '').trim().replace(/\/+$/, '');
+// Tolerate a store URL saved without a scheme (e.g. "example.com").
+const STORE_URL = RAW_STORE_URL && !/^https?:\/\//i.test(RAW_STORE_URL)
+  ? `https://${RAW_STORE_URL}`
+  : RAW_STORE_URL;
 const CK = Deno.env.get('WOO_CONSUMER_KEY') ?? '';
 const CS = Deno.env.get('WOO_CONSUMER_SECRET') ?? '';
 const REWARDS_NS_ENV = Deno.env.get('WP_REWARDS_NAMESPACE') ?? '';
