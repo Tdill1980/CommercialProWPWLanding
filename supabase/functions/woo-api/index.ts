@@ -220,7 +220,13 @@ Deno.serve(async (req) => {
 
       case 'discover': {
         // Lists every REST namespace the store exposes — use this to find the rewards plugin.
-        const res = await fetch(`${STORE_URL}/wp-json`, { headers: { Accept: 'application/json' } });
+        const res = await fetch(`${STORE_URL}/wp-json`, {
+          headers: {
+            Accept: 'application/json',
+            'User-Agent':
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+          },
+        });
         const data = await res.json().catch(() => null);
         return json({ namespaces: (data as any)?.namespaces ?? null, status: res.status });
       }
