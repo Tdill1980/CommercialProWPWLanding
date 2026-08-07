@@ -40,7 +40,7 @@ const Index = () => {
       {/* Navigation Header */}
       <header className="sticky top-0 z-50 bg-background border-b border-border shadow-sm shadow-black/5">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between h-18">
+          <div className="flex items-center justify-between h-[72px]">
             {/* Logo */}
             <div className="flex items-center gap-8">
               <a href="/" className="flex items-center gap-3">
