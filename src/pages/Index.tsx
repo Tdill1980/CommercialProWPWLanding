@@ -91,6 +91,8 @@ const Index = () => {
             </div>
           </div>
         </div>
+        {/* Blue break under header */}
+        <div className="h-1 bg-gradient-to-r from-primary via-primary to-primary/50" />
       </header>
 
       {/* Hero Section */}
