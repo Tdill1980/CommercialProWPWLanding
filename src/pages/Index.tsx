@@ -38,17 +38,17 @@ const Index = () => {
       <QuoteWelcomeBanner />
 
       {/* Navigation Header */}
-      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-border">
+      <header className="sticky top-0 z-50 bg-background border-b border-border shadow-sm shadow-black/5">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-[72px]">
             {/* Logo */}
             <div className="flex items-center gap-8">
-              <a href="/" className="flex items-center gap-2">
-                <img src={logoWpw} alt="WePrintWraps" className="h-8 w-auto" />
+              <a href="/" className="flex items-center gap-3">
+                <img src={logoWpw} alt="WePrintWraps" className="h-10 w-auto" />
                 <div className="flex items-baseline gap-0.5">
-                  <span className="text-lg font-bold text-navy tracking-tight">Commercial</span>
-                  <span className="text-lg font-bold text-primary tracking-tight">Pro</span>
-                  <span className="text-primary text-xs font-bold ml-0.5">™</span>
+                  <span className="text-base font-bold text-navy tracking-tight">Commercial</span>
+                  <span className="text-base font-bold text-primary tracking-tight">Pro</span>
+                  <span className="text-primary text-[10px] font-bold ml-0.5">™</span>
                 </div>
               </a>
               
