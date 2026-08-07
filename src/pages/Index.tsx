@@ -306,13 +306,13 @@ const Index = () => {
               <VoiceAgentButton variant="hero" />
               <SalesAgentDrawer
                 trigger={
-                  <Button size="lg" variant="secondary" className="text-base px-8">
+                  <Button size="lg" variant="outline" className="text-base px-8 border-navy-foreground/30 bg-navy-foreground text-navy hover:bg-navy-foreground/90 hover:text-navy">
                     <MessageCircle className="h-5 w-5 mr-2" />
                     Chat with Sales
                   </Button>
                 }
               />
-              <Button size="lg" className="text-base px-8 bg-white text-navy hover:bg-white/90" asChild>
+              <Button size="lg" className="text-base px-8 bg-white text-navy hover:bg-white/90 shadow-lg shadow-black/20" asChild>
                 <a href="mailto:commercial@weprintwraps.com">
                   <Mail className="h-5 w-5 mr-2" />
                   Email Us

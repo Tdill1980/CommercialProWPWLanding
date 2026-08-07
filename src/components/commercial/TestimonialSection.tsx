@@ -19,7 +19,7 @@ export const TestimonialSection = () => {
         {/* Testimonials Grid */}
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Erik's Video Testimonial */}
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10">
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 shadow-xl shadow-black/20">
             {/* Video Area */}
             <div className="relative aspect-video bg-gradient-to-br from-navy-800 to-navy-900">
               {/* Video Placeholder - replace with actual embed */}

@@ -101,7 +101,7 @@ export const PricingUpdateExplainer = ({
             Same premium quality. Better value.
           </p>
         </div>
-        <div className="bg-background border border-border rounded-xl p-8">
+        <div className="bg-background border border-border rounded-xl p-8 shadow-lg shadow-foreground/5">
           {content}
         </div>
       </div>
