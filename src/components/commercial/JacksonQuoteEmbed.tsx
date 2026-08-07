@@ -37,20 +37,30 @@ export const JacksonQuoteEmbed = ({
   }
   const embedUrl = embedUrlRef.current;
 
+  // Origin of the quote tool — used to scope postMessage in both directions
+  const quoteOrigin = (() => {
+    try {
+      return QUOTE_TOOL_URL ? new URL(QUOTE_TOOL_URL).origin : "";
+    } catch {
+      return "";
+    }
+  })();
+
   // Push prefill updates into the iframe whenever the estimator changes
   useEffect(() => {
-    if (!isReadyRef.current) return;
-    iframeRef.current?.contentWindow?.postMessage(prefillToMessage(prefill), "*");
-  }, [prefill]);
+    if (!isReadyRef.current || !quoteOrigin) return;
+    iframeRef.current?.contentWindow?.postMessage(prefillToMessage(prefill), quoteOrigin);
+  }, [prefill, quoteOrigin]);
 
 
   // Listen for postMessage events from the iframe
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      // Verify origin if needed (for security)
-      // if (event.origin !== expectedOrigin) return;
+      // Only trust messages coming from the quote tool origin
+      if (!quoteOrigin || event.origin !== quoteOrigin) return;
 
       const { type, ...data } = event.data || {};
+
 
       switch (type) {
         case "WPW_QUOTE_HEIGHT":
