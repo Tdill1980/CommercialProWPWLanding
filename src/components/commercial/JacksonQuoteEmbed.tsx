@@ -82,7 +82,7 @@ export const JacksonQuoteEmbed = ({
 
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, [onQuoteStarted, onQuoteUpdated, onQuoteSubmitted]);
+  }, [onQuoteStarted, onQuoteUpdated, onQuoteSubmitted, quoteOrigin]);
 
   // Placeholder when URL is not set
   if (!QUOTE_TOOL_URL) {
