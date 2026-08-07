@@ -128,7 +128,7 @@ export const BulkPricingSection = () => {
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Left: Interactive Calculator */}
-          <div className="bg-background border border-border rounded-xl p-6">
+          <div className="bg-background border border-border rounded-xl p-6 shadow-lg shadow-foreground/5">
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border">
               <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10">
                 <Calculator className="w-5 h-5 text-primary" />
@@ -268,7 +268,7 @@ export const BulkPricingSection = () => {
 
               {/* Next Tier Nudge */}
               {calculations.nextTier && calculations.sqft > 0 && (
-                <div className="flex items-start gap-2 rounded-lg border border-primary/20 bg-primary/5 p-3">
+                <div className="flex items-start gap-2 rounded-lg border border-primary/30 bg-primary/10 p-3">
                   <TrendingDown className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
                   <p className="text-sm text-foreground">
                     Add{" "}
@@ -315,7 +315,7 @@ export const BulkPricingSection = () => {
 
 
           {/* Right: Pricing Table */}
-          <div className="bg-background border border-border rounded-xl p-6">
+          <div className="bg-background border border-border rounded-xl p-6 shadow-lg shadow-foreground/5">
             {/* Base Price Header */}
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border">
               <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10">
@@ -344,7 +344,7 @@ export const BulkPricingSection = () => {
                     key={tier.label}
                     className={`flex items-center justify-between py-3 px-3 -mx-3 rounded-lg transition-colors ${
                       isActive
-                        ? "bg-primary/10 border border-primary/20"
+                        ? "bg-primary/15 border border-primary/30 shadow-sm shadow-primary/10"
                         : index < VOLUME_TIERS.length - 1
                           ? "border-b border-border/50"
                           : ""

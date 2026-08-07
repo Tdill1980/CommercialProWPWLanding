@@ -128,7 +128,7 @@ export const ProductSlider = ({
                 rel="noopener noreferrer"
                 className="group flex-[0_0_auto] w-[260px] sm:w-[280px] md:w-[300px] snap-start"
               >
-                <div className="bg-card border border-border rounded-xl overflow-hidden transition-shadow hover:shadow-lg hover:border-primary/40">
+                <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm shadow-foreground/5 transition-all hover:shadow-xl hover:border-primary/50 hover:-translate-y-0.5">
                   {/* Image */}
                   <div className="relative aspect-square bg-muted overflow-hidden">
                     {img ? (

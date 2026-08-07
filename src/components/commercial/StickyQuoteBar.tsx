@@ -78,7 +78,7 @@ export const StickyQuoteBar = ({ className = "" }: StickyQuoteBarProps) => {
 
               </div>
             </div>
-            <Button onClick={scrollToQuote} size="sm" className="font-medium">
+            <Button onClick={scrollToQuote} size="sm" className="font-medium shadow-md shadow-primary/25">
               Start Quote
               <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
@@ -101,7 +101,7 @@ export const StickyQuoteBar = ({ className = "" }: StickyQuoteBarProps) => {
                 </p>
               </div>
             </div>
-            <Button onClick={scrollToQuote} size="sm" className="font-medium">
+            <Button onClick={scrollToQuote} size="sm" className="font-medium shadow-md shadow-primary/25">
               Continue Quote
               <ChevronRight className="h-4 w-4 ml-1" />
             </Button>

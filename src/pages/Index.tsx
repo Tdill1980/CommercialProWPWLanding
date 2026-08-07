@@ -130,11 +130,11 @@ const Index = () => {
               {/* Bulk pricing hook */}
               <a
                 href="#volume"
-                className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/15 px-4 py-2 mb-6 text-sm font-semibold text-white hover:bg-primary/25 transition-colors"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 mb-6 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 hover:bg-primary/90 transition-colors"
               >
-                <TrendingDown className="h-4 w-4 text-primary" />
+                <TrendingDown className="h-4 w-4" />
                 Save up to 20% on volume orders
-                <ChevronRight className="h-4 w-4 opacity-70" />
+                <ChevronRight className="h-4 w-4 opacity-80" />
               </a>
 
               {/* Quick value props */}
@@ -204,7 +204,7 @@ const Index = () => {
                   </div>
                   <div>
                     <p className="font-semibold text-white text-sm leading-tight">{label}</p>
-                    <p className="text-blue-200/70 text-xs mt-1">{desc}</p>
+                    <p className="text-blue-100 text-xs mt-1">{desc}</p>
                     {badge && (
                       <p className="text-primary text-[10px] mt-1 font-medium">{badge}</p>
                     )}
@@ -306,13 +306,13 @@ const Index = () => {
               <VoiceAgentButton variant="hero" />
               <SalesAgentDrawer
                 trigger={
-                  <Button size="lg" variant="secondary" className="text-base px-8">
+                  <Button size="lg" variant="outline" className="text-base px-8 border-navy-foreground/30 bg-navy-foreground text-navy hover:bg-navy-foreground/90 hover:text-navy">
                     <MessageCircle className="h-5 w-5 mr-2" />
                     Chat with Sales
                   </Button>
                 }
               />
-              <Button size="lg" className="text-base px-8 bg-white text-navy hover:bg-white/90" asChild>
+              <Button size="lg" className="text-base px-8 bg-white text-navy hover:bg-white/90 shadow-lg shadow-black/20" asChild>
                 <a href="mailto:commercial@weprintwraps.com">
                   <Mail className="h-5 w-5 mr-2" />
                   Email Us

@@ -57,7 +57,7 @@ export const ApproveProTeaser = () => {
         <div className="flex-shrink-0">
           <button
             onClick={scrollToProofing}
-            className="flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg text-primary font-medium text-sm transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 rounded-lg text-primary-foreground font-medium text-sm shadow-md shadow-primary/25 transition-colors"
           >
             See before/after
             <ChevronRight className="h-4 w-4" />
