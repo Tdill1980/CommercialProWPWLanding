@@ -57,7 +57,7 @@ export const JacksonQuoteEmbed = ({
           (payload.summary as string) ||
           `${p.category} • ${Math.round(p.sqft)} sq ft • ${p.tierLabel} (${p.tierDiscount}% off)`,
         next_action: "follow_up",
-        raw: { ...payload, prefill: p, reference },
+        raw: { ...payload, prefill: { ...p }, reference } as Record<string, unknown>,
       });
 
       if (error) {
