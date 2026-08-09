@@ -122,13 +122,14 @@ export const JacksonQuoteEmbed = ({
           break;
         case "WPW_QUOTE_SUBMITTED":
           onQuoteSubmitted?.(data.quote_id || "", data.email || "");
+          void saveLead(data);
           break;
       }
     };
 
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, [onQuoteStarted, onQuoteUpdated, onQuoteSubmitted, quoteOrigin]);
+  }, [onQuoteStarted, onQuoteUpdated, onQuoteSubmitted, quoteOrigin, saveLead]);
 
   // Placeholder when URL is not set
   if (!QUOTE_TOOL_URL) {
