@@ -28,9 +28,47 @@ export const JacksonQuoteEmbed = ({
 }: QuoteEmbedProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [iframeHeight, setIframeHeight] = useState(500);
+  const [leadSave, setLeadSave] = useState<LeadSaveState>({ status: "idle" });
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const isReadyRef = useRef(false);
   const prefill = useQuotePrefill();
+  const prefillRef = useRef(prefill);
+  prefillRef.current = prefill;
+
+  // Persist the submitted quote as a lead, then surface a visible confirmation.
+  const saveLead = useCallback(
+    async (payload: Record<string, unknown>) => {
+      const p = prefillRef.current;
+      const email = String(payload.email || "");
+      const quoteId = String(payload.quote_id || "");
+      const reference = quoteId || crypto.randomUUID().slice(0, 8).toUpperCase();
+
+      setLeadSave({ status: "saving" });
+      const { error } = await supabase.from("leads_inbox").insert({
+        source: "commercialpro_quote",
+        external_id: quoteId || null,
+        intent: "quote_request",
+        confidence: 1,
+        caller_email: email || null,
+        caller_name: (payload.name as string) || null,
+        caller_phone: (payload.phone as string) || null,
+        caller_company: (payload.company as string) || null,
+        summary:
+          (payload.summary as string) ||
+          `${p.category} • ${Math.round(p.sqft)} sq ft • ${p.tierLabel} (${p.tierDiscount}% off)`,
+        next_action: "follow_up",
+        raw: { ...payload, prefill: p, reference },
+      });
+
+      if (error) {
+        setLeadSave({ status: "error", message: error.message });
+        return;
+      }
+      setLeadSave({ status: "saved", reference, email });
+    },
+    []
+  );
+
 
   // Build embed URL once — prefill present at mount goes in the query string.
   // Later estimator changes are pushed over postMessage so the iframe never reloads.
