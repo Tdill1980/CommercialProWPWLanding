@@ -51,10 +51,59 @@ const EmbedCommercial = () => {
     };
   }, []);
 
+  const sectionLinks = [
+    { href: "#shop", label: "Shop" },
+    { href: "#volume", label: "Volume Pricing" },
+    { href: "#pricing", label: "Pricing" },
+    { href: "#proofing", label: "3D Proofing" },
+    { href: "#testimonials", label: "Reviews" },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
+      {/* Slim nav strip — the host page is a full-bleed canvas with no theme
+          header, so this guarantees the embed always has navigation. */}
+      <header className="sticky top-0 z-40 bg-background border-b border-border shadow-sm">
+        <nav
+          aria-label="CommercialPro"
+          className="max-w-7xl mx-auto px-4 sm:px-6 h-12 flex items-center gap-4"
+        >
+          <a
+            href="https://weprintwraps.com/"
+            target="_top"
+            className="shrink-0 font-black tracking-tight text-foreground text-sm sm:text-base"
+          >
+            WePrintWraps <span className="text-primary">CommercialPro</span>
+          </a>
+
+          <div className="flex-1 min-w-0 overflow-x-auto">
+            <ul className="flex items-center gap-4 sm:gap-5 whitespace-nowrap">
+              {sectionLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <a
+            href="https://weprintwraps.com/contact/"
+            target="_top"
+            className="shrink-0 inline-flex items-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
+          >
+            Contact
+          </a>
+        </nav>
+      </header>
+
       {/* Hero with quote tool */}
       <section className="relative min-h-[600px] lg:min-h-[660px] overflow-hidden">
+
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-10 lg:py-12">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             {/* Left side - Hero text */}
