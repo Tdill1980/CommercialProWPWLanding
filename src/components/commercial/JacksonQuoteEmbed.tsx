@@ -1,6 +1,14 @@
-import { useState, useEffect, useRef } from "react";
-import { Loader2, Settings } from "lucide-react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { Loader2, Settings, CheckCircle2, AlertTriangle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 import { useQuotePrefill, prefillToParams, prefillToMessage } from "@/lib/quotePrefill";
+
+type LeadSaveState =
+  | { status: "idle" }
+  | { status: "saving" }
+  | { status: "saved"; reference: string; email: string }
+  | { status: "error"; message: string };
 
 // Environment variable for quote tool URL
 const QUOTE_TOOL_URL = import.meta.env.VITE_QUOTE_TOOL_URL || "";
