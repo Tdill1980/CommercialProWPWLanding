@@ -84,9 +84,11 @@ const Index = () => {
                   </button>
                 }
               />
-              <Button size="sm" className="font-medium">
-                Get Quote
-                <ChevronRight className="h-4 w-4 ml-1" />
+              <Button size="sm" className="font-medium" asChild>
+                <a href="#pricing">
+                  Get Quote
+                  <ChevronRight className="h-4 w-4 ml-1" />
+                </a>
               </Button>
             </div>
           </div>
