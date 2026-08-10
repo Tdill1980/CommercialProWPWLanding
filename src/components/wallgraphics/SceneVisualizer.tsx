@@ -90,12 +90,14 @@ const SceneVisualizer = ({ selectedDesign, onSelectWall }: SceneVisualizerProps)
         {/* Navigation Arrows */}
         <button
           onClick={handlePrevScene}
+          aria-label="Previous scene"
           className="absolute left-3 top-1/2 -translate-y-1/2 bg-background/80 backdrop-blur-sm p-2 rounded-full shadow-lg hover:bg-background transition-all"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
         <button
           onClick={handleNextScene}
+          aria-label="Next scene"
           className="absolute right-3 top-1/2 -translate-y-1/2 bg-background/80 backdrop-blur-sm p-2 rounded-full shadow-lg hover:bg-background transition-all"
         >
           <ChevronRight className="h-5 w-5" />
