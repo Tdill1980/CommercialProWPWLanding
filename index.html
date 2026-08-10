@@ -9,7 +9,23 @@
       content="Wholesale wrap printing for shops that don't own printers. Volume pricing to $4.22/sq ft, 3M and Avery film, 1–2 business day production, 3D proofs that sell the job."
     />
     <meta name="author" content="WePrintWraps" />
-    <link rel="canonical" href="https://bright-fleet-flow.lovable.app/" />
+    <!--
+      Canonical points at the WORDPRESS page, not at this origin.
+
+      This app self-canonicalised to bright-fleet-flow.lovable.app while
+      weprintwraps.com/commercialpro/ (live, HTTP 200) serves the same content
+      through the /embed/commercial iframe. Two indexable URLs for one page
+      split the ranking signals, and the lovable.app domain can outrank
+      weprintwraps.com for your own product — the exact outcome the embed plan
+      set out to avoid ("leave the embed route's noindex in place so it never
+      competes with /commercialpro/").
+
+      /embed/commercial is already noindex, but the ROOT was not, and the
+      generated sitemap was actively inviting Google to index it at priority
+      1.0. Canonical is what actually consolidates the signal: crawl this URL
+      all you like, credit belongs to weprintwraps.com.
+    -->
+    <link rel="canonical" href="https://weprintwraps.com/commercialpro/" />
 
     <meta property="og:title" content="CommercialPro — Wholesale Vehicle Wrap Printing" />
     <meta
@@ -48,7 +64,7 @@
           {
             "@type": "WebSite",
             "@id": "https://bright-fleet-flow.lovable.app/#website",
-            "url": "https://bright-fleet-flow.lovable.app/",
+            "url": "https://weprintwraps.com/commercialpro/",
             "name": "WePrintWraps CommercialPro",
             "publisher": { "@id": "https://bright-fleet-flow.lovable.app/#organization" }
           },
@@ -58,7 +74,7 @@
             "serviceType": "Vehicle wrap printing",
             "provider": { "@id": "https://bright-fleet-flow.lovable.app/#organization" },
             "areaServed": "US",
-            "url": "https://bright-fleet-flow.lovable.app/",
+            "url": "https://weprintwraps.com/commercialpro/",
             "description": "Volume-priced printed vehicle wrap film with 3M and Avery materials, free 3D proofs, and 1–2 business day production."
           }
         ]
