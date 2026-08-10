@@ -267,6 +267,7 @@ const CommandCenter = () => {
         </div>
 
         {/* Dashboard Grid */}
+        <h2 className="text-lg font-semibold text-foreground mb-4">Dashboard overview</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           <RecentLeadsPanel leads={leads} isLoading={isLoading} />
           <LeadStatsPanel leads={leads} />
@@ -305,9 +306,9 @@ const CommandCenter = () => {
 
         {/* Upgrade CTA */}
         <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-xl p-8 text-center">
-          <h3 className="text-xl font-semibold text-white mb-2">
+          <h2 className="text-xl font-semibold text-white mb-2">
             Need custom workflows, client portals, or automation?
-          </h3>
+          </h2>
           <p className="text-slate-300 mb-6 max-w-2xl mx-auto">
             Upgrade to WrapCommandAI OS for advanced features like automated follow-ups, 
             client self-service portals, and smart workflow automation.

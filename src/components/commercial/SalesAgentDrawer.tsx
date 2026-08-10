@@ -84,11 +84,12 @@ export function SalesAgentDrawer({ trigger }: SalesAgentDrawerProps) {
                   onClick={handleNewChat}
                   className="h-8 w-8"
                   title="New conversation"
+                  aria-label="Start a new conversation"
                 >
                   <RefreshCw className="h-4 w-4" />
                 </Button>
                 <DrawerClose asChild>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Close chat">
                     <X className="h-4 w-4" />
                   </Button>
                 </DrawerClose>
@@ -212,6 +213,7 @@ export function SalesAgentDrawer({ trigger }: SalesAgentDrawerProps) {
                 size="icon"
                 disabled={!input.trim() || isLoading}
                 className="h-10 w-10 flex-shrink-0"
+                aria-label="Send message"
               >
                 {isLoading ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
