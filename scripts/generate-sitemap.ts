@@ -12,8 +12,16 @@ interface SitemapEntry {
   priority?: string
 }
 
+// "/" is deliberately NOT listed. It serves the same CommercialPro content as
+// weprintwraps.com/commercialpro/ (live), so submitting it at priority 1.0 asks
+// Google to index a duplicate of your own page on a lovable.app domain — which
+// can then outrank weprintwraps.com for your own product. index.html
+// canonicalises this origin to the WordPress page; leaving "/" out of the
+// sitemap keeps the two signals saying the same thing.
+//
+// The routes below stay because they have no WordPress equivalent yet. If one
+// gets embedded on weprintwraps.com, drop it from here and canonicalise it too.
 const entries: SitemapEntry[] = [
-  { path: "/", changefreq: "weekly", priority: "1.0" },
   { path: "/approvepro", changefreq: "monthly", priority: "0.8" },
   { path: "/wall-wraps", changefreq: "monthly", priority: "0.8" },
 ]
