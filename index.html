@@ -3,20 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TODO: Set the document title to the name of your application -->
-    <title>Lovable App</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
+    <title>CommercialPro — Wholesale Vehicle Wrap Printing | WePrintWraps</title>
+    <meta
+      name="description"
+      content="Wholesale wrap printing for shops that don't own printers. Volume pricing to $4.22/sq ft, 3M and Avery film, 1–2 business day production, 3D proofs that sell the job."
+    />
+    <meta name="author" content="WePrintWraps" />
 
-    <!-- TODO: Update og:title to match your application name -->
-    <meta property="og:title" content="Lovable App" />
-    <meta property="og:description" content="Lovable Generated Project" />
+    <meta property="og:title" content="CommercialPro — Wholesale Vehicle Wrap Printing" />
+    <meta
+      property="og:description"
+      content="You sell it and install it — we preflight, print, laminate, label and ship. Volume discounts apply automatically."
+    />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:site_name" content="WePrintWraps" />
+    <meta
+      property="og:image"
+      content="https://kfapjdyythzyvnpdeghu.supabase.co/storage/v1/object/public/wrap-files/commercialpro-email/hero-1200.jpg"
+    />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Lovable" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta name="twitter:title" content="CommercialPro — Wholesale Vehicle Wrap Printing" />
+    <meta
+      name="twitter:image"
+      content="https://kfapjdyythzyvnpdeghu.supabase.co/storage/v1/object/public/wrap-files/commercialpro-email/hero-1200.jpg"
+    />
+
+    <!--
+      ANALYTICS. This page had none of it — no GA, no Klaviyo, no pixel — which
+      is why campaigns pointing here reported clicks and $0. Klaviyo tags every
+      email link with utm_source/medium/campaign/id, and a destination with no
+      analytics cannot read them, so a campaign that sold looked like one that
+      failed.
+
+      Both properties are the same ones the main site uses, so this page's
+      traffic joins the existing reporting instead of forming an island.
+
+      NOTE ON THE IFRAME: when /embed/commercial is framed on
+      weprintwraps.com/commercialpro, the UTMs sit on the PARENT url, not on
+      this one — GA here will attribute the embed itself. Campaign links should
+      therefore point at the WordPress page, not at this origin, once the embed
+      is live. Direct visits to this origin (today's email links) do carry the
+      UTMs and are captured normally.
+    -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MZV0FBG7XJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-MZV0FBG7XJ');
+    </script>
+
+    <!-- Klaviyo onsite. XQZdm5 is the account's PUBLIC api key (site id), not a
+         secret — it is the same value Klaviyo prints in its own embed snippet. -->
+    <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/XQZdm5/klaviyo.js"></script>
+
+    <!-- Meta Pixel: intentionally NOT wired yet. The main app takes its id from
+         VITE_FACEBOOK_PIXEL_ID rather than hard-coding it, so the value is not
+         in source anywhere. Add it here with the real id — a placeholder would
+         load and silently report nothing, which is worse than an obvious gap. -->
   </head>
 
   <body>
