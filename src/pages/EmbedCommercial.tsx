@@ -51,6 +51,38 @@ const EmbedCommercial = () => {
     };
   }, []);
 
+  // Broadcast the document height to the parent window so the host page
+  // (weprintwraps.com/commercialpro/) can size this iframe without scrollbars.
+  // Only fires when actually embedded (window.parent !== window).
+  useEffect(() => {
+    if (window.parent === window) return; // not in an iframe
+
+    const send = () => {
+      const height = Math.ceil(
+        document.documentElement.scrollHeight || document.body.scrollHeight
+      );
+      if (height > 0) {
+        window.parent.postMessage(
+          { type: "WPW_COMMERCIAL_HEIGHT", height },
+          "*" // host page listener verifies our origin
+        );
+      }
+    };
+
+    // Initial + interval-based fallback (covers late iframe image loads).
+    send();
+    const interval = window.setInterval(send, 800);
+
+    // ResizeObserver for smooth, accurate updates.
+    const ro = new ResizeObserver(() => send());
+    ro.observe(document.body);
+
+    return () => {
+      window.clearInterval(interval);
+      ro.disconnect();
+    };
+  }, []);
+
   const sectionLinks = [
     { href: "#shop", label: "Shop" },
     { href: "#volume", label: "Volume Pricing" },
