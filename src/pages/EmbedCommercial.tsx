@@ -134,6 +134,10 @@ const EmbedCommercial = () => {
         </nav>
       </header>
 
+      {/* Fleet promo codes — always above the fold */}
+      <PromoCodesStrip />
+
+
       {/* Hero with quote tool */}
       <section className="relative min-h-[600px] lg:min-h-[660px] overflow-hidden">
 
