@@ -214,7 +214,7 @@ export const PromoCodesSection = () => {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
           {PROMO_CODES.map((promo) => {
             const qualifies = subtotal >= promo.minSpend;
             const isBestForOrder = best?.code === promo.code;
@@ -235,7 +235,7 @@ export const PromoCodesSection = () => {
                     sq_ft: sqFt,
                   })
                 }
-                className={`relative rounded-xl border-2 bg-card p-5 transition-shadow ${
+                className={`relative min-w-0 rounded-xl border-2 bg-card p-4 sm:p-5 mt-3 sm:mt-0 transition-shadow ${
                   isBestForOrder
                     ? "border-primary shadow-xl shadow-primary/30 ring-2 ring-primary/30"
                     : qualifies
@@ -244,24 +244,25 @@ export const PromoCodesSection = () => {
                 }`}
               >
                 {isBestForOrder ? (
-                  <span className="absolute -top-2.5 right-4 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-md shadow-black/30">
+                  <span className="absolute -top-2.5 right-3 sm:right-4 max-w-[calc(100%-1.5rem)] truncate bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-md shadow-black/30">
                     Best for your order
                   </span>
                 ) : promo.isBest ? (
-                  <span className="absolute -top-2.5 right-4 bg-muted text-muted-foreground border border-border text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                  <span className="absolute -top-2.5 right-3 sm:right-4 max-w-[calc(100%-1.5rem)] truncate bg-muted text-muted-foreground border border-border text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
                     Best value
                   </span>
                 ) : null}
 
                 <div className="flex items-center justify-between gap-3 mb-4">
-                  <div>
-                    <p className="font-mono text-xl font-black text-foreground tracking-wide">
+                  <div className="min-w-0">
+                    <p className="font-mono text-lg sm:text-xl font-black text-foreground tracking-wide truncate">
                       {promo.code}
                     </p>
                     <p className="text-sm font-semibold text-primary">{promo.percent}% off</p>
                   </div>
                   <Button
                     size="sm"
+                    className="shrink-0"
                     variant={isBestForOrder ? "default" : "outline"}
                     onClick={() => copy(promo.code)}
                     aria-label={`Copy promo code ${promo.code}`}
@@ -280,35 +281,37 @@ export const PromoCodesSection = () => {
                   </Button>
                 </div>
 
-                <dl className="space-y-2 text-sm border-t border-border pt-4">
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Minimum order</dt>
-                    <dd className="font-semibold text-foreground">{money(promo.minSpend)}</dd>
+                <dl className="space-y-2 text-[13px] sm:text-sm border-t border-border pt-4">
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-muted-foreground min-w-0">Minimum order</dt>
+                    <dd className="font-semibold text-foreground tabular-nums shrink-0">
+                      {money(promo.minSpend)}
+                    </dd>
                   </div>
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Roughly</dt>
-                    <dd className="font-medium text-foreground">
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-muted-foreground min-w-0">Roughly</dt>
+                    <dd className="font-medium text-foreground tabular-nums shrink-0">
                       {promo.minSqFt.toLocaleString()}+ sq ft
                     </dd>
                   </div>
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Effective rate</dt>
-                    <dd className="font-medium text-foreground">
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-muted-foreground min-w-0">Effective rate</dt>
+                    <dd className="font-medium text-foreground tabular-nums shrink-0">
                       ${discountedPrice.toFixed(2)}/sq ft
                     </dd>
                   </div>
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-muted-foreground min-w-0">
                       {qualifies ? "You save on this order" : "You save at minimum"}
                     </dt>
-                    <dd className="font-bold text-primary">{money(savings)}</dd>
+                    <dd className="font-bold text-primary tabular-nums shrink-0">{money(savings)}</dd>
                   </div>
                 </dl>
 
                 {!qualifies && (
                   <p className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <Lock className="h-3 w-3" />
-                    {money(promo.minSpend - subtotal)} more to unlock
+                    <Lock className="h-3 w-3 shrink-0" />
+                    <span className="min-w-0">{money(promo.minSpend - subtotal)} more to unlock</span>
                   </p>
                 )}
               </div>
@@ -316,10 +319,11 @@ export const PromoCodesSection = () => {
           })}
         </div>
 
-        <p className="text-xs text-blue-100/70 text-center mt-8 max-w-2xl mx-auto">
+        <p className="text-xs text-blue-100/70 text-center mt-6 sm:mt-8 max-w-2xl mx-auto">
           One code per order — codes don't stack. Minimums are calculated on the order subtotal
           at the ${BASE_PRICE.toFixed(2)}/sq ft base rate before shipping and taxes.
         </p>
+
       </div>
     </section>
   );
