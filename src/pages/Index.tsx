@@ -15,6 +15,7 @@ import {
   VoiceAgentButton,
   TrustLogosStrip,
   WallWrapProduct,
+  WallWrapQuoteForm,
   PromoCodesSection,
   PromoCodesStrip,
 } from "@/components/commercial";
@@ -258,6 +259,9 @@ const Index = () => {
             </div>
           </div>
           <WallWrapProduct />
+          <div className="mt-8">
+            <WallWrapQuoteForm />
+          </div>
         </div>
       </section>
 
