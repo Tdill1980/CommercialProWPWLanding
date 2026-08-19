@@ -179,14 +179,6 @@ export function SalesAgentDrawer({ trigger }: SalesAgentDrawerProps) {
             </p>
             <div className="flex gap-2">
               <a
-                href="tel:1-800-555-0199"
-                className="flex items-center gap-1.5 text-xs text-primary hover:underline"
-              >
-                <Phone className="h-3 w-3" />
-                Call Sales
-              </a>
-              <span className="text-muted-foreground">•</span>
-              <a
                 href="mailto:commercial@weprintwraps.com"
                 className="flex items-center gap-1.5 text-xs text-primary hover:underline"
               >
