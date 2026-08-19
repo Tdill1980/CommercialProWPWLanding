@@ -253,7 +253,7 @@ const Index = () => {
                 Shop Our Products
               </h2>
               <p className="text-muted-foreground text-sm mt-1 max-w-xl">
-                Featured wrap materials and supplies — same wholesale pricing, shipped fast.
+                Custom printed wall wraps on Avery HP MPI 2610 — same wholesale pricing, shipped fast.
               </p>
             </div>
           </div>
