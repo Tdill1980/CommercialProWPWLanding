@@ -70,33 +70,33 @@ export const PromoCodesSection = () => {
   };
 
   return (
-    <section className="w-full bg-gradient-to-b from-slate-900 via-blue-950 to-slate-900 py-16 border-y border-border">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-10">
-          <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-blue-300 mb-3">
-            <Tag className="h-3.5 w-3.5" />
+    <section className="w-full overflow-x-hidden bg-gradient-to-b from-slate-900 via-blue-950 to-slate-900 py-10 sm:py-16 border-y border-border">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-7 sm:mb-10">
+          <span className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold tracking-widest uppercase text-blue-300 mb-3">
+            <Tag className="h-3.5 w-3.5 shrink-0" />
             Fleet Promo Codes
           </span>
-          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight mb-3 text-balance">
             Apply your discount at checkout
           </h2>
-          <p className="text-blue-100/80 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base text-blue-100/80 max-w-2xl mx-auto">
             These codes are live in our store. Enter the code at checkout once your order
             hits the minimum — the discount applies to the full order.
           </p>
         </div>
 
         {/* Live order estimator */}
-        <div className="rounded-2xl border-2 border-border bg-card shadow-2xl shadow-black/40 p-5 md:p-6 mb-8">
-          <div className="flex items-center gap-2 mb-5">
-            <Calculator className="h-4 w-4 text-primary" />
-            <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">
+        <div className="rounded-2xl border-2 border-border bg-card shadow-2xl shadow-black/40 p-4 sm:p-5 md:p-6 mb-6 sm:mb-8">
+          <div className="flex items-center gap-2 mb-4 sm:mb-5">
+            <Calculator className="h-4 w-4 text-primary shrink-0" />
+            <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-foreground">
               Your order breakdown
             </h3>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-4 mb-5">
-            <div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-5">
+            <div className="col-span-2 md:col-span-1 min-w-0">
               <label htmlFor="promo-size" className="block text-xs font-semibold text-muted-foreground mb-1.5">
                 Wrap size
               </label>
