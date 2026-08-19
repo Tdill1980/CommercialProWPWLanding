@@ -107,7 +107,7 @@ export const PromoCodesSection = () => {
                   setSizeId(e.target.value);
                   setCustomSqFt(null);
                 }}
-                className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground"
+                className="w-full max-w-full h-11 rounded-md border border-input bg-background px-3 text-sm text-foreground truncate"
               >
                 {WRAP_SIZES.map((s) => (
                   <option key={s.id} value={s.id}>
@@ -117,13 +117,14 @@ export const PromoCodesSection = () => {
               </select>
             </div>
 
-            <div>
+            <div className="min-w-0">
               <label htmlFor="promo-qty" className="block text-xs font-semibold text-muted-foreground mb-1.5">
                 Vehicles
               </label>
               <input
                 id="promo-qty"
                 type="number"
+                inputMode="numeric"
                 min={1}
                 max={100}
                 value={qty}
@@ -131,24 +132,25 @@ export const PromoCodesSection = () => {
                   setQty(Math.max(1, Math.min(100, Number(e.target.value) || 1)));
                   setCustomSqFt(null);
                 }}
-                className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground"
+                className="w-full max-w-full h-11 rounded-md border border-input bg-background px-3 text-base sm:text-sm text-foreground"
               />
             </div>
 
-            <div>
+            <div className="min-w-0">
               <label htmlFor="promo-sqft" className="block text-xs font-semibold text-muted-foreground mb-1.5">
                 Total sq ft
               </label>
               <input
                 id="promo-sqft"
                 type="number"
+                inputMode="numeric"
                 min={1}
                 max={50000}
                 value={sqFt}
                 onChange={(e) =>
                   setCustomSqFt(Math.max(1, Math.min(50000, Number(e.target.value) || 1)))
                 }
-                className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm font-semibold text-foreground"
+                className="w-full max-w-full h-11 rounded-md border border-input bg-background px-3 text-base sm:text-sm font-semibold text-foreground"
               />
             </div>
           </div>
@@ -161,34 +163,37 @@ export const PromoCodesSection = () => {
             value={Math.min(sqFt, 15000)}
             onChange={(e) => setCustomSqFt(Number(e.target.value))}
             aria-label="Total square footage"
-            className="w-full accent-primary mb-5"
+            className="block w-full max-w-full accent-primary mb-5"
           />
 
-          <dl className="grid sm:grid-cols-4 gap-3 text-sm">
-            <div className="rounded-lg bg-muted/60 border border-border p-3">
-              <dt className="text-xs text-muted-foreground">Subtotal</dt>
-              <dd className="font-black text-foreground text-lg">{money(subtotal)}</dd>
+          <dl className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 text-sm">
+            <div className="min-w-0 rounded-lg bg-muted/60 border border-border p-3">
+              <dt className="text-[11px] sm:text-xs text-muted-foreground">Subtotal</dt>
+              <dd className="font-black text-foreground text-base sm:text-lg tabular-nums break-words">
+                {money(subtotal)}
+              </dd>
             </div>
-            <div className="rounded-lg bg-muted/60 border border-border p-3">
-              <dt className="text-xs text-muted-foreground">Discount</dt>
-              <dd className="font-black text-lg text-primary">
+            <div className="min-w-0 rounded-lg bg-muted/60 border border-border p-3">
+              <dt className="text-[11px] sm:text-xs text-muted-foreground">Discount</dt>
+              <dd className="font-black text-base sm:text-lg text-primary tabular-nums break-words">
                 {best ? `-${money(subtotal * (best.percent / 100))}` : "—"}
               </dd>
             </div>
-            <div className="rounded-lg bg-muted/60 border border-border p-3">
-              <dt className="text-xs text-muted-foreground">Order total</dt>
-              <dd className="font-black text-foreground text-lg">
+            <div className="min-w-0 rounded-lg bg-muted/60 border border-border p-3">
+              <dt className="text-[11px] sm:text-xs text-muted-foreground">Order total</dt>
+              <dd className="font-black text-foreground text-base sm:text-lg tabular-nums break-words">
                 {money(subtotal * (1 - (best?.percent ?? 0) / 100))}
               </dd>
             </div>
-            <div className="rounded-lg bg-primary/10 border-2 border-primary/40 p-3">
-              <dt className="text-xs text-muted-foreground">Effective rate</dt>
-              <dd className="font-black text-primary text-lg">
+            <div className="min-w-0 rounded-lg bg-primary/10 border-2 border-primary/40 p-3">
+              <dt className="text-[11px] sm:text-xs text-muted-foreground">Effective rate</dt>
+              <dd className="font-black text-primary text-base sm:text-lg tabular-nums break-words">
                 ${(BASE_PRICE * (1 - (best?.percent ?? 0) / 100)).toFixed(2)}
                 <span className="text-xs font-semibold">/sq ft</span>
               </dd>
             </div>
           </dl>
+
 
           <p className="text-xs text-muted-foreground mt-4">
             {best ? (
