@@ -8,7 +8,7 @@ import {
   StickyQuoteBar,
   TrustLogosStrip,
   CommercialInfoStrip,
-  ProductSlider,
+  WallWrapProduct,
   PromoCodesSection,
   PromoCodesStrip,
 } from "@/components/commercial";
@@ -209,7 +209,7 @@ const EmbedCommercial = () => {
               </p>
             </div>
           </div>
-          <ProductSlider sort="featured" count={12} />
+          <WallWrapProduct />
         </div>
       </section>
 

@@ -14,7 +14,7 @@ import {
   SalesAgentDrawer,
   VoiceAgentButton,
   TrustLogosStrip,
-  ProductSlider,
+  WallWrapProduct,
   PromoCodesSection,
   PromoCodesStrip,
 } from "@/components/commercial";
@@ -257,7 +257,7 @@ const Index = () => {
               </p>
             </div>
           </div>
-          <ProductSlider sort="featured" count={12} />
+          <WallWrapProduct />
         </div>
       </section>
 
