@@ -28,7 +28,12 @@ export const JacksonQuoteEmbed = ({
   onQuoteSubmitted,
 }: QuoteEmbedProps) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [iframeHeight, setIframeHeight] = useState(500);
+  // The quote tool is a tall multi-step form. Until (and unless) it reports its
+  // own height over postMessage, use a generous default so nothing is clipped —
+  // taller on narrow screens where the form stacks vertically.
+  const MIN_HEIGHT =
+    typeof window !== "undefined" && window.innerWidth < 768 ? 1600 : 1100;
+  const [iframeHeight, setIframeHeight] = useState(MIN_HEIGHT);
   const [leadSave, setLeadSave] = useState<LeadSaveState>({ status: "idle" });
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const isReadyRef = useRef(false);
@@ -111,8 +116,10 @@ export const JacksonQuoteEmbed = ({
 
       switch (type) {
         case "WPW_QUOTE_HEIGHT":
-          if (typeof data.height === "number") {
-            setIframeHeight(data.height);
+          if (typeof data.height === "number" && data.height > 0) {
+            // Never shrink below the safe minimum — a stale/partial height
+            // report from the tool is what clips the form on mobile.
+            setIframeHeight(Math.max(data.height, 600));
           }
           break;
         case "WPW_QUOTE_STARTED":
