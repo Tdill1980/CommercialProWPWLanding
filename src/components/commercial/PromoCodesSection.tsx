@@ -212,6 +212,15 @@ export const PromoCodesSection = () => {
             return (
               <div
                 key={promo.code}
+                onClick={() =>
+                  trackEvent("promo_code_click", {
+                    promo_code: promo.code,
+                    percent_off: promo.percent,
+                    qualifies,
+                    order_subtotal: Math.round(subtotal),
+                    sq_ft: sqFt,
+                  })
+                }
                 className={`relative rounded-xl border-2 bg-card p-5 transition-shadow ${
                   isBestForOrder
                     ? "border-primary shadow-xl shadow-primary/30 ring-2 ring-primary/30"
