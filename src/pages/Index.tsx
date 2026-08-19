@@ -8,7 +8,6 @@ import {
   CommercialFooter,
   TestimonialSection,
   JacksonQuoteEmbed,
-  ApproveProTeaser,
   StickyQuoteBar,
   QuoteWelcomeBanner,
   ProUpgradeStrip,
@@ -16,6 +15,7 @@ import {
   VoiceAgentButton,
   TrustLogosStrip,
   ProductSlider,
+  PromoCodesSection,
 } from "@/components/commercial";
 import { Button } from "@/components/ui/button";
 import heroFleet from "@/assets/hero-fleet.jpg";
@@ -179,10 +179,6 @@ const Index = () => {
             </div>
           </div>
 
-          {/* ApprovePro Teaser - below quote, still above fold */}
-          <div className="mt-8">
-            <ApproveProTeaser />
-          </div>
         </div>
       </section>
 
@@ -259,6 +255,11 @@ const Index = () => {
       {/* Volume Pricing Section - lead pricing content */}
       <section id="volume" className="scroll-mt-20">
         <BulkPricingSection />
+      </section>
+
+      {/* Fleet Promo Codes */}
+      <section id="promo-codes" className="scroll-mt-20">
+        <PromoCodesSection />
       </section>
 
       {/* Pricing Section */}
