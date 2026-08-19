@@ -61,9 +61,9 @@ const Index = () => {
                   Volume Pricing
                 </a>
 
-                <Link to="/approvepro" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                  ApprovePro
-                </Link>
+                <a href="#promo-codes" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                  Promo Codes
+                </a>
                 <Link to="/wall-wraps" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                   Wall Wraps
                 </Link>
