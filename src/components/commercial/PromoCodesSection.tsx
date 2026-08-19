@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Copy, Check, Tag, Calculator, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { trackEvent } from "@/lib/analytics";
 
 /**
  * PromoCodesSection
