@@ -35,17 +35,17 @@ export const PromoCodesSection = () => {
   };
 
   return (
-    <section className="w-full bg-background py-16 border-y border-border">
+    <section className="w-full bg-gradient-to-b from-slate-900 via-blue-950 to-slate-900 py-16 border-y border-border">
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-center mb-10">
-          <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-primary mb-3">
+          <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-blue-300 mb-3">
             <Tag className="h-3.5 w-3.5" />
             Fleet Promo Codes
           </span>
-          <h2 className="text-3xl md:text-4xl font-black text-foreground tracking-tight mb-3">
+          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-3">
             Apply your discount at checkout
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-blue-100/80 max-w-2xl mx-auto">
             These codes are live in our store. Enter the code at checkout once your order
             hits the minimum — the discount applies to the full order.
           </p>
@@ -59,15 +59,18 @@ export const PromoCodesSection = () => {
             return (
               <div
                 key={promo.code}
-                className={`relative rounded-xl border bg-card p-5 shadow-sm ${
-                  promo.isBest ? "border-primary shadow-lg shadow-primary/10" : "border-border"
+                className={`relative rounded-xl border-2 bg-card p-5 transition-shadow ${
+                  promo.isBest
+                    ? "border-primary shadow-xl shadow-primary/30 ring-2 ring-primary/30"
+                    : "border-border shadow-lg shadow-black/40"
                 }`}
               >
                 {promo.isBest && (
-                  <span className="absolute -top-2.5 right-4 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                  <span className="absolute -top-2.5 right-4 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-md shadow-black/30">
                     Best value
                   </span>
                 )}
+
 
                 <div className="flex items-center justify-between gap-3 mb-4">
                   <div>
@@ -123,7 +126,7 @@ export const PromoCodesSection = () => {
           })}
         </div>
 
-        <p className="text-xs text-muted-foreground text-center mt-8 max-w-2xl mx-auto">
+        <p className="text-xs text-blue-100/70 text-center mt-8 max-w-2xl mx-auto">
           One code per order — codes don't stack. Minimums are calculated on the order subtotal
           at the ${BASE_PRICE.toFixed(2)}/sq ft base rate before shipping and taxes.
         </p>

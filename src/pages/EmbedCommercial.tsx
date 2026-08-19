@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import {
   BulkPricingSection,
   PricingUpdateExplainer,
-  ApproveProPlusSection,
+  
   TestimonialSection,
   JacksonQuoteEmbed,
   StickyQuoteBar,
@@ -176,6 +176,12 @@ const EmbedCommercial = () => {
         </div>
       </section>
 
+      {/* Fleet Promo Codes — above the fold priority */}
+      <section id="promo-codes" className="scroll-mt-20">
+        <PromoCodesSection />
+      </section>
+
+
       {/* Trust Logos Strip */}
       <TrustLogosStrip />
 
@@ -208,20 +214,11 @@ const EmbedCommercial = () => {
         <BulkPricingSection />
       </section>
 
-      {/* Fleet Promo Codes */}
-      <section id="promo-codes" className="scroll-mt-20">
-        <PromoCodesSection />
-      </section>
-
       {/* Pricing */}
       <section id="pricing" className="scroll-mt-20">
         <PricingUpdateExplainer />
       </section>
 
-      {/* 3D Proofing */}
-      <section id="proofing" className="scroll-mt-20">
-        <ApproveProPlusSection />
-      </section>
 
       {/* Testimonials */}
       <section id="testimonials" className="scroll-mt-20">

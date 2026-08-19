@@ -4,7 +4,7 @@ import {
   CommercialInfoStrip,
   BulkPricingSection,
   PricingUpdateExplainer,
-  ApproveProPlusSection,
+  
   CommercialFooter,
   TestimonialSection,
   JacksonQuoteEmbed,
@@ -61,9 +61,9 @@ const Index = () => {
                   Volume Pricing
                 </a>
 
-                <Link to="/approvepro" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                  ApprovePro
-                </Link>
+                <a href="#promo-codes" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                  Promo Codes
+                </a>
                 <Link to="/wall-wraps" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                   Wall Wraps
                 </Link>
@@ -182,6 +182,12 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Fleet Promo Codes — above the fold priority */}
+      <section id="promo-codes" className="scroll-mt-20">
+        <PromoCodesSection />
+      </section>
+
+
       {/* Value Props - 6 items with bold gradient */}
       <section className="border-y border-border bg-gradient-to-b from-slate-900 via-blue-950 to-slate-900 relative overflow-hidden">
         {/* Top gradient accent */}
@@ -257,21 +263,11 @@ const Index = () => {
         <BulkPricingSection />
       </section>
 
-      {/* Fleet Promo Codes */}
-      <section id="promo-codes" className="scroll-mt-20">
-        <PromoCodesSection />
-      </section>
-
       {/* Pricing Section */}
       <section id="pricing" className="scroll-mt-20">
         <PricingUpdateExplainer />
       </section>
 
-
-      {/* 3D Proofing Section */}
-      <section id="proofing" className="scroll-mt-20">
-        <ApproveProPlusSection />
-      </section>
 
       {/* Testimonials Section */}
       <section id="testimonials" className="scroll-mt-20">
