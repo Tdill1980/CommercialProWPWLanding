@@ -176,6 +176,12 @@ const EmbedCommercial = () => {
         </div>
       </section>
 
+      {/* Fleet Promo Codes — above the fold priority */}
+      <section id="promo-codes" className="scroll-mt-20">
+        <PromoCodesSection />
+      </section>
+
+
       {/* Trust Logos Strip */}
       <TrustLogosStrip />
 
