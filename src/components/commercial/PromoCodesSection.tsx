@@ -126,7 +126,7 @@ export const PromoCodesSection = () => {
           })}
         </div>
 
-        <p className="text-xs text-muted-foreground text-center mt-8 max-w-2xl mx-auto">
+        <p className="text-xs text-blue-100/70 text-center mt-8 max-w-2xl mx-auto">
           One code per order — codes don't stack. Minimums are calculated on the order subtotal
           at the ${BASE_PRICE.toFixed(2)}/sq ft base rate before shipping and taxes.
         </p>
