@@ -16,6 +16,7 @@ import {
   TrustLogosStrip,
   ProductSlider,
   PromoCodesSection,
+  PromoCodesStrip,
 } from "@/components/commercial";
 import { Button } from "@/components/ui/button";
 import heroFleet from "@/assets/hero-fleet.jpg";
@@ -96,6 +97,10 @@ const Index = () => {
         {/* Blue break under header */}
         <div className="h-1 bg-gradient-to-r from-primary via-primary to-primary/50" />
       </header>
+
+      {/* Fleet promo codes — always above the fold */}
+      <PromoCodesStrip />
+
 
       {/* Hero Section */}
       <section className="relative min-h-[600px] lg:min-h-[700px] overflow-hidden">
