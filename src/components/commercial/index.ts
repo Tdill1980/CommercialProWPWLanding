@@ -33,3 +33,4 @@ export { RewardsCallout } from "./RewardsCallout";
 // New: WooCommerce product slider
 export { ProductSlider } from "./ProductSlider";
 export { WallWrapProduct } from "./WallWrapProduct";
+export { WallWrapQuoteForm } from "./WallWrapQuoteForm";

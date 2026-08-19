@@ -9,6 +9,7 @@ import {
   TrustLogosStrip,
   CommercialInfoStrip,
   WallWrapProduct,
+  WallWrapQuoteForm,
   PromoCodesSection,
   PromoCodesStrip,
 } from "@/components/commercial";
@@ -210,6 +211,9 @@ const EmbedCommercial = () => {
             </div>
           </div>
           <WallWrapProduct />
+          <div className="mt-8">
+            <WallWrapQuoteForm />
+          </div>
         </div>
       </section>
 
