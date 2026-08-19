@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Copy, Check, Tag, Calculator, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { trackEvent } from "@/lib/analytics";
 
 /**
  * PromoCodesSection
@@ -51,6 +52,14 @@ export const PromoCodesSection = () => {
   );
 
   const copy = async (code: string) => {
+    const promo = PROMO_CODES.find((p) => p.code === code);
+    trackEvent("promo_code_copy", {
+      promo_code: code,
+      percent_off: promo?.percent,
+      qualifies: promo ? subtotal >= promo.minSpend : undefined,
+      order_subtotal: Math.round(subtotal),
+      sq_ft: sqFt,
+    });
     try {
       await navigator.clipboard.writeText(code);
       setCopied(code);
@@ -212,6 +221,15 @@ export const PromoCodesSection = () => {
             return (
               <div
                 key={promo.code}
+                onClick={() =>
+                  trackEvent("promo_code_click", {
+                    promo_code: promo.code,
+                    percent_off: promo.percent,
+                    qualifies,
+                    order_subtotal: Math.round(subtotal),
+                    sq_ft: sqFt,
+                  })
+                }
                 className={`relative rounded-xl border-2 bg-card p-5 transition-shadow ${
                   isBestForOrder
                     ? "border-primary shadow-xl shadow-primary/30 ring-2 ring-primary/30"
