@@ -15,6 +15,7 @@ export { TestimonialSection } from "./TestimonialSection";
 export { JacksonQuoteEmbed } from "./JacksonQuoteEmbed";
 export { ApproveProTeaser } from "./ApproveProTeaser";
 export { PromoCodesSection } from "./PromoCodesSection";
+export { PromoCodesStrip } from "./PromoCodesStrip";
 export { StickyQuoteBar } from "./StickyQuoteBar";
 export { QuoteWelcomeBanner } from "./QuoteWelcomeBanner";
 export { ProUpgradeStrip } from "./ProUpgradeStrip";

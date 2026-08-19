@@ -16,6 +16,7 @@ import {
   TrustLogosStrip,
   ProductSlider,
   PromoCodesSection,
+  PromoCodesStrip,
 } from "@/components/commercial";
 import { Button } from "@/components/ui/button";
 import heroFleet from "@/assets/hero-fleet.jpg";

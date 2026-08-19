@@ -10,6 +10,7 @@ import {
   CommercialInfoStrip,
   ProductSlider,
   PromoCodesSection,
+  PromoCodesStrip,
 } from "@/components/commercial";
 
 /**
