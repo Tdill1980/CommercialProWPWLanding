@@ -5,11 +5,11 @@ import {
   ApproveProPlusSection,
   TestimonialSection,
   JacksonQuoteEmbed,
-  ApproveProTeaser,
   StickyQuoteBar,
   TrustLogosStrip,
   CommercialInfoStrip,
   ProductSlider,
+  PromoCodesSection,
 } from "@/components/commercial";
 
 /**
@@ -173,10 +173,6 @@ const EmbedCommercial = () => {
             </div>
           </div>
 
-          {/* ApprovePro Teaser */}
-          <div className="mt-8">
-            <ApproveProTeaser />
-          </div>
         </div>
       </section>
 
@@ -210,6 +206,11 @@ const EmbedCommercial = () => {
       {/* Volume Pricing */}
       <section id="volume" className="scroll-mt-20">
         <BulkPricingSection />
+      </section>
+
+      {/* Fleet Promo Codes */}
+      <section id="promo-codes" className="scroll-mt-20">
+        <PromoCodesSection />
       </section>
 
       {/* Pricing */}

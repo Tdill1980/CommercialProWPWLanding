@@ -14,6 +14,7 @@ export { TestimonialSection } from "./TestimonialSection";
 // New: Quote integration components
 export { JacksonQuoteEmbed } from "./JacksonQuoteEmbed";
 export { ApproveProTeaser } from "./ApproveProTeaser";
+export { PromoCodesSection } from "./PromoCodesSection";
 export { StickyQuoteBar } from "./StickyQuoteBar";
 export { QuoteWelcomeBanner } from "./QuoteWelcomeBanner";
 export { ProUpgradeStrip } from "./ProUpgradeStrip";
