@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Loader2, RefreshCw, Phone, Mail, User } from "lucide-react";
+import { MessageCircle, X, Send, Loader2, RefreshCw, Mail, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -178,14 +178,6 @@ export function SalesAgentDrawer({ trigger }: SalesAgentDrawerProps) {
               Need to talk to a human?
             </p>
             <div className="flex gap-2">
-              <a
-                href="tel:1-800-555-0199"
-                className="flex items-center gap-1.5 text-xs text-primary hover:underline"
-              >
-                <Phone className="h-3 w-3" />
-                Call Sales
-              </a>
-              <span className="text-muted-foreground">•</span>
               <a
                 href="mailto:commercial@weprintwraps.com"
                 className="flex items-center gap-1.5 text-xs text-primary hover:underline"
