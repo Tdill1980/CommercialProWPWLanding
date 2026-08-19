@@ -116,12 +116,18 @@ export const JacksonQuoteEmbed = ({
           }
           break;
         case "WPW_QUOTE_STARTED":
+          trackPixel("InitiateCheckout", { content_name: "CommercialPro quote" });
           onQuoteStarted?.();
           break;
         case "WPW_QUOTE_UPDATED":
           onQuoteUpdated?.(data.summary || "", data);
           break;
         case "WPW_QUOTE_SUBMITTED":
+          trackPixel("Lead", {
+            content_name: "CommercialPro quote",
+            value: Number(data.total) || undefined,
+            currency: "USD",
+          });
           onQuoteSubmitted?.(data.quote_id || "", data.email || "");
           void saveLead(data);
           break;
