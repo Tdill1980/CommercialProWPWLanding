@@ -208,6 +208,11 @@ const EmbedCommercial = () => {
         <BulkPricingSection />
       </section>
 
+      {/* Fleet Promo Codes */}
+      <section id="promo-codes" className="scroll-mt-20">
+        <PromoCodesSection />
+      </section>
+
       {/* Pricing */}
       <section id="pricing" className="scroll-mt-20">
         <PricingUpdateExplainer />
