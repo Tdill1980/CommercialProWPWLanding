@@ -70,33 +70,33 @@ export const PromoCodesSection = () => {
   };
 
   return (
-    <section className="w-full bg-gradient-to-b from-slate-900 via-blue-950 to-slate-900 py-16 border-y border-border">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-10">
-          <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-blue-300 mb-3">
-            <Tag className="h-3.5 w-3.5" />
+    <section className="w-full overflow-x-hidden bg-gradient-to-b from-slate-900 via-blue-950 to-slate-900 py-10 sm:py-16 border-y border-border">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-7 sm:mb-10">
+          <span className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold tracking-widest uppercase text-blue-300 mb-3">
+            <Tag className="h-3.5 w-3.5 shrink-0" />
             Fleet Promo Codes
           </span>
-          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight mb-3 text-balance">
             Apply your discount at checkout
           </h2>
-          <p className="text-blue-100/80 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base text-blue-100/80 max-w-2xl mx-auto">
             These codes are live in our store. Enter the code at checkout once your order
             hits the minimum — the discount applies to the full order.
           </p>
         </div>
 
         {/* Live order estimator */}
-        <div className="rounded-2xl border-2 border-border bg-card shadow-2xl shadow-black/40 p-5 md:p-6 mb-8">
-          <div className="flex items-center gap-2 mb-5">
-            <Calculator className="h-4 w-4 text-primary" />
-            <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">
+        <div className="rounded-2xl border-2 border-border bg-card shadow-2xl shadow-black/40 p-4 sm:p-5 md:p-6 mb-6 sm:mb-8">
+          <div className="flex items-center gap-2 mb-4 sm:mb-5">
+            <Calculator className="h-4 w-4 text-primary shrink-0" />
+            <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-foreground">
               Your order breakdown
             </h3>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-4 mb-5">
-            <div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-5">
+            <div className="col-span-2 md:col-span-1 min-w-0">
               <label htmlFor="promo-size" className="block text-xs font-semibold text-muted-foreground mb-1.5">
                 Wrap size
               </label>
@@ -107,7 +107,7 @@ export const PromoCodesSection = () => {
                   setSizeId(e.target.value);
                   setCustomSqFt(null);
                 }}
-                className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground"
+                className="w-full max-w-full h-11 rounded-md border border-input bg-background px-3 text-sm text-foreground truncate"
               >
                 {WRAP_SIZES.map((s) => (
                   <option key={s.id} value={s.id}>
@@ -117,13 +117,14 @@ export const PromoCodesSection = () => {
               </select>
             </div>
 
-            <div>
+            <div className="min-w-0">
               <label htmlFor="promo-qty" className="block text-xs font-semibold text-muted-foreground mb-1.5">
                 Vehicles
               </label>
               <input
                 id="promo-qty"
                 type="number"
+                inputMode="numeric"
                 min={1}
                 max={100}
                 value={qty}
@@ -131,24 +132,25 @@ export const PromoCodesSection = () => {
                   setQty(Math.max(1, Math.min(100, Number(e.target.value) || 1)));
                   setCustomSqFt(null);
                 }}
-                className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground"
+                className="w-full max-w-full h-11 rounded-md border border-input bg-background px-3 text-base sm:text-sm text-foreground"
               />
             </div>
 
-            <div>
+            <div className="min-w-0">
               <label htmlFor="promo-sqft" className="block text-xs font-semibold text-muted-foreground mb-1.5">
                 Total sq ft
               </label>
               <input
                 id="promo-sqft"
                 type="number"
+                inputMode="numeric"
                 min={1}
                 max={50000}
                 value={sqFt}
                 onChange={(e) =>
                   setCustomSqFt(Math.max(1, Math.min(50000, Number(e.target.value) || 1)))
                 }
-                className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm font-semibold text-foreground"
+                className="w-full max-w-full h-11 rounded-md border border-input bg-background px-3 text-base sm:text-sm font-semibold text-foreground"
               />
             </div>
           </div>
@@ -161,34 +163,37 @@ export const PromoCodesSection = () => {
             value={Math.min(sqFt, 15000)}
             onChange={(e) => setCustomSqFt(Number(e.target.value))}
             aria-label="Total square footage"
-            className="w-full accent-primary mb-5"
+            className="block w-full max-w-full accent-primary mb-5"
           />
 
-          <dl className="grid sm:grid-cols-4 gap-3 text-sm">
-            <div className="rounded-lg bg-muted/60 border border-border p-3">
-              <dt className="text-xs text-muted-foreground">Subtotal</dt>
-              <dd className="font-black text-foreground text-lg">{money(subtotal)}</dd>
+          <dl className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 text-sm">
+            <div className="min-w-0 rounded-lg bg-muted/60 border border-border p-3">
+              <dt className="text-[11px] sm:text-xs text-muted-foreground">Subtotal</dt>
+              <dd className="font-black text-foreground text-base sm:text-lg tabular-nums break-words">
+                {money(subtotal)}
+              </dd>
             </div>
-            <div className="rounded-lg bg-muted/60 border border-border p-3">
-              <dt className="text-xs text-muted-foreground">Discount</dt>
-              <dd className="font-black text-lg text-primary">
+            <div className="min-w-0 rounded-lg bg-muted/60 border border-border p-3">
+              <dt className="text-[11px] sm:text-xs text-muted-foreground">Discount</dt>
+              <dd className="font-black text-base sm:text-lg text-primary tabular-nums break-words">
                 {best ? `-${money(subtotal * (best.percent / 100))}` : "—"}
               </dd>
             </div>
-            <div className="rounded-lg bg-muted/60 border border-border p-3">
-              <dt className="text-xs text-muted-foreground">Order total</dt>
-              <dd className="font-black text-foreground text-lg">
+            <div className="min-w-0 rounded-lg bg-muted/60 border border-border p-3">
+              <dt className="text-[11px] sm:text-xs text-muted-foreground">Order total</dt>
+              <dd className="font-black text-foreground text-base sm:text-lg tabular-nums break-words">
                 {money(subtotal * (1 - (best?.percent ?? 0) / 100))}
               </dd>
             </div>
-            <div className="rounded-lg bg-primary/10 border-2 border-primary/40 p-3">
-              <dt className="text-xs text-muted-foreground">Effective rate</dt>
-              <dd className="font-black text-primary text-lg">
+            <div className="min-w-0 rounded-lg bg-primary/10 border-2 border-primary/40 p-3">
+              <dt className="text-[11px] sm:text-xs text-muted-foreground">Effective rate</dt>
+              <dd className="font-black text-primary text-base sm:text-lg tabular-nums break-words">
                 ${(BASE_PRICE * (1 - (best?.percent ?? 0) / 100)).toFixed(2)}
                 <span className="text-xs font-semibold">/sq ft</span>
               </dd>
             </div>
           </dl>
+
 
           <p className="text-xs text-muted-foreground mt-4">
             {best ? (
@@ -209,7 +214,7 @@ export const PromoCodesSection = () => {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
           {PROMO_CODES.map((promo) => {
             const qualifies = subtotal >= promo.minSpend;
             const isBestForOrder = best?.code === promo.code;
@@ -230,7 +235,7 @@ export const PromoCodesSection = () => {
                     sq_ft: sqFt,
                   })
                 }
-                className={`relative rounded-xl border-2 bg-card p-5 transition-shadow ${
+                className={`relative min-w-0 rounded-xl border-2 bg-card p-4 sm:p-5 mt-3 sm:mt-0 transition-shadow ${
                   isBestForOrder
                     ? "border-primary shadow-xl shadow-primary/30 ring-2 ring-primary/30"
                     : qualifies
@@ -239,24 +244,25 @@ export const PromoCodesSection = () => {
                 }`}
               >
                 {isBestForOrder ? (
-                  <span className="absolute -top-2.5 right-4 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-md shadow-black/30">
+                  <span className="absolute -top-2.5 right-3 sm:right-4 max-w-[calc(100%-1.5rem)] truncate bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-md shadow-black/30">
                     Best for your order
                   </span>
                 ) : promo.isBest ? (
-                  <span className="absolute -top-2.5 right-4 bg-muted text-muted-foreground border border-border text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                  <span className="absolute -top-2.5 right-3 sm:right-4 max-w-[calc(100%-1.5rem)] truncate bg-muted text-muted-foreground border border-border text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
                     Best value
                   </span>
                 ) : null}
 
                 <div className="flex items-center justify-between gap-3 mb-4">
-                  <div>
-                    <p className="font-mono text-xl font-black text-foreground tracking-wide">
+                  <div className="min-w-0">
+                    <p className="font-mono text-lg sm:text-xl font-black text-foreground tracking-wide truncate">
                       {promo.code}
                     </p>
                     <p className="text-sm font-semibold text-primary">{promo.percent}% off</p>
                   </div>
                   <Button
                     size="sm"
+                    className="shrink-0"
                     variant={isBestForOrder ? "default" : "outline"}
                     onClick={() => copy(promo.code)}
                     aria-label={`Copy promo code ${promo.code}`}
@@ -275,35 +281,37 @@ export const PromoCodesSection = () => {
                   </Button>
                 </div>
 
-                <dl className="space-y-2 text-sm border-t border-border pt-4">
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Minimum order</dt>
-                    <dd className="font-semibold text-foreground">{money(promo.minSpend)}</dd>
+                <dl className="space-y-2 text-[13px] sm:text-sm border-t border-border pt-4">
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-muted-foreground min-w-0">Minimum order</dt>
+                    <dd className="font-semibold text-foreground tabular-nums shrink-0">
+                      {money(promo.minSpend)}
+                    </dd>
                   </div>
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Roughly</dt>
-                    <dd className="font-medium text-foreground">
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-muted-foreground min-w-0">Roughly</dt>
+                    <dd className="font-medium text-foreground tabular-nums shrink-0">
                       {promo.minSqFt.toLocaleString()}+ sq ft
                     </dd>
                   </div>
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Effective rate</dt>
-                    <dd className="font-medium text-foreground">
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-muted-foreground min-w-0">Effective rate</dt>
+                    <dd className="font-medium text-foreground tabular-nums shrink-0">
                       ${discountedPrice.toFixed(2)}/sq ft
                     </dd>
                   </div>
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-muted-foreground min-w-0">
                       {qualifies ? "You save on this order" : "You save at minimum"}
                     </dt>
-                    <dd className="font-bold text-primary">{money(savings)}</dd>
+                    <dd className="font-bold text-primary tabular-nums shrink-0">{money(savings)}</dd>
                   </div>
                 </dl>
 
                 {!qualifies && (
                   <p className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <Lock className="h-3 w-3" />
-                    {money(promo.minSpend - subtotal)} more to unlock
+                    <Lock className="h-3 w-3 shrink-0" />
+                    <span className="min-w-0">{money(promo.minSpend - subtotal)} more to unlock</span>
                   </p>
                 )}
               </div>
@@ -311,10 +319,11 @@ export const PromoCodesSection = () => {
           })}
         </div>
 
-        <p className="text-xs text-blue-100/70 text-center mt-8 max-w-2xl mx-auto">
+        <p className="text-xs text-blue-100/70 text-center mt-6 sm:mt-8 max-w-2xl mx-auto">
           One code per order — codes don't stack. Minimums are calculated on the order subtotal
           at the ${BASE_PRICE.toFixed(2)}/sq ft base rate before shipping and taxes.
         </p>
+
       </div>
     </section>
   );
