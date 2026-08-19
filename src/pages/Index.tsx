@@ -257,21 +257,11 @@ const Index = () => {
         <BulkPricingSection />
       </section>
 
-      {/* Fleet Promo Codes */}
-      <section id="promo-codes" className="scroll-mt-20">
-        <PromoCodesSection />
-      </section>
-
       {/* Pricing Section */}
       <section id="pricing" className="scroll-mt-20">
         <PricingUpdateExplainer />
       </section>
 
-
-      {/* 3D Proofing Section */}
-      <section id="proofing" className="scroll-mt-20">
-        <ApproveProPlusSection />
-      </section>
 
       {/* Testimonials Section */}
       <section id="testimonials" className="scroll-mt-20">
