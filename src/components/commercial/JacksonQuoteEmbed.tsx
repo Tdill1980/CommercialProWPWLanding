@@ -3,6 +3,7 @@ import { Loader2, Settings, CheckCircle2, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuotePrefill, prefillToParams, prefillToMessage } from "@/lib/quotePrefill";
+import { trackPixel } from "@/lib/metaPixel";
 
 type LeadSaveState =
   | { status: "idle" }
