@@ -52,6 +52,14 @@ export const PromoCodesSection = () => {
   );
 
   const copy = async (code: string) => {
+    const promo = PROMO_CODES.find((p) => p.code === code);
+    trackEvent("promo_code_copy", {
+      promo_code: code,
+      percent_off: promo?.percent,
+      qualifies: promo ? subtotal >= promo.minSpend : undefined,
+      order_subtotal: Math.round(subtotal),
+      sq_ft: sqFt,
+    });
     try {
       await navigator.clipboard.writeText(code);
       setCopied(code);
