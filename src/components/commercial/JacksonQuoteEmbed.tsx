@@ -116,8 +116,10 @@ export const JacksonQuoteEmbed = ({
 
       switch (type) {
         case "WPW_QUOTE_HEIGHT":
-          if (typeof data.height === "number") {
-            setIframeHeight(data.height);
+          if (typeof data.height === "number" && data.height > 0) {
+            // Never shrink below the safe minimum — a stale/partial height
+            // report from the tool is what clips the form on mobile.
+            setIframeHeight(Math.max(data.height, 600));
           }
           break;
         case "WPW_QUOTE_STARTED":
