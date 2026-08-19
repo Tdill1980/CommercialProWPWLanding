@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import {
   BulkPricingSection,
   PricingUpdateExplainer,
-  ApproveProPlusSection,
+  
   TestimonialSection,
   JacksonQuoteEmbed,
   StickyQuoteBar,
