@@ -28,7 +28,12 @@ export const JacksonQuoteEmbed = ({
   onQuoteSubmitted,
 }: QuoteEmbedProps) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [iframeHeight, setIframeHeight] = useState(500);
+  // The quote tool is a tall multi-step form. Until (and unless) it reports its
+  // own height over postMessage, use a generous default so nothing is clipped —
+  // taller on narrow screens where the form stacks vertically.
+  const MIN_HEIGHT =
+    typeof window !== "undefined" && window.innerWidth < 768 ? 1600 : 1100;
+  const [iframeHeight, setIframeHeight] = useState(MIN_HEIGHT);
   const [leadSave, setLeadSave] = useState<LeadSaveState>({ status: "idle" });
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const isReadyRef = useRef(false);
