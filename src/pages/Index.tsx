@@ -182,6 +182,12 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Fleet Promo Codes — above the fold priority */}
+      <section id="promo-codes" className="scroll-mt-20">
+        <PromoCodesSection />
+      </section>
+
+
       {/* Value Props - 6 items with bold gradient */}
       <section className="border-y border-border bg-gradient-to-b from-slate-900 via-blue-950 to-slate-900 relative overflow-hidden">
         {/* Top gradient accent */}
